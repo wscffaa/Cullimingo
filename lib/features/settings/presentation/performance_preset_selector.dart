@@ -144,7 +144,7 @@ class _RecommendedBadge extends StatelessWidget {
       borderRadius: BorderRadius.circular(4),
     ),
     child: const Text(
-      'Recommended',
+      '推荐',
       style: TextStyle(color: AppColors.accent, fontSize: 10),
     ),
   );

@@ -119,7 +119,7 @@ class _TopBar extends StatelessWidget {
         const Icon(Icons.compare, size: 16, color: AppColors.textSecondary),
         const SizedBox(width: AppSpacing.sm),
         Text(
-          'Compare $count photos',
+          '对比 $count 张照片',
           style: const TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.w600,
@@ -127,13 +127,13 @@ class _TopBar extends StatelessWidget {
         ),
         const Spacer(),
         const Text(
-          'Arrows focus · 1-5 / P / X / colours mark · ✕ drops · Esc closes',
+          '方向键聚焦 · 1-5 / P / X / 色标标记 · ✕ 移除 · Esc 关闭',
           style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
         ),
         const SizedBox(width: AppSpacing.sm),
         IconButton(
           onPressed: onClose,
-          tooltip: 'Close compare (Esc)',
+          tooltip: '关闭对比（Esc）',
           icon: const Icon(Icons.close_rounded, size: 18),
           color: AppColors.textPrimary,
         ),
@@ -201,7 +201,7 @@ class _CompareCell extends ConsumerWidget {
                     right: AppSpacing.xs,
                     child: IconButton(
                       onPressed: onRemove,
-                      tooltip: 'Remove from compare',
+                      tooltip: '从对比中移除',
                       iconSize: 18,
                       icon: const Icon(Icons.close_rounded),
                       color: AppColors.textPrimary,

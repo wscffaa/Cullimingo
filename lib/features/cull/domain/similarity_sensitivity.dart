@@ -4,13 +4,13 @@
 /// distance ranges 0–64; these presets cover the useful band.
 enum SimilaritySensitivity {
   /// Only near-identical frames (tight crops / exposure brackets of one shot).
-  strict(label: 'Strict', blurb: 'Near-duplicates only', maxDistance: 5),
+  strict(label: '严格', blurb: '仅近似重复', maxDistance: 5),
 
   /// The default: clear bursts of the same subject.
-  balanced(label: 'Balanced', blurb: 'Same subject / burst', maxDistance: 10),
+  balanced(label: '均衡', blurb: '同主体 / 连拍', maxDistance: 10),
 
   /// Loosely similar scenes (more grouped, more false positives).
-  loose(label: 'Loose', blurb: 'Similar scenes', maxDistance: 16);
+  loose(label: '宽松', blurb: '相似场景', maxDistance: 16);
 
   const SimilaritySensitivity({
     required this.label,

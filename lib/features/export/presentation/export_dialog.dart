@@ -66,8 +66,8 @@ const List<({String label, int value})> _sizeChoices = [
   (label: '2048 px', value: 2048),
   (label: '3072 px', value: 3072),
   (label: '4096 px', value: 4096),
-  (label: 'Original', value: _originalSize),
-  (label: 'Custom…', value: _customSize),
+  (label: '原始', value: _originalSize),
+  (label: '自定义…', value: _customSize),
 ];
 
 /// Shows the export dialog for [sources] (the current selection or the whole
@@ -116,7 +116,7 @@ class _ExportDialogState extends State<_ExportDialog> {
   /// Export beside each source (in [_subfolder]), not into [_destination].
   bool _nextToOriginals = false;
   final TextEditingController _subfolder = TextEditingController(
-    text: 'Exports',
+    text: '导出',
   );
   bool _limitSize = false;
   bool _openWhenDone = true;
@@ -328,7 +328,7 @@ class _ExportDialogState extends State<_ExportDialog> {
   Widget build(BuildContext context) {
     final count = widget.sources.length;
     return AlertDialog(
-      title: Text('Export $count photo${count == 1 ? '' : 's'}'),
+      title: Text('导出 $count 张照片'),
       content: SizedBox(
         width: 780,
         child: SingleChildScrollView(child: _form()),
@@ -368,7 +368,7 @@ class _ExportDialogState extends State<_ExportDialog> {
 
   /// The Destination card: upload target or local folder.
   Widget _destinationCard() => DialogCard(
-    title: 'Destination',
+    title: '目标位置',
     children: [
       if (_servers.isNotEmpty) ...[
         DialogDropdown<String>(
@@ -377,12 +377,12 @@ class _ExportDialogState extends State<_ExportDialog> {
             () => _server = _servers.where((s) => s.id == id).firstOrNull,
           ),
           items: [
-            const DropdownMenuItem(value: '', child: Text('Local folder')),
+            const DropdownMenuItem(value: '', child: Text('本地文件夹')),
             for (final server in _servers)
               DropdownMenuItem(
                 value: server.id,
                 child: Text(
-                  'Upload to ${server.name} (${server.protocol.label})',
+                  '上传到 ${server.name}（${server.protocol.label}）',
                 ),
               ),
           ],
@@ -393,7 +393,7 @@ class _ExportDialogState extends State<_ExportDialog> {
         DialogCheckbox(
           value: _keepLocalCopy,
           onChanged: (v) => setState(() => _keepLocalCopy = v ?? false),
-          label: 'Also keep a local copy',
+          label: '同时保留本地副本',
         ),
       // Local export: pick between one chosen folder and beside-each-original.
       if (_nextToOriginalsAvailable) ...[
@@ -401,10 +401,10 @@ class _ExportDialogState extends State<_ExportDialog> {
           value: _nextToOriginals,
           onChanged: (v) => setState(() => _nextToOriginals = v ?? false),
           items: const [
-            DropdownMenuItem(value: false, child: Text('Choose a folder…')),
+            DropdownMenuItem(value: false, child: Text('选择文件夹…')),
             DropdownMenuItem(
               value: true,
-              child: Text('Same folder as originals'),
+              child: Text('与原文件同文件夹'),
             ),
           ],
         ),
@@ -412,10 +412,10 @@ class _ExportDialogState extends State<_ExportDialog> {
       ],
       if (_useNextToOriginals)
         DialogField(
-          label: 'Subfolder',
+          label: '子文件夹',
           child: TextField(
             controller: _subfolder,
-            decoration: dialogInputDecoration('Exports (blank = alongside)'),
+            decoration: dialogInputDecoration('导出位置（留空 = 与原文件同目录）'),
             style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
             onChanged: (_) => setState(() {}),
           ),
@@ -424,23 +424,23 @@ class _ExportDialogState extends State<_ExportDialog> {
         DialogPathRow(
           path: _destination,
           onPick: _pickDestination,
-          hint: 'Choose a folder…',
+          hint: '选择文件夹…',
         ),
       if (_server == null || _keepLocalCopy)
         DialogCheckbox(
           value: _openWhenDone,
           onChanged: (v) => setState(() => _openWhenDone = v ?? true),
-          label: 'Open folder when done',
+          label: '完成后打开文件夹',
         ),
     ],
   );
 
   /// The Size & quality card: long edge, quality, format, and size limits.
   Widget _sizeQualityCard() => DialogCard(
-    title: 'Size & quality',
+    title: '尺寸与质量',
     children: [
       DialogField(
-        label: 'Long edge',
+        label: '长边',
         child: Row(
           children: [
             Expanded(
@@ -471,7 +471,7 @@ class _ExportDialogState extends State<_ExportDialog> {
         ),
       ),
       DialogField(
-        label: 'Quality',
+        label: '质量',
         child: Row(
           children: [
             Expanded(
@@ -498,7 +498,7 @@ class _ExportDialogState extends State<_ExportDialog> {
       ),
       if (_altFormats)
         DialogField(
-          label: 'Format',
+          label: '格式',
           child: DialogDropdown<ExportFormat>(
             value: _preset.format,
             onChanged: (f) =>
@@ -517,12 +517,12 @@ class _ExportDialogState extends State<_ExportDialog> {
         value: _preset.sharpen,
         onChanged: (v) =>
             setState(() => _preset = _preset.copyWith(sharpen: v ?? false)),
-        label: 'Sharpen after resize',
+        label: '缩放后锐化',
       ),
       DialogCheckbox(
         value: _limitSize,
         onChanged: (v) => setState(() => _limitSize = v ?? false),
-        label: 'Limit file size to',
+        label: '限制文件大小为',
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -550,7 +550,7 @@ class _ExportDialogState extends State<_ExportDialog> {
   /// The Naming card: the pattern builder, which renders the job-name row
   /// inline (right under the preset picker, only while the pattern uses it).
   Widget _namingCard() => DialogCard(
-    title: 'Naming',
+    title: '命名',
     children: [
       NameBuilder(
         initial: _naming,
@@ -567,16 +567,15 @@ class _ExportDialogState extends State<_ExportDialog> {
 
   /// The full-width Output card: the live filename preview and a look caveat.
   Widget _outputCard() => DialogCard(
-    title: 'Output',
+    title: '输出',
     children: [
       Text(
-        'e.g.  $_previewName',
+        '例如  $_previewName',
         style: const TextStyle(color: AppColors.textPrimary, fontSize: 13),
       ),
       const SizedBox(height: AppSpacing.xs),
       const Text(
-        'Embedded-preview export — the in-camera look (great for proofs/web), '
-        'not a Capture One / Lightroom render.',
+        '嵌入式预览导出——机内观感（适合样片/网络），不是 Capture One / Lightroom 的渲染结果。',
         style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
       ),
     ],
@@ -585,14 +584,14 @@ class _ExportDialogState extends State<_ExportDialog> {
   List<Widget> _actions() => [
     TextButton(
       onPressed: () => Navigator.of(context).pop(),
-      child: const Text('Cancel'),
+      child: const Text('取消'),
     ),
     FilledButton(
       onPressed: _canSubmit ? _submit : null,
       child: Text(
         _server == null
-            ? 'Export ${widget.sources.length}'
-            : 'Export & upload ${widget.sources.length}',
+            ? '导出 ${widget.sources.length} 张'
+            : '导出并上传 ${widget.sources.length} 张',
       ),
     ),
   ];

@@ -116,7 +116,7 @@ class _HotCodesDialogState extends State<HotCodesDialog> {
   @override
   Widget build(BuildContext context) => AlertDialog(
     backgroundColor: AppColors.surfaceElevated,
-    title: const Text('Hot codes'),
+    title: const Text('快捷代码'),
     content: SizedBox(
       width: 560,
       child: SingleChildScrollView(
@@ -125,11 +125,7 @@ class _HotCodesDialogState extends State<HotCodesDialog> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              'A hot code fills several metadata fields at once: type its '
-              '=code= in any Metadata-editor field and every field below is '
-              'stamped (the field you typed in keeps its other text). Values '
-              'may use =text codes= and {variables}. Uses the same delimiter '
-              'as the code replacements.',
+              '一个快捷代码可同时填充多个元数据字段：在任意元数据编辑字段中输入其 =code=，下方每个字段都会被盖印（你输入的字段保留其余文本）。值可以使用 =文本代码= 和 {变量}。与代码替换使用相同的分隔符。',
               style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
             ),
             const SizedBox(height: AppSpacing.md),
@@ -139,7 +135,7 @@ class _HotCodesDialogState extends State<HotCodesDialog> {
               child: TextButton.icon(
                 onPressed: _addCode,
                 icon: const Icon(Icons.add, size: 16),
-                label: const Text('Add hot code'),
+                label: const Text('添加快捷代码'),
               ),
             ),
           ],
@@ -149,7 +145,7 @@ class _HotCodesDialogState extends State<HotCodesDialog> {
     actions: [
       TextButton(
         onPressed: () => Navigator.of(context).pop(),
-        child: const Text('Cancel'),
+        child: const Text('取消'),
       ),
       FilledButton(
         onPressed: () => Navigator.of(context).pop(_build()),
@@ -185,7 +181,7 @@ class _HotCodesDialogState extends State<HotCodesDialog> {
                   style: const TextStyle(fontSize: 13),
                   decoration: const InputDecoration(
                     isDense: true,
-                    hintText: 'e.g. arena',
+                    hintText: '例如 arena',
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -194,7 +190,7 @@ class _HotCodesDialogState extends State<HotCodesDialog> {
               IconButton(
                 iconSize: 16,
                 visualDensity: VisualDensity.compact,
-                tooltip: 'Remove hot code',
+                tooltip: '删除快捷代码',
                 icon: const Icon(Icons.delete_outline),
                 onPressed: () => _removeCode(index),
               ),
@@ -208,7 +204,7 @@ class _HotCodesDialogState extends State<HotCodesDialog> {
               onPressed: () => _addField(entry),
               icon: const Icon(Icons.add, size: 14),
               label: const Text(
-                'Add field',
+                '添加字段',
                 style: TextStyle(fontSize: 12),
               ),
             ),
@@ -261,7 +257,7 @@ class _HotCodesDialogState extends State<HotCodesDialog> {
           IconButton(
             iconSize: 16,
             visualDensity: VisualDensity.compact,
-            tooltip: 'Remove field',
+            tooltip: '移除字段',
             icon: const Icon(Icons.close_rounded),
             onPressed: () => _removeField(entry, index),
           ),

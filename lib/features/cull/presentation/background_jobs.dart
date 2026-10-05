@@ -94,7 +94,7 @@ class BackgroundJobs extends _$BackgroundJobs {
 
   /// Starts an export of [total] items.
   void startExport(int total) => state = BackgroundJobsState(
-    export: JobProgress(verb: 'Exporting', done: 0, total: total),
+    export: JobProgress(verb: '导出', done: 0, total: total),
     contactSheet: state.contactSheet,
     findSimilar: state.findSimilar,
     transfer: state.transfer,
@@ -164,7 +164,7 @@ class BackgroundJobs extends _$BackgroundJobs {
   void startFindSimilar(int total) => state = BackgroundJobsState(
     export: state.export,
     contactSheet: state.contactSheet,
-    findSimilar: JobProgress(verb: 'Finding similar', done: 0, total: total),
+    findSimilar: JobProgress(verb: '查找相似', done: 0, total: total),
     transfer: state.transfer,
   );
 

@@ -51,7 +51,7 @@ class SftpDeliveryClient implements DeliveryClient {
           password.isEmpty ? null : password,
         );
       } on Object catch (e) {
-        throw DeliveryException('Could not read the key "$keyFilePath" — $e');
+        throw DeliveryException('无法读取密钥“$keyFilePath”——$e');
       }
     }
     try {
@@ -66,11 +66,11 @@ class SftpDeliveryClient implements DeliveryClient {
       await ssh.authenticated.timeout(timeout);
       _sftp = await ssh.sftp();
     } on SSHAuthFailError {
-      throw DeliveryException('$host refused the login for "$username"');
+      throw DeliveryException('$host 拒绝了用户“$username”的登录');
     } on DeliveryException {
       rethrow;
     } on Object catch (e) {
-      throw DeliveryException('Could not connect to $host:$port — $e');
+      throw DeliveryException('无法连接 $host:$port——$e');
     }
   }
 
@@ -90,7 +90,7 @@ class SftpDeliveryClient implements DeliveryClient {
       try {
         await sftp.stat(path);
       } on Object {
-        throw DeliveryException('Could not create "$path" on $host');
+        throw DeliveryException('无法在 $host 上创建“$path”');
       }
     }
     _remoteDir = parts.isEmpty ? '.' : './${parts.join('/')}';
@@ -115,7 +115,7 @@ class SftpDeliveryClient implements DeliveryClient {
     } on DeliveryException {
       rethrow;
     } on Object catch (e) {
-      throw DeliveryException('Upload of "$remoteName" to $host failed — $e');
+      throw DeliveryException('“$remoteName”上传到 $host 失败——$e');
     }
   }
 
@@ -133,7 +133,7 @@ class SftpDeliveryClient implements DeliveryClient {
 
   SftpClient _requireSftp() {
     final sftp = _sftp;
-    if (sftp == null) throw const DeliveryException('Not connected');
+    if (sftp == null) throw const DeliveryException('未连接');
     return sftp;
   }
 }

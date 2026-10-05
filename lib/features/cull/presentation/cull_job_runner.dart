@@ -139,8 +139,8 @@ class CullJobRunner {
             final failed = summary.failed;
             _notify(
               failed > 0
-                  ? 'Exported ${summary.written} photo(s) · $failed failed'
-                  : 'Exported ${summary.written} photo(s)',
+                  ? '已导出 ${summary.written} 张照片 · $failed 个失败'
+                  : '已导出 ${summary.written} 张照片',
               kind: failed > 0 ? NoticeKind.warning : NoticeKind.success,
             );
             if (request.openWhenDone && summary.written > 0) {
@@ -167,7 +167,7 @@ class CullJobRunner {
     _exportSub = null;
     _deliveryCancel?.cancelled = true;
     _jobs.clearExport();
-    _notify('Export cancelled');
+    _notify('导出已取消');
   }
 
   /// Runs a delivered export (`BUILD_PLAN.md` §11): render via the export
@@ -205,7 +205,7 @@ class CullJobRunner {
           if (r.ok) r.relPath,
       ];
       if (okPaths.isEmpty) {
-        _notify('Nothing was rendered to upload', kind: NoticeKind.warning);
+        _notify('没有可上传的渲染结果', kind: NoticeKind.warning);
         return;
       }
 
@@ -277,7 +277,7 @@ class CullJobRunner {
             .read(secretStoreProvider)
             .read(deliveryPasswordKey(server.id)) ??
         '';
-    _jobs.updateExport(verb: 'Uploading', done: 0, total: items.length);
+    _jobs.updateExport(verb: '上传', done: 0, total: items.length);
     final results = <DeliveryResult>[];
     await for (final tick in runDelivery(
       items: items,
@@ -301,10 +301,10 @@ class CullJobRunner {
   }) {
     final failures = summary.failures;
     final parts = [
-      'Delivered ${summary.delivered} photo(s) to ${server.name}',
-      if (renderFailed > 0) '$renderFailed failed to render',
+      '已交付 ${summary.delivered} 张照片到 ${server.name}',
+      if (renderFailed > 0) '$renderFailed 张渲染失败',
       if (failures.isNotEmpty)
-        '${failures.length} failed to upload (${failures.first.error})',
+        '${failures.length} 个上传失败（${failures.first.error}）',
     ];
     if (failures.isEmpty) {
       _notify(
@@ -325,7 +325,7 @@ class CullJobRunner {
         icon: NoticeKind.warning.icon,
         actions: [
           (
-            label: 'Retry failed',
+            label: '重试失败项',
             onTap: () => unawaited(retryFailedDelivery()),
           ),
         ],
@@ -394,13 +394,13 @@ class CullJobRunner {
     );
     if (!check.ok) {
       _notify(
-        "${isMove ? 'Move' : 'Copy'} not started: ${check.problems.join(' ')}",
+        "无法开始${isMove ? '移动' : '复制'}：${check.problems.join(' ')}",
         kind: NoticeKind.warning,
       );
       return;
     }
     final results = <CopyResult>[];
-    _jobs.startTransfer(isMove ? 'Moving' : 'Copying', plan.length);
+    _jobs.startTransfer(isMove ? '移动' : '复制', plan.length);
     // Kept in _transferSub and cancelled in cancelTransfer/_shutdown.
     _transferSub =
         runTransfer(
@@ -417,12 +417,12 @@ class CullJobRunner {
             _jobs.clearTransfer();
             final summary = TransferSummary(results);
             final parts = [
-              '${isMove ? 'Moved' : 'Copied'} ${summary.transferred} photo(s)',
+              '已${isMove ? '移动' : '复制'} ${summary.transferred} 张照片',
               if (summary.conflicts > 0)
-                '${summary.conflicts} skipped (name in use)',
+                '${summary.conflicts} 个跳过（名称被占用）',
               if (summary.stillBeingWritten > 0)
-                '${summary.stillBeingWritten} still being written (retry)',
-              if (summary.failed > 0) '${summary.failed} failed',
+                '${summary.stillBeingWritten} 个仍在写入（请重试）',
+              if (summary.failed > 0) '${summary.failed} 个失败',
             ];
             _notify(
               parts.join(' · '),
@@ -445,7 +445,7 @@ class CullJobRunner {
     unawaited(_transferSub?.cancel());
     _transferSub = null;
     _jobs.clearTransfer();
-    _notify('Transfer cancelled');
+    _notify('传输已取消');
   }
 
   /// Renders [request]'s sources to a temp folder via the export pipeline,
@@ -458,7 +458,7 @@ class CullJobRunner {
       token: request.token,
     );
     final cancel = _csCancel = _JobCancel();
-    _jobs.startContactSheet('Rendering', request.sources.length);
+    _jobs.startContactSheet('渲染', request.sources.length);
     try {
       // 1. Render to temp via the export pipeline.
       final plan = buildExportPlan(request.sources, request.preset);
@@ -484,7 +484,7 @@ class CullJobRunner {
       );
       final files = [for (final path in filePaths) File(path)];
       if (files.isEmpty) {
-        throw const ContactSheetException('Nothing was rendered to upload');
+        throw const ContactSheetException('没有可上传的渲染结果');
       }
 
       // 2. Resolve the gallery. For a new destination, create the chain of
@@ -502,11 +502,11 @@ class CullJobRunner {
         galleryId = parentId;
       }
       if (galleryId == null) {
-        throw const ContactSheetException('No gallery to upload into');
+        throw const ContactSheetException('没有可上传的画廊');
       }
 
       // 3. Upload in batches, reporting progress.
-      _jobs.updateContactSheet(verb: 'Uploading', total: files.length, done: 0);
+      _jobs.updateContactSheet(verb: '上传', total: files.length, done: 0);
       const batchSize = 10;
       var uploaded = 0;
       for (var i = 0; i < files.length && !cancel.cancelled; i += batchSize) {
@@ -521,7 +521,7 @@ class CullJobRunner {
 
       if (!cancel.cancelled) {
         _notify(
-          'Sent $uploaded photo(s) to ContactSheet',
+          '已发送 $uploaded 张照片到 ContactSheet',
           kind: NoticeKind.success,
         );
       }
@@ -540,7 +540,7 @@ class CullJobRunner {
   void cancelContactSheet() {
     _csCancel?.cancelled = true;
     _jobs.clearContactSheet();
-    _notify('Send cancelled');
+    _notify('发送已取消');
   }
 
   /// Pulls client marks (ratings/colours) from a shared ContactSheet gallery
@@ -553,7 +553,7 @@ class CullJobRunner {
       token: request.token,
     );
     final cancel = _csCancel = _JobCancel();
-    _jobs.startContactSheet('Pulling', 0);
+    _jobs.startContactSheet('拉取', 0);
     try {
       final marks = await client.pullGalleryMarks(request.shareToken);
       final photos = _ref.read(photosProvider).value ?? const <Photo>[];
@@ -563,7 +563,7 @@ class CullJobRunner {
       final resolved = resolvePulledMarks(marks, photoRefs);
 
       if (resolved.isNotEmpty) {
-        _jobs.updateContactSheet(verb: 'Applying', total: resolved.length);
+        _jobs.updateContactSheet(verb: '应用', total: resolved.length);
         final controller = _ref.read(cullControllerProvider.notifier);
         // Group by value and apply as batch marks: one UPDATE + one stream
         // emit + one sidecar batch per distinct value. Per-photo setRating/
@@ -628,14 +628,14 @@ class CullJobRunner {
 
       if (!cancel.cancelled) {
         if (resolved.isEmpty && savedCollections == 0) {
-          _notify('No matching client marks in “${request.galleryName}”');
+          _notify('“${request.galleryName}” 中没有匹配的客户标记');
         } else {
           final parts = [
-            if (resolved.isNotEmpty) '${resolved.length} marked photo(s)',
-            if (savedCollections > 0) '$savedCollections collection(s)',
+            if (resolved.isNotEmpty) '${resolved.length} 张已标记照片',
+            if (savedCollections > 0) '$savedCollections 个收藏',
           ];
           _notify(
-            'Pulled ${parts.join(' + ')} from “${request.galleryName}”',
+            '已从“${request.galleryName}”拉取 ${parts.join(' + ')}',
             kind: NoticeKind.success,
           );
         }
@@ -729,10 +729,8 @@ class CullJobRunner {
       _ref.read(similarGroupsProvider.notifier).setFor(importId, result);
       _notify(
         result.burstCount == 0
-            ? 'No similar photos found (${sensitivity.label} sensitivity)'
-            : 'Found ${result.burstCount} similar group(s), '
-                  '${result.memberIds.length} photos · '
-                  '${sensitivity.label} (Similar filter)',
+            ? '未找到相似照片（${sensitivity.label} 敏感度）'
+            : '找到 ${result.burstCount} 个相似组、${result.memberIds.length} 张照片 · ${sensitivity.label}（相似筛选）',
         kind: NoticeKind.success,
       );
     } on Object catch (e) {

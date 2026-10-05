@@ -35,15 +35,15 @@ class StatusBar extends StatelessWidget {
     final counts = StringBuffer()
       ..write(
         filteredCount == total
-            ? '$total photo${total == 1 ? '' : 's'}'
-            : '$filteredCount of $total photos',
+            ? '$total 张照片'
+            : '$total 张中的 $filteredCount 张',
       )
-      ..write(' · $selectedCount selected');
+      ..write(' · 已选 $selectedCount 张');
 
     final n = selectedCount > 0 ? selectedCount : filteredCount;
     final label = selectedCount > 0
-        ? 'Export $n selected'
-        : 'Export $n photo${n == 1 ? '' : 's'}';
+        ? '导出已选 $n 张'
+        : '导出 $n 张照片';
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -67,7 +67,7 @@ class StatusBar extends StatelessWidget {
             ),
           ),
           Tooltip(
-            message: 'Export (⌘/Ctrl S)',
+            message: '导出（⌘/Ctrl S）',
             child: FilledButton.icon(
               onPressed: onExport,
               style: FilledButton.styleFrom(

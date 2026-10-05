@@ -70,11 +70,11 @@ class _KeywordDialogState extends State<_KeywordDialog> {
   @override
   Widget build(BuildContext context) {
     final subtitle = widget.count > 1
-        ? 'Applies to ${widget.count} photos (replaces their keywords)'
-        : 'Comma-separated';
+        ? '应用到 ${widget.count} 张照片（替换其关键字）'
+        : '逗号分隔';
     return AlertDialog(
       backgroundColor: AppColors.surfaceElevated,
-      title: const Text('Keywords'),
+      title: const Text('关键字'),
       content: SizedBox(
         width: 360,
         child: Column(
@@ -86,7 +86,7 @@ class _KeywordDialogState extends State<_KeywordDialog> {
               autofocus: true,
               onSubmitted: (_) => _save(),
               decoration: const InputDecoration(
-                hintText: 'sunset, beach, portrait',
+                hintText: '日落, 海滩, 人像',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -104,7 +104,7 @@ class _KeywordDialogState extends State<_KeywordDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
         FilledButton(onPressed: _save, child: const Text('Save')),
       ],

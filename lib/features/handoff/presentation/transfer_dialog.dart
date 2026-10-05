@@ -122,26 +122,26 @@ class _TransferDialogState extends State<_TransferDialog> {
   @override
   Widget build(BuildContext context) {
     final count = widget.sources.length;
-    final verb = _isMove ? 'Move' : 'Copy';
+    final verb = _isMove ? '移动' : '复制';
     return AlertDialog(
-      title: Text('$verb $count photo${count == 1 ? '' : 's'}'),
+      title: Text('$verb $count 张照片'),
       content: SizedBox(
         width: 460,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const DialogSection('Destination'),
+            const DialogSection('目标位置'),
             DialogPathRow(
               path: _destination,
               onPick: _pickDestination,
-              hint: 'Choose a folder…',
+              hint: '选择文件夹…',
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: _subfolder,
               decoration: dialogInputDecoration(
-                'Subfolder (optional, e.g. selects)',
+                '子文件夹（可选，如 selects）',
               ),
               style: const TextStyle(
                 color: AppColors.textPrimary,
@@ -152,21 +152,18 @@ class _TransferDialogState extends State<_TransferDialog> {
             DialogCheckbox(
               value: _includeSidecars,
               onChanged: (v) => setState(() => _includeSidecars = v ?? true),
-              label: 'Include XMP sidecars',
+              label: '包含 XMP 附属文件',
             ),
             DialogCheckbox(
               value: _openWhenDone,
               onChanged: (v) => setState(() => _openWhenDone = v ?? false),
-              label: 'Open folder when done',
+              label: '完成后打开文件夹',
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
               _isMove
-                  ? 'Move copies the originals to the destination and removes '
-                        'them from their current folder — only after each copy '
-                        'is verified.'
-                  : 'Copy duplicates the originals; the files stay where they '
-                        'are.',
+                  ? '移动会把原文件复制到目标位置，并在每次复制校验通过后才将其从当前文件夹移除。'
+                  : '复制会生成原文件的副本；原文件保留在原处。',
               style: const TextStyle(
                 color: AppColors.textSecondary,
                 fontSize: 11,
@@ -178,11 +175,11 @@ class _TransferDialogState extends State<_TransferDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
         FilledButton(
           onPressed: _destination == null ? null : _submit,
-          child: Text('$verb ${widget.sources.length}'),
+          child: Text('$verb ${widget.sources.length} 张'),
         ),
       ],
     );

@@ -57,21 +57,21 @@ const List<int> counterWidths = [1, 2, 3, 4, 5, 6];
 /// each `date:` key paired with a human label + hint (Capture One shows the
 /// pattern hint, e.g. "Aktuelles Datum (MMM tt jjjj)").
 const List<({String key, String label})> dateFormats = [
-  (key: 'iso', label: 'Date (2026-07-02)'),
-  (key: 'dmyDots', label: 'Date (02.07.2026)'),
-  (key: 'dmyDotsShort', label: 'Date (02.07.26)'),
-  (key: 'compact', label: 'Date (20260702)'),
-  (key: 'yearMonth', label: 'Year-month (2026-07)'),
-  (key: 'year', label: 'Year (2026)'),
-  (key: 'monthNumber', label: 'Month number (07)'),
-  (key: 'monthName', label: 'Month (Jul)'),
-  (key: 'monthNameFull', label: 'Month (July)'),
+  (key: 'iso', label: '日期（2026-07-02）'),
+  (key: 'dmyDots', label: '日期（02.07.2026）'),
+  (key: 'dmyDotsShort', label: '日期（02.07.26）'),
+  (key: 'compact', label: '日期（20260702）'),
+  (key: 'yearMonth', label: '年月（2026-07）'),
+  (key: 'year', label: '年份（2026）'),
+  (key: 'monthNumber', label: '月份数字（07）'),
+  (key: 'monthName', label: '月份（Jul）'),
+  (key: 'monthNameFull', label: '月份（July）'),
   (key: 'monthDayYear', label: 'Jul 02 2026'),
   (key: 'dayMonthYear', label: '02 Jul 2026'),
-  (key: 'weekday', label: 'Weekday (Mon)'),
-  (key: 'weekdayFull', label: 'Weekday (Monday)'),
-  (key: 'time', label: 'Time (143005)'),
-  (key: 'timeHM', label: 'Time (14-30)'),
+  (key: 'weekday', label: '星期（Mon）'),
+  (key: 'weekdayFull', label: '星期（Monday）'),
+  (key: 'time', label: '时间（143005）'),
+  (key: 'timeHM', label: '时间（14-30）'),
 ];
 
 /// The palette, grouped like Capture One's element list. Only tokens the engine
@@ -79,19 +79,19 @@ const List<({String key, String label})> dateFormats = [
 /// plug in without touching the builder UI.
 const List<NameElementGroup> paletteGroups = [
   NameElementGroup('Job', [
-    NameElement(label: 'Job name', token: 'shoot'),
-    NameElement(label: 'Counter', token: 'seq:3', option: NameOption.counter),
+    NameElement(label: '任务名称', token: 'shoot'),
+    NameElement(label: '计数器', token: 'seq:3', option: NameOption.counter),
   ]),
-  NameElementGroup('Date & time', [
+  NameElementGroup('日期与时间', [
     NameElement(
-      label: 'Date / time',
+      label: '日期 / 时间',
       token: 'date:iso',
       option: NameOption.date,
     ),
   ]),
   NameElementGroup('File', [
-    NameElement(label: 'Original filename', token: 'origname'),
-    NameElement(label: 'Camera', token: 'camera'),
+    NameElement(label: '原始文件名', token: 'origname'),
+    NameElement(label: '相机', token: 'camera'),
   ]),
 ];
 
@@ -101,11 +101,11 @@ const List<NameElementGroup> paletteGroups = [
 /// [engineToDisplay] / [displayToEngine] bridge the two. The map is bijective
 /// over the tokens the palette can produce, so the round-trip is lossless.
 final Map<String, String> tokenDisplayLabels = {
-  'shoot': 'Job name',
-  'origname': 'Original filename',
-  'camera': 'Camera',
-  'seq': 'Counter',
-  for (final w in counterWidths) 'seq:$w': 'Counter $w',
+  'shoot': '任务名称',
+  'origname': '原始文件名',
+  'camera': '相机',
+  'seq': '计数器',
+  for (final w in counterWidths) 'seq:$w': '计数器（$w 位）',
   for (final f in dateFormats) 'date:${f.key}': f.label,
 };
 

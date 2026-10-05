@@ -497,7 +497,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                'Import photos',
+                '导入照片',
                 style: TextStyle(
                   color: AppColors.textPrimary,
                   fontSize: 18,
@@ -545,7 +545,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
   Widget _sourceCard() {
     final status = _scanStatus();
     return DialogCard(
-      title: 'Source',
+      title: '来源',
       children: [
         Row(
           children: [
@@ -553,7 +553,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
             const SizedBox(width: AppSpacing.sm),
             OutlinedButton(
               onPressed: _pickSource,
-              child: const Text('Browse…'),
+              child: const Text('浏览…'),
             ),
           ],
         ),
@@ -576,7 +576,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
           children: [
             Expanded(
               child: Tooltip(
-                message: 'Uncheck to import RAW files only',
+                message: '取消勾选则仅导入 RAW 文件',
                 child: DialogCheckbox(
                   value: _includeJpegs,
                   onChanged: (v) {
@@ -584,13 +584,13 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
                     // Instant re-filter of the cached scan (RAW+JPEG cards).
                     _rebuildPlan();
                   },
-                  label: 'Include JPEGs',
+                  label: '包含 JPEG',
                 ),
               ),
             ),
             Expanded(
               child: Tooltip(
-                message: 'Videos are copied alongside the photos',
+                message: '视频将随照片一起复制',
                 child: DialogCheckbox(
                   value: _includeVideos,
                   onChanged: (v) {
@@ -598,7 +598,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
                     // Instant: videos were already scanned, this re-filters.
                     _rebuildPlan();
                   },
-                  label: 'Include videos',
+                  label: '包含视频',
                 ),
               ),
             ),
@@ -609,29 +609,29 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
   }
 
   Widget _destinationCard() => DialogCard(
-    title: 'Destination',
+    title: '目标位置',
     children: [
       DialogPathRow(
         path: _dest,
         onPick: () => _pickDest(backup: false),
-        hint: 'Choose where the photos are copied…',
+        hint: '选择照片复制目标…',
       ),
       const SizedBox(height: AppSpacing.xs),
       DialogCheckbox(
         value: _verify,
         onChanged: (v) => setState(() => _verify = v ?? true),
-        label: 'Verify each copy by checksum (recommended)',
+        label: '通过校验和验证每次复制（推荐）',
       ),
       DialogCheckbox(
         value: _backup,
         onChanged: (v) => setState(() => _backup = v ?? false),
-        label: 'Also copy to a backup destination (always verified)',
+        label: '同时复制到备份目标（始终校验）',
       ),
       if (_backup)
         DialogPathRow(
           path: _dest2,
           onPick: () => _pickDest(backup: true),
-          hint: 'Choose backup…',
+          hint: '选择备份位置…',
         ),
       for (final problem in _destProblems)
         Padding(
@@ -645,7 +645,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
   );
 
   Widget _namingCard() => DialogCard(
-    title: 'Naming',
+    title: '命名',
     children: [
       NameBuilder(
         initial: _naming,
@@ -694,7 +694,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
         DropdownMenuItem(
           value: v.path,
           child: Text(
-            v.hasDcim ? '${v.name}  •  card' : v.name,
+            v.hasDcim ? '${v.name} • 存储卡' : v.name,
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -703,7 +703,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
     ];
     return DialogDropdown<String>(
       value: _source,
-      hint: 'Select a card or folder',
+      hint: '选择存储卡或文件夹',
       items: items,
       onChanged: (v) {
         setState(() => _source = v);
@@ -748,14 +748,14 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
           children: [
             Expanded(
               child: Text(
-                'Days on this card — $included of ${counts.length} included',
+                '此卡上的日期——已包含 $included / ${counts.length} 天',
                 style: const TextStyle(
                   color: AppColors.textSecondary,
                   fontSize: 12,
                 ),
               ),
             ),
-            _dateActionButton('Newest day', _selectNewestDayOnly),
+            _dateActionButton('最新一天', _selectNewestDayOnly),
             _dateActionButton(
               'All',
               () => _setAllDatesIncluded(included: true),
@@ -849,15 +849,15 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
   ];
 
   static String _formatDay(DateTime d) {
-    final date = '${_dayMonths[d.month - 1]} ${d.day}';
+    final date = '${d.month}月${d.day}日';
     final now = DateTime.now();
     final days = DateTime(
       now.year,
       now.month,
       now.day,
     ).difference(DateTime(d.year, d.month, d.day)).inDays;
-    if (days == 0) return 'Today · $date';
-    if (days == 1) return 'Yesterday · $date';
+    if (days == 0) return '今天 · $date';
+    if (days == 1) return '昨天 · $date';
     return date;
   }
 
@@ -867,8 +867,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
   Widget? _scanStatus() {
     if (_wholeDrive) {
       return const Text(
-        'That looks like a whole drive. Choose a folder on it with Browse… '
-        '(or insert a camera card) to scan.',
+        '这看起来是整个驱动器。用「浏览…」选择其中的一个文件夹（或插入相机存储卡）以扫描。',
         style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
       );
     }
@@ -882,7 +881,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
           ),
           SizedBox(width: AppSpacing.sm),
           Text(
-            'Scanning…',
+            '正在扫描…',
             style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
           ),
         ],
@@ -890,13 +889,13 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
     }
     if (_scanError != null) {
       return Text(
-        "Couldn't scan this source: $_scanError",
+        "无法扫描此来源：$_scanError",
         style: const TextStyle(color: AppColors.labelYellow, fontSize: 13),
       );
     }
     if (_source == null) {
       return const Text(
-        'Select a card or folder to scan.',
+        '选择要扫描的存储卡或文件夹。',
         style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
       );
     }
@@ -907,8 +906,8 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
       final scannedSomething = (_sources ?? const []).isNotEmpty;
       return Text(
         scannedSomething
-            ? 'Everything is filtered out — re-include a day or file type.'
-            : 'No photos found in the source.',
+            ? '全部已被筛选排除——请重新包含某个日期或文件类型。'
+            : '来源中未找到照片。',
         style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
       );
     }
@@ -925,8 +924,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "$n ${n == 1 ? 'item' : 'items'} on the source couldn't be read and "
-          "won't be imported. Don't format the card until you've checked it.",
+          '来源上的 $n 个项目无法读取，不会被导入。确认检查完成前请勿格式化存储卡。',
           style: const TextStyle(color: AppColors.labelYellow, fontSize: 13),
         ),
         ..._unreadableLines(_unreadable),
@@ -943,14 +941,14 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
     return [
       for (final u in problems.take(5))
         Text(
-          '• ${shown(u.path)}: ${u.reason}',
+          '• ${shown(u.path)}：${u.reason}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
         ),
       if (problems.length > 5)
         Text(
-          '• …and ${problems.length - 5} more',
+          '• …以及另外 ${problems.length - 5} 个',
           style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
         ),
     ];
@@ -966,9 +964,8 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
         const SizedBox(height: AppSpacing.xs),
         Text(
           pr == null
-              ? (_checking ? 'Checking destinations…' : 'Starting…')
-              : 'Copying ${pr.done} / ${pr.total}  ·  ${_speed(pr)}  —  '
-                    '${p.basename(pr.last.source)}',
+              ? (_checking ? '正在检查目标…' : '正在开始…')
+              : '正在复制 ${pr.done} / ${pr.total} · ${_speed(pr)} — ${p.basename(pr.last.source)}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
@@ -998,10 +995,10 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
             const SizedBox(width: AppSpacing.sm),
             Text(
               s.cancelled
-                  ? 'Import cancelled'
+                  ? '导入已取消'
                   : s.allOk
-                  ? 'Import complete'
-                  : 'Import finished with issues',
+                  ? '导入完成'
+                  : '导入完成但有问题',
               style: const TextStyle(
                 color: AppColors.textPrimary,
                 fontSize: 15,
@@ -1013,24 +1010,23 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
         const SizedBox(height: AppSpacing.md),
         _statRow(
           _ranVerified
-              ? 'Copied & verified'
+              ? '已复制并校验'
               : _ranBackup
-              ? 'Copied (only the backup verified)'
-              : 'Copied (not verified)',
+              ? '已复制（仅备份已校验）'
+              : '已复制（未校验）',
           s.copied,
         ),
-        _statRow('Already present (skipped)', s.skipped),
-        if (s.notStarted > 0) _statRow('Not copied (cancelled)', s.notStarted),
-        if (s.conflicts > 0) _statRow('Conflicts (kept existing)', s.conflicts),
+        _statRow('已存在（已跳过）', s.skipped),
+        if (s.notStarted > 0) _statRow('未复制（已取消）', s.notStarted),
+        if (s.conflicts > 0) _statRow('冲突（保留现有文件）', s.conflicts),
         if (s.stillBeingWritten > 0)
-          _statRow('Still being written (import again)', s.stillBeingWritten),
-        if (s.failed > 0) _statRow('Failed', s.failed),
+          _statRow('仍在写入（请重新导入）', s.stillBeingWritten),
+        if (s.failed > 0) _statRow('失败', s.failed),
         if (s.unreadable.isNotEmpty) ...[
-          _statRow("Couldn't read on the source", s.unreadable.length),
+          _statRow("在来源上无法读取", s.unreadable.length),
           const SizedBox(height: AppSpacing.sm),
           const Text(
-            "Part of the source couldn't be read, so its files weren't "
-            "imported. Don't format the card until you've checked it.",
+            '部分来源无法读取，其中的文件未被导入。确认检查完成前请勿格式化存储卡。',
             key: ValueKey('ingest-summary-unreadable'),
             style: TextStyle(color: AppColors.labelYellow, fontSize: 13),
           ),
@@ -1040,7 +1036,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
           const SizedBox(height: AppSpacing.sm),
           for (final r in s.results.where((r) => !r.ok).take(8))
             Text(
-              '• ${p.basename(r.source)}: ${r.message ?? r.outcome.name}',
+              '• ${p.basename(r.source)}：${r.message ?? r.outcome.name}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -1089,7 +1085,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
               final dest = _dest!;
               Navigator.of(context).pop(sub == null ? dest : p.join(dest, sub));
             },
-            child: const Text('Open in library'),
+            child: const Text('在图库中打开'),
           ),
         ],
       );
@@ -1104,17 +1100,17 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
           onPressed: _running
               ? (_cancelled ? null : _cancel)
               : () => Navigator.of(context).pop(),
-          child: Text(_cancelled ? 'Cancelling…' : 'Cancel'),
+          child: Text(_cancelled ? '正在取消…' : '取消'),
         ),
         const SizedBox(width: AppSpacing.sm),
         FilledButton(
           onPressed: _canRun ? _run : null,
           child: Text(
             _running
-                ? 'Importing…'
+                ? '正在导入…'
                 : count > 0
-                ? 'Import $count photo${count == 1 ? '' : 's'}'
-                : 'Import',
+                ? '导入 $count 张照片'
+                : '导入',
           ),
         ),
       ],
@@ -1130,11 +1126,11 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
     String? reason;
     if (!_running) {
       if (_source == null) {
-        reason = 'Select a source above';
+        reason = '请在上方选择来源';
       } else if (hasPlan && _dest == null) {
-        reason = 'Choose a destination to import';
+        reason = '选择导入目标位置';
       } else if (hasPlan && _backup && _dest2 == null) {
-        reason = 'Choose the backup destination';
+        reason = '选择备份目标位置';
       }
     }
     return Text.rich(
@@ -1143,8 +1139,7 @@ class _IngestDialogState extends ConsumerState<IngestDialog> {
           if (hasPlan)
             TextSpan(
               text:
-                  '${plan.items.length} photos · '
-                  '${_formatBytes(plan.totalBytes)}',
+                  '${plan.items.length} 张照片 · ${_formatBytes(plan.totalBytes)}',
               style: const TextStyle(
                 color: AppColors.textPrimary,
                 fontWeight: FontWeight.w600,

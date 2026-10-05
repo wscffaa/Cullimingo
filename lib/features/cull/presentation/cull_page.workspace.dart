@@ -58,7 +58,7 @@ mixin _CullWorkspace on _CullGrid {
         _restoreActiveLiveState();
         if (mounted) {
           _notify(
-            'The folder is no longer available (ejected or deleted)',
+            '文件夹已不可用（已弹出或删除）',
             kind: NoticeKind.warning,
           );
         }
@@ -124,10 +124,10 @@ mixin _CullWorkspace on _CullGrid {
       Notice(
         kind: NoticeKind.info,
         icon: Icons.sd_card,
-        message: "Card '${card.name}' detected",
+        message: "检测到存储卡“${card.name}”",
         actions: [
           (
-            label: 'Import',
+            label: '导入',
             onTap: () {
               _dismissNotice();
               unawaited(_ingest(card.path));
@@ -202,7 +202,7 @@ mixin _CullWorkspace on _CullGrid {
     final stamped = await applyIngestTemplateToImport(ref, importId);
     if (stamped > 0 && mounted) {
       _notify(
-        'Stamped the metadata template onto $stamped ingested photo(s)',
+        '已将元数据模板盖印到 $stamped 张导入照片',
         kind: NoticeKind.success,
       );
     }
@@ -219,11 +219,11 @@ mixin _CullWorkspace on _CullGrid {
         .syncSidecarsFromDisk(importId);
     if (!mounted) return;
     final conflicts = result.conflicts > 0
-        ? ' · ${result.conflicts} conflict(s)'
+        ? ' · ${result.conflicts} 个冲突'
         : '';
     final message = result.isEmpty
-        ? 'Sidecars already up to date'
-        : 'Updated ${result.updated} photo(s) from disk$conflicts';
+        ? '附属文件已是最新'
+        : '已从磁盘更新 ${result.updated} 张照片$conflicts';
     _notify(
       message,
       kind: result.conflicts > 0 ? NoticeKind.warning : NoticeKind.success,
@@ -236,14 +236,14 @@ mixin _CullWorkspace on _CullGrid {
     switch (outcome.result) {
       case ApplyTemplateResult.noTemplate:
         _notify(
-          'No metadata template set up — add one in Settings',
+          '尚未设置元数据模板——请在设置中添加',
           kind: NoticeKind.warning,
         );
       case ApplyTemplateResult.noTargets:
-        _notify('Select photos to apply the template to');
+        _notify('请选择要应用模板的照片');
       case ApplyTemplateResult.applied:
         _notify(
-          'Applied the metadata template to ${outcome.count} photo(s)',
+          '已将元数据模板应用到 ${outcome.count} 张照片',
           kind: NoticeKind.success,
         );
     }
@@ -256,20 +256,19 @@ mixin _CullWorkspace on _CullGrid {
     final outcome = await geocodeSelection(ref);
     if (!mounted) return;
     final skipped = [
-      if (outcome.noGps > 0) '${outcome.noGps} without GPS',
-      if (outcome.noPlace > 0) '${outcome.noPlace} with no place nearby',
+      if (outcome.noGps > 0) '${outcome.noGps} 张无 GPS',
+      if (outcome.noPlace > 0) '${outcome.noPlace} 张附近无地点',
     ].join(' · ');
     if (outcome.filled == 0) {
       _notify(
         skipped.isEmpty
-            ? 'Select photos to fill their location from GPS'
-            : 'No location filled — $skipped',
+            ? '请选择照片以从 GPS 填充位置'
+            : '未填充位置——$skipped',
         kind: NoticeKind.warning,
       );
     } else {
       _notify(
-        'Filled location on ${outcome.filled} photo(s)'
-        '${skipped.isEmpty ? '' : ' · $skipped'}',
+        "已为 ${outcome.filled} 张照片填充位置${skipped.isEmpty ? '' : ' · $skipped'}",
         kind: NoticeKind.success,
       );
     }
@@ -281,7 +280,7 @@ mixin _CullWorkspace on _CullGrid {
     // Drop decoded images too, so freed disk/RAM is actually reclaimed.
     PaintingBinding.instance.imageCache.clear();
     if (!mounted) return;
-    _notify('Thumbnail cache cleared', kind: NoticeKind.success);
+    _notify('缩略图缓存已清除', kind: NoticeKind.success);
   }
 
   // Saves the live focus/selection + filter + scroll into the active tab
@@ -400,7 +399,7 @@ mixin _CullWorkspace on _CullGrid {
     }
     if (missing > 0) {
       _notify(
-        '$missing saved folder(s) no longer available',
+        '$missing 个已保存的文件夹不再可用',
         kind: NoticeKind.warning,
       );
     }
@@ -435,17 +434,14 @@ mixin _CullWorkspace on _CullGrid {
     if (!mounted) return;
     if (result.unavailable) {
       _notify(
-        "Can't refresh: the folder is missing or empty — is the card or "
-        'drive connected? Nothing was removed.',
+        '无法刷新：文件夹缺失或为空——存储卡或驱动器是否已连接？未删除任何内容。',
         kind: NoticeKind.warning,
       );
       return;
     }
     if (result.unreadable > 0) {
       _notify(
-        'Refreshed: +${result.added} photo(s), but ${result.unreadable} '
-        "item(s) in the folder couldn't be read — nothing was removed. "
-        'Check the card or drive and its permissions.',
+        '已刷新：+${result.added} 张照片，但 ${result.unreadable} 个项目无法读取——未删除任何内容。请检查存储卡或驱动器及其权限。',
         kind: NoticeKind.warning,
       );
       return;
@@ -454,10 +450,8 @@ mixin _CullWorkspace on _CullGrid {
         result.added == 0 && result.removed == 0 && result.changedPaths.isEmpty;
     _notify(
       upToDate
-          ? 'Folder up to date'
-          : 'Refreshed: +${result.added} / −${result.removed} photo(s)'
-                '${result.changedPaths.isEmpty ? '' : ' · '
-                          '${result.changedPaths.length} changed'}',
+          ? '文件夹已是最新'
+          : "已刷新：+${result.added} / −${result.removed} 张${result.changedPaths.isEmpty ? '' : ' · ${result.changedPaths.length} 张有改动'}",
       kind: upToDate ? NoticeKind.info : NoticeKind.success,
     );
   }
@@ -492,18 +486,17 @@ mixin _CullWorkspace on _CullGrid {
     if (!scanChanged && marks.isEmpty && scan.unreadable == 0) return;
 
     final parts = <String>[
-      if (scanChanged) '+${scan.added} / −${scan.removed} file(s)',
-      if (marks.updated > 0) '${marks.updated} mark(s) from disk',
+      if (scanChanged) '+${scan.added} / −${scan.removed} 个文件',
+      if (marks.updated > 0) '来自磁盘的 ${marks.updated} 条标记',
     ];
     final conflicts = marks.conflicts > 0
-        ? ' · ${marks.conflicts} conflict(s)'
+        ? ' · ${marks.conflicts} 个冲突'
         : '';
     final unreadable = scan.unreadable > 0
-        ? "${parts.isEmpty ? '' : ' · '}${scan.unreadable} item(s) couldn't "
-              'be read'
+        ? "${parts.isEmpty ? '' : ' · '}${scan.unreadable} 个项目无法读取"
         : '';
     _notify(
-      'Synced ${parts.join(' · ')}$conflicts$unreadable',
+      '已同步 ${parts.join(' · ')}$conflicts$unreadable',
       kind: marks.conflicts > 0 || scan.unreadable > 0
           ? NoticeKind.warning
           : NoticeKind.success,

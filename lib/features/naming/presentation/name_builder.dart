@@ -231,32 +231,32 @@ class _NameBuilderState extends State<NameBuilder> {
         const SizedBox(height: AppSpacing.xs),
         DialogDisclosure(
           label: widget.showFolder
-              ? 'Customise filename & folders'
-              : 'Customise filename',
+              ? '自定义文件名与文件夹'
+              : '自定义文件名',
           open: _customiseOpen,
           onToggle: () => setState(() => _customiseOpen = !_customiseOpen),
         ),
         if (_customiseOpen) ...[
           const SizedBox(height: AppSpacing.xs),
           _fieldRow(
-            'Filename',
+            '文件名',
             _fileCtrl,
             _fileFocus,
             _Field.file,
-            'Type here, or insert elements below…',
+            '在此输入，或在下方插入元素…',
           ),
           if (widget.showFolder) ...[
             const SizedBox(height: AppSpacing.xs),
             _fieldRow(
-              'Folder',
+              '文件夹',
               _folderCtrl,
               _folderFocus,
               _Field.folder,
-              'Optional sub-folders, e.g. {YYYY}/{MM}',
+              '可选子文件夹，如 {YYYY}/{MM}',
             ),
           ],
           const SizedBox(height: AppSpacing.md),
-          const DialogSection('Elements'),
+          const DialogSection('元素'),
           _palette(),
         ],
       ],
@@ -271,7 +271,7 @@ class _NameBuilderState extends State<NameBuilder> {
       const SizedBox(
         width: 64,
         child: Text(
-          'Job name',
+          '任务名称',
           style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
         ),
       ),
@@ -280,7 +280,7 @@ class _NameBuilderState extends State<NameBuilder> {
           controller: widget.shootController,
           onChanged: widget.onShootChanged,
           decoration: dialogInputDecoration(
-            'e.g. Wedding-Anna (used by the Job-name element)',
+            '如 Wedding-Anna（供 Job-name 元素使用）',
           ).copyWith(isDense: true),
           style: const TextStyle(color: AppColors.textPrimary, fontSize: 13),
         ),
@@ -293,7 +293,7 @@ class _NameBuilderState extends State<NameBuilder> {
       Expanded(
         child: DialogDropdown<String>(
           value: _selectedName,
-          hint: 'Custom',
+          hint: '自定义',
           items: [
             for (final p in _presets)
               DropdownMenuItem(value: p.name, child: Text(p.name)),
@@ -313,7 +313,7 @@ class _NameBuilderState extends State<NameBuilder> {
     final selected = _presets.where((p) => p.name == _selectedName).firstOrNull;
     final canDelete = selected != null && !selected.builtIn;
     return PopupMenuButton<String>(
-      tooltip: 'Preset actions',
+      tooltip: '预设操作',
       popUpAnimationStyle: kMenuAnimationStyle,
       color: AppColors.surfaceElevated,
       icon: const Icon(
@@ -324,12 +324,12 @@ class _NameBuilderState extends State<NameBuilder> {
       itemBuilder: (_) => [
         const PopupMenuItem(
           value: 'saveAs',
-          child: Text('Save as new preset…'),
+          child: Text('另存为新预设…'),
         ),
         if (canDelete)
           PopupMenuItem(
             value: 'delete',
-            child: Text("Delete '${selected.name}'"),
+            child: Text("删除“${selected.name}”"),
           ),
       ],
       onSelected: (action) async {
@@ -395,7 +395,7 @@ class _NameBuilderState extends State<NameBuilder> {
       const SizedBox(
         width: 64,
         child: Text(
-          'Example',
+          '示例',
           style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
         ),
       ),
@@ -452,7 +452,7 @@ class _NameBuilderState extends State<NameBuilder> {
             for (final w in counterWidths)
               PopupMenuItem(
                 value: w,
-                child: Text('$w digit${w == 1 ? '' : 's'}'),
+                child: Text('$w 位'),
               ),
           ],
           onSelected: (w) => _insert('seq:$w'),
@@ -503,17 +503,17 @@ class _NameBuilderState extends State<NameBuilder> {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: const Text('Save naming preset'),
+        title: const Text('保存命名预设'),
         content: TextField(
           controller: controller,
           autofocus: true,
-          decoration: dialogInputDecoration('Preset name'),
+          decoration: dialogInputDecoration('预设名称'),
           onSubmitted: (v) => Navigator.of(ctx).pop(v),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Cancel'),
+            child: const Text('取消'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(ctx).pop(controller.text),

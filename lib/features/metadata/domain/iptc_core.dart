@@ -4,22 +4,22 @@ import 'package:cullimingo/features/metadata/domain/iptc_structured.dart';
 /// fills them: what the photo shows, where it was taken, who to credit.
 enum IptcFieldGroup {
   /// Caption / headline / alt-text — what the photo shows.
-  description('Description'),
+  description('说明'),
 
   /// Sub-location / city / state / country — where it was taken.
-  location('Location'),
+  location('地点'),
 
   /// Creator / credit / copyright / instructions — who to credit and rights.
-  credit('Credit & rights'),
+  credit('署名与权利'),
 
   /// Editorial workflow — category, urgency, edit status (legacy IIM).
-  status('Status'),
+  status('状态'),
 
   /// Model / property release status + IDs (PLUS).
-  releases('Models & releases'),
+  releases('模特与授权'),
 
   /// Digital source type + AI system/prompt — provenance (IPTC 2025.1).
-  ai('AI & provenance');
+  ai('AI 与来源信息');
 
   const IptcFieldGroup(this.label);
 
@@ -33,212 +33,212 @@ enum IptcFieldGroup {
 /// name doubles as the JSON storage key (see [IptcCore.toJson]).
 enum IptcField {
   /// Caption / description.
-  caption('Caption', IptcFieldGroup.description, multiline: true),
+  caption('说明文字', IptcFieldGroup.description, multiline: true),
 
   /// Headline.
-  headline('Headline', IptcFieldGroup.description),
+  headline('标题', IptcFieldGroup.description),
 
   /// Date the photo was created (`photoshop:DateCreated`). Stored as an ISO
   /// 8601 local string; empty means "use the capture time". Rendered with a
   /// date/time picker, not a plain text field.
-  dateCreated('Date created', IptcFieldGroup.description, mergeable: false),
+  dateCreated('创建日期', IptcFieldGroup.description, mergeable: false),
 
   /// Title / object name — the story slug (AP uses this).
-  title('Title / Slug', IptcFieldGroup.description),
+  title('标题 / Slug', IptcFieldGroup.description),
 
   /// Alt-text for accessibility.
-  altText('Alt text', IptcFieldGroup.description, multiline: true),
+  altText('替代文本', IptcFieldGroup.description, multiline: true),
 
   /// IPTC Media Topics / subject codes (comma-separated `medtop:` QCodes).
-  subjectCodes('Media topics', IptcFieldGroup.description, mergeable: false),
+  subjectCodes('媒体主题', IptcFieldGroup.description, mergeable: false),
 
   /// Who wrote the caption / description (`photoshop:CaptionWriter`).
-  descriptionWriters('Description writers', IptcFieldGroup.description),
+  descriptionWriters('说明撰写者', IptcFieldGroup.description),
 
   /// People shown in the image (comma-separated `Iptc4xmpExt:PersonInImage`).
-  personsShown('Persons shown', IptcFieldGroup.description, mergeable: false),
+  personsShown('画面人物', IptcFieldGroup.description, mergeable: false),
 
   /// Featured organisation names (comma-separated).
-  featuredOrgName('Featured org', IptcFieldGroup.description, mergeable: false),
+  featuredOrgName('画面机构', IptcFieldGroup.description, mergeable: false),
 
   /// Featured organisation codes (comma-separated).
   featuredOrgCode(
-    'Featured org code',
+    '画面机构代码',
     IptcFieldGroup.description,
     mergeable: false,
   ),
 
   /// Intellectual genre — the nature of the item
   /// (`Iptc4xmpCore:IntellectualGenre`).
-  intellectualGenre('Intellectual genre', IptcFieldGroup.description),
+  intellectualGenre('题材类型', IptcFieldGroup.description),
 
   /// IPTC scene codes (comma-separated `Iptc4xmpCore:Scene`).
-  iptcScene('IPTC scene', IptcFieldGroup.description, mergeable: false),
+  iptcScene('IPTC 场景', IptcFieldGroup.description, mergeable: false),
 
   /// The event the image documents (`Iptc4xmpExt:Event`).
-  event('Event', IptcFieldGroup.location),
+  event('事件', IptcFieldGroup.location),
 
   /// Sub-location within the city.
-  location('Sublocation', IptcFieldGroup.location),
+  location('子地点', IptcFieldGroup.location),
 
   /// City.
-  city('City', IptcFieldGroup.location),
+  city('城市', IptcFieldGroup.location),
 
   /// Province / state.
-  state('State / Province', IptcFieldGroup.location),
+  state('省州', IptcFieldGroup.location),
 
   /// Country name.
-  country('Country', IptcFieldGroup.location),
+  country('国家', IptcFieldGroup.location),
 
   /// ISO country code.
-  countryCode('ISO code', IptcFieldGroup.location, mergeable: false),
+  countryCode('ISO 代码', IptcFieldGroup.location, mergeable: false),
 
   /// World region — the created location's continent/region
   /// (`Iptc4xmpExt:LocationCreated/Iptc4xmpExt:WorldRegion`).
-  worldRegion('World region', IptcFieldGroup.location),
+  worldRegion('世界地区', IptcFieldGroup.location),
 
   /// Location identifier for the created location
   /// (`Iptc4xmpExt:LocationCreated/Iptc4xmpExt:LocationId`).
-  locationId('Location ID', IptcFieldGroup.location, mergeable: false),
+  locationId('地点 ID', IptcFieldGroup.location, mergeable: false),
 
   /// Creator / photographer.
-  creator('Creator', IptcFieldGroup.credit),
+  creator('创作者', IptcFieldGroup.credit),
 
   /// Creator's job title.
-  authorTitle('Job title', IptcFieldGroup.credit),
+  authorTitle('职务', IptcFieldGroup.credit),
 
   /// Creator's work email (contact info).
-  creatorEmail('Creator email', IptcFieldGroup.credit),
+  creatorEmail('创作者邮箱', IptcFieldGroup.credit),
 
   /// Creator's work website (contact info).
-  creatorWebsite('Creator website', IptcFieldGroup.credit),
+  creatorWebsite('创作者网站', IptcFieldGroup.credit),
 
   /// Creator's work postal address (`CreatorContactInfo/CiAdrExtadr`).
-  creatorAddress('Creator address', IptcFieldGroup.credit, multiline: true),
+  creatorAddress('创作者地址', IptcFieldGroup.credit, multiline: true),
 
   /// Creator's work city (`CreatorContactInfo/CiAdrCity`).
-  creatorCity('Creator city', IptcFieldGroup.credit),
+  creatorCity('创作者城市', IptcFieldGroup.credit),
 
   /// Creator's work state/region (`CreatorContactInfo/CiAdrRegion`).
-  creatorRegion('Creator state/region', IptcFieldGroup.credit),
+  creatorRegion('创作者省州', IptcFieldGroup.credit),
 
   /// Creator's work postal code (`CreatorContactInfo/CiAdrPcode`).
-  creatorPostalCode('Creator postcode', IptcFieldGroup.credit),
+  creatorPostalCode('创作者邮编', IptcFieldGroup.credit),
 
   /// Creator's work country (`CreatorContactInfo/CiAdrCtry`).
-  creatorCountry('Creator country', IptcFieldGroup.credit),
+  creatorCountry('创作者国家', IptcFieldGroup.credit),
 
   /// Creator's work phone (`CreatorContactInfo/CiTelWork`).
-  creatorPhone('Creator phone', IptcFieldGroup.credit),
+  creatorPhone('创作者电话', IptcFieldGroup.credit),
 
   /// Credit line.
-  credit('Credit', IptcFieldGroup.credit),
+  credit('署名', IptcFieldGroup.credit),
 
   /// Original owner / source.
-  source('Source', IptcFieldGroup.credit),
+  source('来源', IptcFieldGroup.credit),
 
   /// Copyright notice.
-  copyright('Copyright', IptcFieldGroup.credit),
+  copyright('版权', IptcFieldGroup.credit),
 
   /// Copyright status (copyrighted / public domain).
-  copyrightStatus('Copyright status', IptcFieldGroup.credit, mergeable: false),
+  copyrightStatus('版权状态', IptcFieldGroup.credit, mergeable: false),
 
   /// Rights usage terms — how the image may be used.
-  usageTerms('Usage terms', IptcFieldGroup.credit, multiline: true),
+  usageTerms('使用条款', IptcFieldGroup.credit, multiline: true),
 
   /// Web statement of rights — the rights/licensing URL.
-  webStatement('Rights URL', IptcFieldGroup.credit),
+  webStatement('权利 URL', IptcFieldGroup.credit),
 
   /// Special instructions / handling notes.
-  instructions('Instructions', IptcFieldGroup.credit, multiline: true),
+  instructions('使用说明', IptcFieldGroup.credit, multiline: true),
 
   /// Job identifier / transmission reference — the wire routing/story ID.
-  jobId('Job ID / Transmission', IptcFieldGroup.credit),
+  jobId('任务 ID / 传输', IptcFieldGroup.credit),
 
   /// Image supplier name (`plus:ImageSupplier/ImageSupplierName`).
-  imageSupplierName('Image supplier', IptcFieldGroup.credit),
+  imageSupplierName('图像供稿方', IptcFieldGroup.credit),
 
   /// Image supplier identifier (`plus:ImageSupplier/ImageSupplierID`).
-  imageSupplierId('Supplier ID', IptcFieldGroup.credit, mergeable: false),
+  imageSupplierId('供稿方 ID', IptcFieldGroup.credit, mergeable: false),
 
   /// Supplier's own ID for the image (`plus:ImageSupplierImageID`).
   imageSupplierImageId(
-    'Supplier image ID',
+    '供稿图像 ID',
     IptcFieldGroup.credit,
     mergeable: false,
   ),
 
   /// Category — a legacy 3-letter subject abbreviation (`photoshop:Category`).
-  category('Category', IptcFieldGroup.status, mergeable: false),
+  category('类别', IptcFieldGroup.status, mergeable: false),
 
   /// Supplemental categories, comma-separated
   /// (`photoshop:SupplementalCategories`).
   supplementalCategories(
-    'Supplemental categories',
+    '补充类别',
     IptcFieldGroup.status,
     mergeable: false,
   ),
 
   /// Urgency / editorial priority, 0–8 (`photoshop:Urgency`).
-  urgency('Urgency', IptcFieldGroup.status, mergeable: false),
+  urgency('紧急程度', IptcFieldGroup.status, mergeable: false),
 
   /// Edit status — a free-text workflow note (legacy IIM 2:07).
-  editStatus('Edit status', IptcFieldGroup.status),
+  editStatus('编辑状态', IptcFieldGroup.status),
 
   /// Globally-unique image identifier (`Iptc4xmpExt:DigImageGUID`).
-  digImageGuid('Image GUID', IptcFieldGroup.status, mergeable: false),
+  digImageGuid('图像 GUID', IptcFieldGroup.status, mergeable: false),
 
   /// Model release status (`plus:ModelReleaseStatus`).
-  modelReleaseStatus('Model release', IptcFieldGroup.releases),
+  modelReleaseStatus('模特授权', IptcFieldGroup.releases),
 
   /// Model release document IDs, comma-separated (`plus:ModelReleaseID`).
   modelReleaseIds(
-    'Model release IDs',
+    '模特授权 ID',
     IptcFieldGroup.releases,
     mergeable: false,
   ),
 
   /// Property release status (`plus:PropertyReleaseStatus`).
-  propertyReleaseStatus('Property release', IptcFieldGroup.releases),
+  propertyReleaseStatus('财产授权', IptcFieldGroup.releases),
 
   /// Property release document IDs, comma-separated (`plus:PropertyReleaseID`).
   propertyReleaseIds(
-    'Property release IDs',
+    '财产授权 ID',
     IptcFieldGroup.releases,
     mergeable: false,
   ),
 
   /// Free-text notes about the model(s) (`Iptc4xmpExt:AddlModelInfo`).
   additionalModelInfo(
-    'Additional model info',
+    '模特补充信息',
     IptcFieldGroup.releases,
     multiline: true,
   ),
 
   /// Age(s) of the model(s), comma-separated (`Iptc4xmpExt:ModelAge`, a Bag).
-  modelAge('Model age', IptcFieldGroup.releases, mergeable: false),
+  modelAge('模特年龄', IptcFieldGroup.releases, mergeable: false),
 
   /// Minor model age disclosure (`plus:MinorModelAgeDisclosure`).
   minorModelAgeDisclosure(
-    'Minor model age disclosure',
+    '未成年模特年龄披露',
     IptcFieldGroup.releases,
     mergeable: false,
   ),
 
   /// Digital source type — photo / ai-generated / composite (IPTC 2025.1).
-  digitalSourceType('Source type', IptcFieldGroup.ai, mergeable: false),
+  digitalSourceType('来源类型', IptcFieldGroup.ai, mergeable: false),
 
   /// Name of the AI system used, if any.
-  aiSystemUsed('AI system', IptcFieldGroup.ai),
+  aiSystemUsed('AI 系统', IptcFieldGroup.ai),
 
   /// Version of the AI system used.
-  aiSystemVersion('AI system version', IptcFieldGroup.ai),
+  aiSystemVersion('AI 系统版本', IptcFieldGroup.ai),
 
   /// The prompt used to generate/edit the image.
-  aiPromptInfo('AI prompt', IptcFieldGroup.ai, multiline: true),
+  aiPromptInfo('AI 提示词', IptcFieldGroup.ai, multiline: true),
 
   /// Who wrote the AI prompt.
-  aiPromptWriter('AI prompt writer', IptcFieldGroup.ai);
+  aiPromptWriter('AI 提示词作者', IptcFieldGroup.ai);
 
   const IptcField(
     this.label,

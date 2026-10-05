@@ -165,7 +165,7 @@ class CullTopBar extends StatelessWidget {
       child: Row(
         children: [
           const Text(
-            'Library',
+            '图库',
             style: TextStyle(
               color: AppColors.textPrimary,
               fontWeight: FontWeight.w600,
@@ -174,7 +174,7 @@ class CullTopBar extends StatelessWidget {
           const SizedBox(width: AppSpacing.md),
           if (count > 0) ...[
             Text(
-              '$count photos',
+              '$count 张',
               style: const TextStyle(color: AppColors.textSecondary),
             ),
             const SizedBox(width: AppSpacing.md),
@@ -217,15 +217,15 @@ class CullTopBar extends StatelessWidget {
                     if (onFind != null)
                       IconButton(
                         onPressed: onFind,
-                        tooltip: 'Find by filename (⌘F)',
+                        tooltip: '按文件名查找（⌘F）',
                         icon: const Icon(Icons.search, size: 18),
                       ),
                     if (onToggleInspector != null)
                       IconButton(
                         onPressed: onToggleInspector,
                         tooltip: inspectorOpen
-                            ? 'Hide info (I)'
-                            : 'Show info (I)',
+                            ? '隐藏信息（I）'
+                            : '显示信息（I）',
                         icon: Icon(
                           Icons.info_outline,
                           size: 18,
@@ -249,8 +249,8 @@ class CullTopBar extends StatelessWidget {
                   IconButton(
                     onPressed: () => onIncludeSubfolders(!includeSubfolders),
                     tooltip: includeSubfolders
-                        ? 'Open folder: including sub-folders'
-                        : 'Open folder: top level only',
+                        ? '打开文件夹：包含子文件夹'
+                        : '打开文件夹：仅顶层',
                     icon: Icon(
                       Icons.account_tree_outlined,
                       size: 18,
@@ -263,27 +263,27 @@ class CullTopBar extends StatelessWidget {
                   TextButton.icon(
                     onPressed: onIngest,
                     icon: const Icon(Icons.sd_card, size: 18),
-                    label: const Text('Import'),
+                    label: const Text('导入'),
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   Tooltip(
-                    message: 'Open folder (⌘/Ctrl O)',
+                    message: '打开文件夹（⌘/Ctrl O）',
                     child: FilledButton.icon(
                       onPressed: onOpenFolder,
                       icon: const Icon(Icons.folder_open, size: 18),
-                      label: const Text('Open folder'),
+                      label: const Text('打开文件夹'),
                     ),
                   ),
                   const _BarDivider(),
                   // App-level group (always reachable, even with no folder).
                   IconButton(
                     onPressed: onShortcuts,
-                    tooltip: 'Keyboard shortcuts (?)',
+                    tooltip: '键盘快捷键（?）',
                     icon: const Icon(Icons.keyboard_outlined, size: 18),
                   ),
                   IconButton(
                     onPressed: () => unawaited(onSettings()),
-                    tooltip: 'Settings',
+                    tooltip: '设置',
                     icon: const Icon(Icons.settings_outlined, size: 18),
                   ),
                   // The More menu only holds folder-specific actions — hide it
@@ -325,9 +325,9 @@ class CullTopBar extends StatelessWidget {
         MenuItemButton(onPressed: onPressed, child: Text(label));
     final groups = <List<Widget>>[
       [
-        if (onCompare != null) item('Compare selected (C)', onCompare!),
+        if (onCompare != null) item('对比已选（C）', onCompare!),
         if (onExpandBrackets != null)
-          item('Expand selection to bracket (G)', onExpandBrackets!),
+          item('扩展选择到包围曝光（G）', onExpandBrackets!),
         // A mode toggle (mirrors the Settings checkbox), kept open on click so
         // its checkmark flips in place.
         if (onTogglePropagateMarks != null)
@@ -335,36 +335,36 @@ class CullTopBar extends StatelessWidget {
             value: propagateMarksToStack,
             closeOnActivate: false,
             onChanged: (_) => onTogglePropagateMarks!(),
-            child: const Text('Apply marks to whole bracket'),
+            child: const Text('将标记应用到整个包围曝光'),
           ),
         if (onFindSimilar != null)
-          item('Find similar photos', () => unawaited(onFindSimilar!())),
+          item('查找相似照片', () => unawaited(onFindSimilar!())),
         if (onClearSimilar != null)
-          item('Clear similar grouping', onClearSimilar!),
+          item('清除相似分组', onClearSimilar!),
       ],
       [
-        if (onEditKeywords != null) item('Edit keywords (K)', onEditKeywords!),
-        if (onEditMetadata != null) item('Edit metadata (M)', onEditMetadata!),
+        if (onEditKeywords != null) item('编辑关键字（K）', onEditKeywords!),
+        if (onEditMetadata != null) item('编辑元数据（M）', onEditMetadata!),
         if (onApplyTemplate != null)
-          item('Apply metadata template (T)', onApplyTemplate!),
-        if (onGeocode != null) item('Fill location from GPS', onGeocode!),
+          item('应用元数据模板（T）', onApplyTemplate!),
+        if (onGeocode != null) item('从 GPS 填充位置', onGeocode!),
       ],
       [
         if (onImport != null)
-          item('Import selection list…', () => unawaited(onImport!())),
+          item('导入选择列表…', () => unawaited(onImport!())),
         if (onContactSheet != null)
           item('ContactSheet…', () => unawaited(onContactSheet!())),
       ],
       [
         if (onRefresh != null)
-          item('Refresh folder (⌘R)', () => unawaited(onRefresh!())),
+          item('刷新文件夹（⌘R）', () => unawaited(onRefresh!())),
         if (onResync != null)
-          item('Re-sync sidecars from disk', () => unawaited(onResync!())),
+          item('从磁盘重新同步附属文件', () => unawaited(onResync!())),
       ],
       // Destructive, so it sits alone behind a divider.
       [
         if (onDeleteRejects != null)
-          item('Delete rejected photos… (⌘⌫)', onDeleteRejects!),
+          item('删除已剔除照片…（⌘⌫）', onDeleteRejects!),
       ],
     ];
     final children = <Widget>[];
@@ -404,7 +404,7 @@ class _SortButton extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         PopupMenuButton<PhotoSortKey>(
-          tooltip: 'Sort by',
+          tooltip: '排序方式',
           popUpAnimationStyle: kMenuAnimationStyle,
           onSelected: notifier.setKey,
           itemBuilder: (context) => [
@@ -447,7 +447,7 @@ class _SortButton extends ConsumerWidget {
         ),
         IconButton(
           onPressed: notifier.toggleDirection,
-          tooltip: sort.ascending ? 'Ascending' : 'Descending',
+          tooltip: sort.ascending ? '升序' : '降序',
           icon: Icon(
             sort.ascending ? Icons.arrow_upward : Icons.arrow_downward,
             size: 16,
@@ -471,7 +471,7 @@ class _SyncIndicator extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.only(left: AppSpacing.md),
       child: Tooltip(
-        message: 'Writing marks to XMP sidecars',
+        message: '正在将标记写入 XMP 附属文件',
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -482,7 +482,7 @@ class _SyncIndicator extends ConsumerWidget {
             ),
             const SizedBox(width: AppSpacing.sm),
             Text(
-              'Syncing $pending…',
+              '正在同步 $pending…',
               style: const TextStyle(
                 color: AppColors.textSecondary,
                 fontSize: 12,
@@ -522,7 +522,7 @@ class _SavedSelectionsButton extends ConsumerWidget {
         ref.watch(savedSelectionsProvider).value ?? const <SavedSelection>[];
     final hasSaved = saved.isNotEmpty;
     return PopupMenuButton<Object>(
-      tooltip: 'Saved selections',
+      tooltip: '已保存选择',
       popUpAnimationStyle: kMenuAnimationStyle,
       // A small accent dot when saved selections exist — present-or-not is all
       // we need, and a dot stays legible without covering the glyph.
@@ -544,7 +544,7 @@ class _SavedSelectionsButton extends ConsumerWidget {
       itemBuilder: (context) => [
         const PopupMenuItem<Object>(
           value: _saveCurrentSelection,
-          child: Text('Save current selection…'),
+          child: Text('保存当前选择…'),
         ),
         if (saved.isNotEmpty) const PopupMenuDivider(),
         for (final selection in saved)
@@ -554,12 +554,12 @@ class _SavedSelectionsButton extends ConsumerWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '${selection.name} (${selection.photoIds.length})',
+                    '${selection.name}（${selection.photoIds.length}）',
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 IconButton(
-                  tooltip: 'Delete',
+                  tooltip: '删除',
                   iconSize: 16,
                   visualDensity: VisualDensity.compact,
                   icon: const Icon(Icons.delete_outline),

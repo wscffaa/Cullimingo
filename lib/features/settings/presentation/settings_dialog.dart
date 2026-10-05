@@ -388,7 +388,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
   /// Cancelling either step adds nothing; an existing name is never
   /// overwritten from here.
   Future<void> _addSnapshot() async {
-    final name = await promptForName(context, title: 'New template');
+    final name = await promptForName(context, title: '新建模板');
     if (name == null || name.isEmpty || !mounted) return;
     if (_snapshots.snapshots.any((s) => s.name == name)) return;
     final edited = await showTemplateEditor(
@@ -410,7 +410,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
     if (current == null) return;
     final name = await promptForName(
       context,
-      title: 'Rename template',
+      title: '重命名模板',
       initial: current.name,
     );
     if (name == null || name.isEmpty || name == current.name || !mounted) {
@@ -441,7 +441,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Settings'),
+      title: const Text('设置'),
       // A fixed-size body so the nav-rail and Apply/Cancel never jump as you
       // switch groups: a left nav-rail selects the group, the right pane
       // scrolls its sections when a tab outgrows the height.
@@ -468,7 +468,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
         FilledButton(onPressed: _apply, child: const Text('Apply')),
       ],
@@ -500,7 +500,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
     final available = availablePresets(totalBytes: _totalRam);
     final recommended = recommendedPreset(totalBytes: _totalRam);
     return [
-      const DialogSection('Performance'),
+      const DialogSection('性能'),
       PerformancePresetSelector(
         available: available,
         recommended: recommended,
@@ -509,58 +509,57 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
         onSelect: (p) => setState(() => _selectedPreset = p),
       ),
       const Text(
-        'Applies the next time you start Cullimingo.',
+        '在下次启动 Cullimingo 时生效。',
         style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
       ),
       const SizedBox(height: AppSpacing.lg),
-      const DialogSection('Interface'),
+      const DialogSection('界面'),
       DialogCheckbox(
         value: _showTooltips,
         onChanged: (v) => setState(() => _showTooltips = v ?? true),
-        label: 'Show button tooltips',
+        label: '显示按钮提示',
       ),
       DialogCheckbox(
         value: _autoAdvanceAfterMark,
         onChanged: (v) => setState(() => _autoAdvanceAfterMark = v ?? false),
-        label: 'Auto-advance to the next photo after rating or flagging',
+        label: '评分或标记后自动跳到下一张',
       ),
       DialogCheckbox(
         value: _markConfirmation,
         onChanged: (v) => setState(() => _markConfirmation = v ?? true),
-        label: 'Flash a confirmation over the loupe when you mark a photo',
+        label: '标记照片时在放大视图上闪烁确认',
       ),
       const SizedBox(height: AppSpacing.lg),
-      const DialogSection('Exposure brackets'),
+      const DialogSection('包围曝光'),
       DialogCheckbox(
         value: _propagateMarksToStack,
         onChanged: (v) => setState(() => _propagateMarksToStack = v ?? false),
-        label: 'Apply ratings, flags and colours to the whole bracket',
+        label: '将评分、标记和色标应用到整个包围曝光',
       ),
       DialogCheckbox(
         value: _autoExpandBrackets,
         onChanged: (v) => setState(() => _autoExpandBrackets = v ?? false),
         label:
-            'Expand pulled-in client picks (Find / ContactSheet) to their '
-            'brackets automatically',
+            '把拉取的客户精选（查找 / ContactSheet）自动扩展到其包围曝光',
       ),
       const SizedBox(height: AppSpacing.lg),
-      const DialogSection('Ingest'),
+      const DialogSection('导入'),
       DialogCheckbox(
         value: _autoOpenImportOnCard,
         onChanged: (v) => setState(() => _autoOpenImportOnCard = v ?? true),
-        label: 'Open Import automatically when a memory card is inserted',
+        label: '插入存储卡时自动打开导入',
       ),
       const SizedBox(height: AppSpacing.lg),
-      const DialogSection('Startup'),
+      const DialogSection('启动'),
       DialogCheckbox(
         value: _reopenLastFolders,
         onChanged: (v) => setState(() => _reopenLastFolders = v ?? false),
-        label: 'Reopen last folders on startup',
+        label: '启动时重新打开上次文件夹',
       ),
       DialogCheckbox(
         value: _checkForUpdates,
         onChanged: (v) => setState(() => _checkForUpdates = v ?? true),
-        label: 'Check for updates on startup',
+        label: '启动时检查更新',
       ),
       const SizedBox(height: AppSpacing.lg),
       const DialogSection('Cache'),
@@ -570,7 +569,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
           onPressed: _cacheCleared ? null : _clearCache,
           icon: const Icon(Icons.delete_sweep_outlined, size: 16),
           label: Text(
-            _cacheCleared ? 'Thumbnail cache cleared' : 'Clear thumbnail cache',
+            _cacheCleared ? '缩略图缓存已清除' : '清除缩略图缓存',
           ),
         ),
       ),
@@ -578,13 +577,9 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
   }
 
   List<Widget> _metadataSection() => [
-    const DialogSection('Metadata templates'),
+    const DialogSection('元数据模板'),
     const Text(
-      'Caption, credit, location… to stamp onto photos, saved as '
-      'named templates you can switch per customer or assignment. '
-      'Use {year}/{name}/{camera}… variables and =code= '
-      'replacements; the active template applies with the ⋮ menu, '
-      'T, or automatically on ingest.',
+      '要盖印到照片上的说明、署名、地点…，保存为可按客户或任务切换的命名模板。可使用 {year}/{name}/{camera}… 变量和 =code= 替换；活动模板通过 ⋮ 菜单、T 键或导入时自动应用。',
       style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
     ),
     const SizedBox(height: AppSpacing.sm),
@@ -593,7 +588,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
         Expanded(
           child: DialogDropdown<String>(
             value: _snapshots.activeSnapshot?.name,
-            hint: 'No saved templates',
+            hint: '没有已保存模板',
             items: [
               for (final s in _snapshots.snapshots)
                 DropdownMenuItem(value: s.name, child: Text(s.name)),
@@ -609,14 +604,14 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
         IconButton(
           iconSize: 16,
           visualDensity: VisualDensity.compact,
-          tooltip: 'New template',
+          tooltip: '新建模板',
           icon: const Icon(Icons.add),
           onPressed: () => unawaited(_addSnapshot()),
         ),
         IconButton(
           iconSize: 16,
           visualDensity: VisualDensity.compact,
-          tooltip: 'Rename template',
+          tooltip: '重命名模板',
           icon: const Icon(Icons.drive_file_rename_outline),
           onPressed: _snapshots.isEmpty
               ? null
@@ -625,7 +620,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
         IconButton(
           iconSize: 16,
           visualDensity: VisualDensity.compact,
-          tooltip: 'Delete template',
+          tooltip: '删除模板',
           icon: const Icon(Icons.delete_outline),
           onPressed: _snapshots.isEmpty ? null : _deleteSnapshot,
         ),
@@ -640,8 +635,8 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
           onPressed: () => unawaited(_editTemplate()),
           icon: const Icon(Icons.edit_note_outlined, size: 16),
           label: Text(switch (_snapshots.activeSnapshot?.name) {
-            null => 'Set up template…',
-            final name => 'Edit "$name" (${_templateFieldCount()} fields)…',
+            null => '设置模板…',
+            final name => '编辑“$name”（${_templateFieldCount()} 个字段）…',
           }),
         ),
         OutlinedButton.icon(
@@ -649,8 +644,8 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
           icon: const Icon(Icons.code, size: 16),
           label: Text(
             _codes.isEmpty
-                ? 'Code replacements…'
-                : 'Code replacements (${_codes.codes.length})…',
+                ? '代码替换…'
+                : '代码替换（${_codes.codes.length}）…',
           ),
         ),
         OutlinedButton.icon(
@@ -658,8 +653,8 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
           icon: const Icon(Icons.bolt_outlined, size: 16),
           label: Text(
             _hotCodes.isEmpty
-                ? 'Hot codes…'
-                : 'Hot codes (${_hotCodes.codes.length})…',
+                ? '快捷代码…'
+                : '快捷代码（${_hotCodes.codes.length}）…',
           ),
         ),
       ],
@@ -668,7 +663,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
     DialogCheckbox(
       value: _applyTemplateOnIngest,
       onChanged: (v) => setState(() => _applyTemplateOnIngest = v ?? false),
-      label: 'Apply to photos as they are ingested',
+      label: '照片导入时应用',
     ),
   ];
 
@@ -683,14 +678,13 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
     TextField(
       controller: _token,
       obscureText: true,
-      decoration: dialogInputDecoration('Access token (cs_pat_…)'),
+      decoration: dialogInputDecoration('访问令牌（cs_pat_…）'),
       style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
     ),
     const SizedBox(height: AppSpacing.lg),
-    const DialogSection('Send to editors'),
+    const DialogSection('发送到编辑器'),
     const Text(
-      'Hand the selected photos to another app from the right-click '
-      'menu; the first editor is ⌘E.',
+      '从右键菜单把所选照片交给其他应用；第一个编辑器为 ⌘E。',
       style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
     ),
     const SizedBox(height: AppSpacing.sm),
@@ -713,7 +707,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
             IconButton(
               iconSize: 16,
               visualDensity: VisualDensity.compact,
-              tooltip: 'Remove',
+              tooltip: '移除',
               icon: const Icon(Icons.close_rounded),
               onPressed: () => setState(
                 () => _editors = [
@@ -730,15 +724,13 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
       child: OutlinedButton.icon(
         onPressed: () => unawaited(_addEditor()),
         icon: const Icon(Icons.add, size: 16),
-        label: const Text('Add editor…'),
+        label: const Text('添加编辑器…'),
       ),
     ),
     const SizedBox(height: AppSpacing.lg),
-    const DialogSection('Delivery servers'),
+    const DialogSection('交付服务器'),
     const Text(
-      'FTP/FTPS/SFTP destinations the export dialog can upload to '
-      '(wire/agency delivery). Passwords are stored in the system '
-      'keychain, not in the settings file.',
+      '导出对话框可上传到的 FTP/FTPS/SFTP 目标（通讯社/机构交付）。密码保存在系统钥匙串中，而非设置文件。',
       style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
     ),
     const SizedBox(height: AppSpacing.sm),
@@ -762,14 +754,14 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
             IconButton(
               iconSize: 16,
               visualDensity: VisualDensity.compact,
-              tooltip: 'Edit server',
+              tooltip: '编辑服务器',
               icon: const Icon(Icons.edit_outlined),
               onPressed: () => unawaited(_editServer(server)),
             ),
             IconButton(
               iconSize: 16,
               visualDensity: VisualDensity.compact,
-              tooltip: 'Remove server',
+              tooltip: '删除服务器',
               icon: const Icon(Icons.close_rounded),
               onPressed: () => _removeServer(server),
             ),
@@ -781,7 +773,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
       child: OutlinedButton.icon(
         onPressed: () => unawaited(_addServer()),
         icon: const Icon(Icons.add, size: 16),
-        label: const Text('Add server…'),
+        label: const Text('添加服务器…'),
       ),
     ),
   ];
@@ -789,7 +781,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
   List<Widget> _aboutSection() => [
     const DialogSection('About'),
     const Text(
-      'Cullimingo · Version $kAppVersion',
+      'Cullimingo · 版本 $kAppVersion',
       style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
     ),
     const SizedBox(height: AppSpacing.md),
@@ -800,12 +792,12 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
         OutlinedButton.icon(
           onPressed: () => showLogViewer(context),
           icon: const Icon(Icons.article_outlined, size: 16),
-          label: const Text('View logs'),
+          label: const Text('查看日志'),
         ),
         OutlinedButton.icon(
           onPressed: () => showAboutCullimingo(context),
           icon: const Icon(Icons.info_outline, size: 16),
-          label: const Text('About & licenses'),
+          label: const Text('关于与许可'),
         ),
       ],
     ),
@@ -814,9 +806,9 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
 
 /// The settings groups shown in the dialog's left nav-rail.
 enum _SettingsTab {
-  general('General', Icons.tune),
-  metadata('Metadata', Icons.sell_outlined),
-  delivery('Delivery', Icons.cloud_upload_outlined),
+  general('常规', Icons.tune),
+  metadata('元数据', Icons.sell_outlined),
+  delivery('交付', Icons.cloud_upload_outlined),
   about('About', Icons.info_outline);
 
   const _SettingsTab(this.label, this.icon);

@@ -60,7 +60,7 @@ class TemplateSnapshots {
   }
 
   /// The name the single pre-snapshots template gets when migrated.
-  static const legacyName = 'Default';
+  static const legacyName = '默认';
 
   /// The saved snapshots, in user order.
   final List<TemplateSnapshot> snapshots;

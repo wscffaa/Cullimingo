@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// The rebindable actions grouped for display in the cheat sheet / editor.
 const List<({String title, List<CullAction> actions})> kShortcutActionGroups = [
   (
-    title: 'Rate, flag & label',
+    title: '评分、标记与色标',
     actions: [
       CullAction.rate1,
       CullAction.rate2,
@@ -34,7 +34,7 @@ const List<({String title, List<CullAction> actions})> kShortcutActionGroups = [
     ],
   ),
   (
-    title: 'View & select',
+    title: '查看与选择',
     actions: [
       CullAction.select,
       CullAction.loupe,
@@ -48,24 +48,24 @@ const List<({String title, List<CullAction> actions})> kShortcutActionGroups = [
 
 /// Fixed (non-rebindable) keys shown for reference.
 const List<({String keys, String does})> kFixedShortcuts = [
-  (keys: '← ↑ → ↓', does: 'Move focus'),
-  (keys: 'Double-click', does: 'Open loupe / play video'),
-  (keys: 'Enter', does: 'Loupe (also opens it)'),
-  (keys: '[  ]', does: 'Previous / next photo in loupe'),
-  (keys: 'Esc', does: 'Close loupe / compare'),
-  (keys: '⌘/Ctrl + O', does: 'Open folder'),
-  (keys: '⌘/Ctrl + T', does: 'New tab'),
-  (keys: '⌘/Ctrl + W', does: 'Close tab'),
-  (keys: '⌘/Ctrl + A', does: 'Select all (filtered)'),
-  (keys: '⌘/Ctrl + R', does: 'Refresh folder'),
-  (keys: '⌘/Ctrl + F', does: 'Find by filename'),
-  (keys: '⌘/Ctrl + S', does: 'Export'),
-  (keys: '⌘/Ctrl + Z', does: 'Undo mark change'),
-  (keys: '⌘/Ctrl + Shift + Z', does: 'Redo mark change'),
-  (keys: '⌘/Ctrl + Backspace', does: 'Delete rejected photos…'),
-  (keys: '⌘/Ctrl + Enter', does: 'Metadata editor: save & next photo'),
-  (keys: '⌘/Ctrl + Shift + Enter', does: 'Metadata editor: previous photo'),
-  (keys: '?', does: 'Show this list'),
+  (keys: '← ↑ → ↓', does: '移动焦点'),
+  (keys: 'Double-click', does: '打开放大视图 / 播放视频'),
+  (keys: 'Enter', does: '放大视图（同样打开）'),
+  (keys: '[  ]', does: '放大视图中上一张 / 下一张'),
+  (keys: 'Esc', does: '关闭放大视图 / 对比'),
+  (keys: '⌘/Ctrl + O', does: '打开文件夹'),
+  (keys: '⌘/Ctrl + T', does: '新标签页'),
+  (keys: '⌘/Ctrl + W', does: '关闭标签页'),
+  (keys: '⌘/Ctrl + A', does: '全选（筛选结果）'),
+  (keys: '⌘/Ctrl + R', does: '刷新文件夹'),
+  (keys: '⌘/Ctrl + F', does: '按文件名查找'),
+  (keys: '⌘/Ctrl + S', does: '导出'),
+  (keys: '⌘/Ctrl + Z', does: '撤销标记更改'),
+  (keys: '⌘/Ctrl + Shift + Z', does: '重做标记更改'),
+  (keys: '⌘/Ctrl + Backspace', does: '删除已剔除照片…'),
+  (keys: '⌘/Ctrl + Enter', does: '元数据编辑器：保存并跳下一张'),
+  (keys: '⌘/Ctrl + Shift + Enter', does: '元数据编辑器：上一张'),
+  (keys: '?', does: '显示此列表'),
 ];
 
 /// Shows the keyboard-shortcuts cheat sheet (live bindings). Pass [firstRun]
@@ -89,7 +89,7 @@ class _KeyboardShortcutsDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final shortcuts = ref.watch(cullShortcutsControllerProvider);
     return AlertDialog(
-      title: Text(firstRun ? 'Welcome to Cullimingo' : 'Keyboard shortcuts'),
+      title: Text(firstRun ? '欢迎使用 Cullimingo' : '键盘快捷键'),
       // First run: a short essentials list so a newcomer isn't buried under the
       // full keymap on launch — the whole list is one `?` away. The `?` cheat
       // sheet stays the two-column reference (rebindable cull keys left,
@@ -128,7 +128,7 @@ class _KeyboardShortcutsDialog extends ConsumerWidget {
           ? [
               FilledButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Got it'),
+                child: const Text('知道了'),
               ),
             ]
           : [
@@ -137,7 +137,7 @@ class _KeyboardShortcutsDialog extends ConsumerWidget {
                   Navigator.of(context).pop();
                   showShortcutEditor(context);
                 },
-                child: const Text('Customize…'),
+                child: const Text('自定义…'),
               ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
@@ -152,36 +152,35 @@ class _KeyboardShortcutsDialog extends ConsumerWidget {
   Widget _firstRunEssentials(CullShortcuts shortcuts) {
     String k(CullAction a) => keyDisplayLabel(shortcuts.keyFor(a));
     final rows = <({String keys, String does})>[
-      (keys: '← ↑ → ↓', does: 'Move between photos'),
+      (keys: '← ↑ → ↓', does: '在照片间移动'),
       (
         keys: '${k(CullAction.rate1)} – ${k(CullAction.rate5)}',
-        does: 'Rate 1–5 stars',
+        does: '评 1–5 星',
       ),
       (
         keys: '${k(CullAction.pick)}   ${k(CullAction.reject)}',
-        does: 'Pick / reject',
+        does: '精选 / 剔除',
       ),
       (
         keys: '${k(CullAction.colorRed)} – ${k(CullAction.colorBlue)}',
-        does: 'Colour labels',
+        does: '色标',
       ),
-      (keys: k(CullAction.select), does: 'Add to selection'),
-      (keys: k(CullAction.loupe), does: 'Open the loupe'),
+      (keys: k(CullAction.select), does: '加入选择'),
+      (keys: k(CullAction.loupe), does: '打开放大视图'),
     ];
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Text(
-          'Culling here is keyboard-first. The essentials to get going:',
+          '本应用以键盘操作为主。入门要点：',
           style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
         ),
         const SizedBox(height: AppSpacing.md),
         for (final r in rows) _Row(keys: r.keys, does: r.does, keyWidth: 108),
         const SizedBox(height: AppSpacing.lg),
         const Text(
-          'Press ? any time for the full list — and rebind anything under '
-          'Settings.',
+          '随时按 ? 查看完整列表——所有快捷键可在设置中重新绑定。',
           style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
         ),
       ],
@@ -211,7 +210,7 @@ class _KeyboardShortcutsDialog extends ConsumerWidget {
             ),
         ],
         if (includeFixed) ...[
-          const _Header('Navigation & app'),
+          const _Header('导航与应用'),
           for (final s in kFixedShortcuts)
             _Row(keys: s.keys, does: s.does, keyWidth: keyWidth),
         ],

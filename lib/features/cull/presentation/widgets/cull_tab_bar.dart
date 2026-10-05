@@ -94,7 +94,7 @@ class _OpenFolderButton extends StatelessWidget {
     if (recent.isEmpty) {
       return IconButton(
         onPressed: onNew,
-        tooltip: 'Open another folder',
+        tooltip: '打开另一个文件夹',
         iconSize: 18,
         icon: const Icon(Icons.add, color: AppColors.textSecondary),
       );
@@ -103,7 +103,7 @@ class _OpenFolderButton extends StatelessWidget {
       builder: (context, controller, _) => IconButton(
         onPressed: () =>
             controller.isOpen ? controller.close() : controller.open(),
-        tooltip: 'Open folder / recent',
+        tooltip: '打开文件夹 / 最近',
         iconSize: 18,
         icon: const Icon(Icons.add, color: AppColors.textSecondary),
       ),
@@ -111,7 +111,7 @@ class _OpenFolderButton extends StatelessWidget {
         MenuItemButton(
           leadingIcon: const Icon(Icons.folder_open, size: 16),
           onPressed: () => unawaitedOpen(onNew),
-          child: const Text('Open folder…'),
+          child: const Text('打开文件夹…'),
         ),
         const Divider(height: 1),
         for (final path in recent)

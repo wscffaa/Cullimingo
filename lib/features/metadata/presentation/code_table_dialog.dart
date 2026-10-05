@@ -108,7 +108,7 @@ class _CodeTableDialogState extends State<CodeTableDialog> {
     final preview = expandCodes(_preview.text, _build());
     return AlertDialog(
       backgroundColor: AppColors.surfaceElevated,
-      title: const Text('Code replacements'),
+      title: const Text('代码替换'),
       content: SizedBox(
         width: 520,
         child: SingleChildScrollView(
@@ -117,16 +117,14 @@ class _CodeTableDialogState extends State<CodeTableDialog> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Text(
-                'Type a code between the delimiter (e.g. =ff=) in any template '
-                'field and it expands to its text. Separate alternates with '
-                '“ | ” — =ff#2= picks the second.',
+                '在任意模板字段的分隔符之间输入代码（如 =ff=）即展开为其文本。用“ | ”分隔候选——=ff#2= 选择第二个。',
                 style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
               ),
               const SizedBox(height: AppSpacing.md),
               Row(
                 children: [
                   const Text(
-                    'Delimiter',
+                    '分隔符',
                     style: TextStyle(
                       color: AppColors.textSecondary,
                       fontSize: 12,
@@ -158,18 +156,18 @@ class _CodeTableDialogState extends State<CodeTableDialog> {
                 child: TextButton.icon(
                   onPressed: _addRow,
                   icon: const Icon(Icons.add, size: 16),
-                  label: const Text('Add code'),
+                  label: const Text('添加代码'),
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              const DialogSection('Preview'),
+              const DialogSection('预览'),
               TextField(
                 controller: _preview,
                 style: const TextStyle(fontSize: 13),
                 onChanged: (_) => setState(() {}),
                 decoration: const InputDecoration(
                   isDense: true,
-                  hintText: 'Type text with a =code= to preview…',
+                  hintText: '输入含 =code= 的文本以预览…',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -188,7 +186,7 @@ class _CodeTableDialogState extends State<CodeTableDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_build()),
@@ -223,7 +221,7 @@ class _CodeTableDialogState extends State<CodeTableDialog> {
             onChanged: (_) => setState(() {}),
             decoration: const InputDecoration(
               isDense: true,
-              hintText: 'replacement  (alt1 | alt2)',
+              hintText: '替换内容（候选1 | 候选2）',
               border: OutlineInputBorder(),
             ),
           ),
@@ -231,7 +229,7 @@ class _CodeTableDialogState extends State<CodeTableDialog> {
         IconButton(
           iconSize: 16,
           visualDensity: VisualDensity.compact,
-          tooltip: 'Remove',
+          tooltip: '移除',
           icon: const Icon(Icons.close_rounded),
           onPressed: () => _removeRow(index),
         ),

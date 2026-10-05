@@ -57,8 +57,7 @@ class _ShortcutEditorState extends ConsumerState<_ShortcutEditorDialog> {
     if (!CullShortcuts.isAssignable(key)) {
       setState(
         () => _error =
-            '“${keyDisplayLabel(key)}” is reserved for '
-            'navigation and can’t be assigned.',
+            '“${keyDisplayLabel(key)}”保留给导航，无法分配。',
       );
       return KeyEventResult.handled;
     }
@@ -67,8 +66,7 @@ class _ShortcutEditorState extends ConsumerState<_ShortcutEditorDialog> {
     if (clash != null) {
       setState(
         () => _error =
-            '“${keyDisplayLabel(key)}” is already used by '
-            '“${clash.label}”.',
+            '“${keyDisplayLabel(key)}”已被“${clash.label}”使用。',
       );
       return KeyEventResult.handled;
     }
@@ -84,7 +82,7 @@ class _ShortcutEditorState extends ConsumerState<_ShortcutEditorDialog> {
   Widget build(BuildContext context) {
     final shortcuts = ref.watch(cullShortcutsControllerProvider);
     return AlertDialog(
-      title: const Text('Customize shortcuts'),
+      title: const Text('自定义快捷键'),
       content: SizedBox(
         width: 460,
         child: Focus(
@@ -97,9 +95,8 @@ class _ShortcutEditorState extends ConsumerState<_ShortcutEditorDialog> {
               children: [
                 Text(
                   _armed != null
-                      ? 'Press a key for “${_armed!.label}” (Esc to cancel)'
-                      : 'Click a key to rebind it. Arrows, Esc, Enter and the '
-                            '⌘/Ctrl combos stay fixed.',
+                      ? '为“${_armed!.label}”按一个键（Esc 取消）'
+                      : '点击按键即可重新绑定。方向键、Esc、Enter 和 ⌘/Ctrl 组合键固定不变。',
                   style: TextStyle(
                     color: _armed != null
                         ? AppColors.accent
@@ -144,7 +141,7 @@ class _ShortcutEditorState extends ConsumerState<_ShortcutEditorDialog> {
               _error = null;
             });
           },
-          child: const Text('Reset to defaults'),
+          child: const Text('恢复默认'),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(),
@@ -213,7 +210,7 @@ class _BindingRow extends StatelessWidget {
                 width: armed ? 2 : 1,
               ),
             ),
-            child: Text(armed ? 'Press a key…' : keyLabel),
+            child: Text(armed ? '按任意键…' : keyLabel),
           ),
         ],
       ),

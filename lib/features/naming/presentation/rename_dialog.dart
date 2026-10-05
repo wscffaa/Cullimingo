@@ -134,7 +134,7 @@ class _RenameDialogState extends State<_RenameDialog> {
   Widget build(BuildContext context) {
     final count = widget.sources.length;
     return AlertDialog(
-      title: Text('Rename $count photo${count == 1 ? '' : 's'}'),
+      title: Text('重命名 $count 张照片'),
       content: SizedBox(
         width: 460,
         child: SingleChildScrollView(
@@ -155,7 +155,7 @@ class _RenameDialogState extends State<_RenameDialog> {
               TextField(
                 controller: _shoot,
                 decoration: dialogInputDecoration(
-                  'Job name (the Job-name element)',
+                  '任务名称（Job-name 元素）',
                 ),
                 style: const TextStyle(
                   color: AppColors.textPrimary,
@@ -164,7 +164,7 @@ class _RenameDialogState extends State<_RenameDialog> {
                 onChanged: (_) => setState(() {}),
               ),
               const SizedBox(height: AppSpacing.lg),
-              const DialogSection('Preview'),
+              const DialogSection('预览'),
               for (final row in _preview)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 1),
@@ -202,7 +202,7 @@ class _RenameDialogState extends State<_RenameDialog> {
                 Padding(
                   padding: const EdgeInsets.only(top: AppSpacing.xs),
                   child: Text(
-                    '…and ${widget.sources.length - 4} more',
+                    '…以及另外 ${widget.sources.length - 4} 张',
                     style: const TextStyle(
                       color: AppColors.textSecondary,
                       fontSize: 11,
@@ -211,8 +211,7 @@ class _RenameDialogState extends State<_RenameDialog> {
                 ),
               const SizedBox(height: AppSpacing.xs),
               const Text(
-                'Renames the files in place (with their .xmp sidecars). '
-                'Name clashes get a _2, _3… suffix.',
+                '就地重命名文件（连同 .xmp 附属文件）。名称冲突会自动加 _2、_3… 后缀。',
                 style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
               ),
             ],
@@ -222,11 +221,11 @@ class _RenameDialogState extends State<_RenameDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
         FilledButton(
           onPressed: _submit,
-          child: Text('Rename ${widget.sources.length}'),
+          child: Text('重命名 ${widget.sources.length} 张'),
         ),
       ],
     );

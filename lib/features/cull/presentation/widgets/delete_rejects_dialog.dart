@@ -8,9 +8,9 @@ Future<bool?> showDeleteRejectsDialog(
   required int count,
 }) => _showTrashConfirmDialog(
   context,
-  title: 'Delete rejected photos',
+  title: '删除已剔除照片',
   count: count,
-  descriptor: count == 1 ? 'rejected photo' : 'rejected photos',
+  descriptor: count == 1 ? '已剔除照片' : '已剔除照片',
 );
 
 /// Confirms moving [count] selected photos to the OS trash (the right-click
@@ -21,7 +21,7 @@ Future<bool?> showDeleteSelectedPhotosDialog(
   required int count,
 }) => _showTrashConfirmDialog(
   context,
-  title: count == 1 ? 'Delete photo' : 'Delete $count photos',
+  title: count == 1 ? '删除照片' : '删除 $count 张照片',
   count: count,
   descriptor: count == 1 ? 'photo' : 'photos',
 );
@@ -37,19 +37,17 @@ Future<bool?> _showTrashConfirmDialog(
     builder: (context) => AlertDialog(
       title: Text(title),
       content: Text(
-        'Move $count $descriptor to the Trash?\n\n'
-        'The originals and their .xmp sidecars leave this folder. Nothing is '
-        'permanently deleted — you can restore them from the Trash.',
+        '将 $count $descriptor 移到废纸篓？\n\n原图及其 .xmp 附属文件将离开此文件夹。不会永久删除——可从废纸篓恢复。',
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
         TextButton(
           style: TextButton.styleFrom(foregroundColor: AppColors.labelRed),
           onPressed: () => Navigator.of(context).pop(true),
-          child: const Text('Move to Trash'),
+          child: const Text('移到废纸篓'),
         ),
       ],
     ),

@@ -47,7 +47,7 @@ class _FindSimilarDialogState extends State<_FindSimilarDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Find similar photos'),
+      title: const Text('查找相似照片'),
       content: SizedBox(
         width: 420,
         child: Column(
@@ -55,7 +55,7 @@ class _FindSimilarDialogState extends State<_FindSimilarDialog> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              'Sensitivity',
+              '敏感度',
               style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -71,9 +71,9 @@ class _FindSimilarDialogState extends State<_FindSimilarDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
-        FilledButton(onPressed: _run, child: const Text('Find similar')),
+        FilledButton(onPressed: _run, child: const Text('查找相似')),
       ],
     );
   }

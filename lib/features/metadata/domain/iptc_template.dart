@@ -4,13 +4,13 @@ import 'package:cullimingo/features/metadata/domain/iptc_structured.dart';
 /// How a text field (caption) merges with a photo's existing value.
 enum TextApplyMode {
   /// Overwrite the existing value.
-  replace('Replace'),
+  replace('替换'),
 
   /// Put the template text before the existing value.
-  prefix('Prefix'),
+  prefix('前缀'),
 
   /// Put the template text after the existing value.
-  append('Append');
+  append('追加');
 
   const TextApplyMode(this.label);
 
@@ -21,10 +21,10 @@ enum TextApplyMode {
 /// How a template's keywords merge with a photo's existing keywords.
 enum KeywordApplyMode {
   /// Replace the whole keyword list.
-  replace('Replace'),
+  replace('替换'),
 
   /// Add the template keywords to the existing ones (de-duplicated).
-  append('Add to existing');
+  append('添加到现有内容');
 
   const KeywordApplyMode(this.label);
 

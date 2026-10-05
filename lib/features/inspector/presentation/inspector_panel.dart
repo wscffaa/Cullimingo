@@ -238,7 +238,7 @@ class InspectorPanelBody extends StatelessWidget {
         const Spacer(),
         IconButton(
           onPressed: onClose,
-          tooltip: 'Hide inspector (I)',
+          tooltip: '隐藏检查器（I）',
           icon: const Icon(Icons.chevron_right, size: 18),
         ),
       ],
@@ -301,28 +301,28 @@ class InspectorPanelBody extends StatelessWidget {
       _IptcTables(iptc: d.iptc),
       const SizedBox(height: AppSpacing.lg),
 
-      const DialogSection('Camera'),
-      _Kv('Camera', d.camera),
+      const DialogSection('相机'),
+      _Kv('相机', d.camera),
       _Kv('Lens', exif?.lens),
       _Kv(
-        'Exposure',
+        '曝光',
         exif?.shutterSeconds == null
             ? null
             : formatShutter(exif!.shutterSeconds!),
       ),
       _Kv(
-        'Aperture',
+        '光圈',
         exif?.aperture == null ? null : formatAperture(exif!.aperture!),
       ),
       _Kv('ISO', exif?.iso == null ? null : formatIso(exif!.iso!)),
       _Kv(
-        'Focal length',
+        '焦距',
         exif?.focalLength == null
             ? null
             : formatFocalLength(exif!.focalLength!),
       ),
       _Kv(
-        'Exp. comp.',
+        '曝光补偿',
         exif?.exposureBias == null
             ? null
             : formatExposureBias(exif!.exposureBias!),
@@ -331,26 +331,25 @@ class InspectorPanelBody extends StatelessWidget {
 
       const DialogSection('Image'),
       _Kv(
-        'Dimensions',
+        '尺寸',
         (d.width == null || d.height == null)
             ? null
             : formatDimensions(d.width!, d.height!),
       ),
       _Kv(
-        'Resolution',
+        '分辨率',
         (d.width == null || d.height == null)
             ? null
             : formatMegapixels(d.width!, d.height!),
       ),
-      _Kv('Orientation', formatOrientation(d.orientation)),
+      _Kv('方向', formatOrientation(d.orientation)),
       if (d.crop != null)
         _Kv(
           'Crop',
-          'Cropped (LR) · '
-              '${formatCrop(d.crop!.width, d.crop!.height, d.crop!.angle)}',
+          '已在 LR 中裁剪 · ${formatCrop(d.crop!.width, d.crop!.height, d.crop!.angle)}',
         ),
       _Kv(
-        'Captured',
+        '拍摄时间',
         d.capturedAt == null
             ? null
             : displayDateTime(d.capturedAt!, seconds: true),
@@ -392,7 +391,7 @@ class _IptcSectionState extends State<_IptcSection> {
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 3),
             child: Text(
-              'No caption or credit',
+              '无说明或署名',
               style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
             ),
           ),
@@ -415,7 +414,7 @@ class _IptcSectionState extends State<_IptcSection> {
           ),
         if (onSave != null)
           PopupMenuButton<IptcField>(
-            tooltip: 'Add a metadata field',
+            tooltip: '添加元数据字段',
             popUpAnimationStyle: kMenuAnimationStyle,
             onSelected: (field) => setState(() => _adding = field),
             itemBuilder: (_) => [
@@ -426,7 +425,7 @@ class _IptcSectionState extends State<_IptcSection> {
             child: const Padding(
               padding: EdgeInsets.symmetric(vertical: 3),
               child: Text(
-                '+ Add field',
+                '添加字段',
                 style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
               ),
             ),
@@ -452,27 +451,27 @@ class _IptcTables extends StatelessWidget {
   Widget build(BuildContext context) {
     final groups = <({String title, List<String> rows})>[
       (
-        title: 'Locations shown',
+        title: '所示地点',
         rows: [for (final l in iptc.locationsShown) _row(l.toJson())],
       ),
       (
-        title: 'Artwork or object',
+        title: '艺术品或对象',
         rows: [for (final a in iptc.artwork) _row(a.toJson())],
       ),
       (
-        title: 'Image creators',
+        title: '图像创作者',
         rows: [for (final e in iptc.imageCreators) _row(e.toJson())],
       ),
       (
-        title: 'Copyright owners',
+        title: '版权所有者',
         rows: [for (final e in iptc.copyrightOwners) _row(e.toJson())],
       ),
       (
-        title: 'Licensors',
+        title: '许可方',
         rows: [for (final l in iptc.licensors) _row(l.toJson())],
       ),
       (
-        title: 'Registry entries',
+        title: '注册条目',
         rows: [for (final r in iptc.registryEntries) _row(r.toJson())],
       ),
     ].where((g) => g.rows.isNotEmpty).toList();
@@ -714,7 +713,7 @@ class _MarksRow extends StatelessWidget {
       return const Padding(
         padding: EdgeInsets.symmetric(vertical: 3),
         child: Text(
-          'No marks',
+          '无标记',
           style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
         ),
       );
@@ -743,7 +742,7 @@ class _MarksRow extends StatelessWidget {
             FlagBadge(flag: flag, size: 16),
             const SizedBox(width: AppSpacing.xs),
             Text(
-              flag == PickFlag.pick ? 'Pick' : 'Reject',
+              flag == PickFlag.pick ? 'Pick' : '剔除',
               style: const TextStyle(
                 color: AppColors.textPrimary,
                 fontSize: 13,
@@ -802,7 +801,7 @@ class _Empty extends StatelessWidget {
     child: Padding(
       padding: EdgeInsets.all(AppSpacing.lg),
       child: Text(
-        'No photo selected',
+        '未选择照片',
         style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
       ),
     ),

@@ -64,7 +64,7 @@ Future<void> showThumbnailContextMenu({
           enabled: false,
           height: 32,
           child: Text(
-            '$count photos',
+            '$count 张照片',
             style: const TextStyle(
               color: AppColors.textSecondary,
               fontSize: 12,
@@ -90,73 +90,73 @@ Future<void> showThumbnailContextMenu({
       const PopupMenuDivider(height: 8),
       _action(
         () => controller.applyRotation(-1),
-        const _MenuRow('Rotate left', ','),
+        const _MenuRow('向左旋转', ','),
       ),
       _action(
         () => controller.applyRotation(1),
-        const _MenuRow('Rotate right', '.'),
+        const _MenuRow('向右旋转', '.'),
       ),
       const PopupMenuDivider(height: 8),
       if (onEditMetadata != null)
         _action(
           () async => onEditMetadata(),
-          const _MenuRow('Edit metadata…', 'M'),
+          const _MenuRow('编辑元数据…', 'M'),
         ),
       _action(
         () => showKeywordEditor(context, ref),
-        const _MenuRow('Edit keywords…', 'K'),
+        const _MenuRow('编辑关键字…', 'K'),
       ),
       if (onApplyTemplate != null)
         _action(
           () async => onApplyTemplate(),
-          const _MenuRow('Apply metadata template', 'T'),
+          const _MenuRow('应用元数据模板', 'T'),
         ),
       if (onGeocode != null)
-        _action(() async => onGeocode(), const Text('Fill location from GPS')),
+        _action(() async => onGeocode(), const Text('从 GPS 填充位置')),
       const PopupMenuDivider(height: 8),
       if (onExpandBrackets != null)
         _action(
           () async => onExpandBrackets(),
-          const _MenuRow('Expand selection to bracket', 'G'),
+          const _MenuRow('扩展选择到包围曝光', 'G'),
         ),
       if (onApplyMarksToBracket != null)
         _action(
           () async => onApplyMarksToBracket(),
-          const Text('Apply marks to bracket'),
+          const Text('应用标记到包围曝光'),
         ),
       if (onStack != null)
-        _action(() async => onStack(), const Text('Stack as bracket')),
+        _action(() async => onStack(), const Text('堆叠为包围曝光')),
       if (onUnstack != null)
-        _action(() async => onUnstack(), const Text('Remove from bracket')),
+        _action(() async => onUnstack(), const Text('从包围曝光中移除')),
       if (onRename != null)
-        _action(() async => onRename(), const _MenuRow('Rename…', 'R')),
+        _action(() async => onRename(), const _MenuRow('重命名…', 'R')),
       _action(
         () async => onTransfer(TransferMode.copy),
-        const Text('Copy to folder…'),
+        const Text('复制到文件夹…'),
       ),
       _action(
         () async => onTransfer(TransferMode.move),
-        const Text('Move to folder…'),
+        const Text('移动到文件夹…'),
       ),
       if (onExport != null)
-        _action(() async => onExport(), const _MenuRow('Export…', 'S')),
+        _action(() async => onExport(), const _MenuRow('导出…', 'S')),
       // ContactSheet round-trip — only when the integration is configured
       // (the caller passes a non-null callback in that case, §7b).
       if (onContactSheet != null) ...[
         const PopupMenuDivider(height: 8),
         _action(
           () async => onContactSheet(false),
-          const Text('Send to ContactSheet…'),
+          const Text('发送到 ContactSheet…'),
         ),
         _action(
           () async => onContactSheet(true),
-          const Text('Pull marks from ContactSheet…'),
+          const Text('从 ContactSheet 拉取标记…'),
         ),
       ],
       const PopupMenuDivider(height: 8),
       _action(
         () => openExternally(photo.path),
-        const Text('Open in default app'),
+        const Text('在默认应用中打开'),
       ),
       _action(
         () => revealInFileManager(photo.path),
@@ -167,7 +167,7 @@ Future<void> showThumbnailContextMenu({
         for (final editor in editors)
           _action(
             () async => onSendTo(editor),
-            Text('Open in ${editor.label}'),
+            Text('在 ${editor.label} 中打开'),
           ),
       ],
       // Destructive, so it sits alone behind a divider (mirrors the toolbar's
@@ -177,7 +177,7 @@ Future<void> showThumbnailContextMenu({
         _action(
           () async => onDelete(),
           const Text(
-            'Delete…',
+            '删除…',
             style: TextStyle(color: AppColors.labelRed),
           ),
         ),
@@ -283,7 +283,7 @@ class _FlagRow extends StatelessWidget {
         IconButton(
           iconSize: 18,
           visualDensity: VisualDensity.compact,
-          tooltip: 'Reject',
+          tooltip: '剔除',
           icon: Icon(
             Icons.close_rounded,
             color: photo.flag == PickFlag.reject

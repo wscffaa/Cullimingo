@@ -63,8 +63,7 @@ Future<IptcTemplate> readTemplateXmpFile(String path) => Isolate.run(() async {
     source = await File(path).readAsString();
   } on FileSystemException {
     throw const TemplateFileException(
-      'The file could not be opened. Check that it still exists and is '
-      'readable.',
+      '无法打开该文件。请检查它是否仍存在且可读。',
     );
   }
   final IptcTemplate template;
@@ -72,13 +71,12 @@ Future<IptcTemplate> readTemplateXmpFile(String path) => Isolate.run(() async {
     template = templateFromXmpSource(source);
   } on FormatException {
     throw const TemplateFileException(
-      'This is not an XMP template. Choose a .xmp file saved from a metadata '
-      'template — by Photo Mechanic, Adobe Bridge, or Cullimingo.',
+      '这不是 XMP 模板。请选择由元数据模板保存的 .xmp 文件——来自 Photo Mechanic、Adobe Bridge 或 Cullimingo。',
     );
   }
   if (template.isEmpty) {
     throw const TemplateFileException(
-      'This XMP file contains no template fields — nothing to load.',
+      '此 XMP 文件不包含模板字段——没有可加载的内容。',
     );
   }
   return template;
@@ -94,8 +92,7 @@ Future<void> writeTemplateXmpFile(String path, IptcTemplate template) {
       await File(path).writeAsString(xml);
     } on FileSystemException {
       throw const TemplateFileException(
-        'The file could not be written. Check that the folder exists and is '
-        'writable.',
+        '无法写入该文件。请检查文件夹是否存在且可写。',
       );
     }
   });

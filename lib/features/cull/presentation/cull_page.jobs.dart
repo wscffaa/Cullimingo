@@ -56,7 +56,7 @@ mixin _CullJobs on _CullSelections {
         if (photo.flag == PickFlag.reject) photo,
     ];
     if (rejects.isEmpty) {
-      _notify('No rejected photos in this folder');
+      _notify('此文件夹没有已剔除照片');
       return;
     }
     final confirmed = await showDeleteRejectsDialog(
@@ -96,8 +96,8 @@ mixin _CullJobs on _CullSelections {
     final noun = result.deleted == 1 ? 'photo' : 'photos';
     _notify(
       [
-        'Moved ${result.deleted} $noun to the Trash',
-        if (failed.isNotEmpty) '${failed.length} failed',
+        '已将 ${result.deleted} 个$noun 移到废纸篓',
+        if (failed.isNotEmpty) '${failed.length} 个失败',
       ].join(' · '),
       kind: failed.isEmpty ? NoticeKind.success : NoticeKind.warning,
     );
@@ -154,8 +154,8 @@ mixin _CullJobs on _CullSelections {
     final noun = result.deleted == 1 ? 'photo' : 'photos';
     _notify(
       [
-        'Moved ${result.deleted} $noun to the Trash',
-        if (failed.isNotEmpty) '${failed.length} failed',
+        '已将 ${result.deleted} 个$noun 移到废纸篓',
+        if (failed.isNotEmpty) '${failed.length} 个失败',
       ].join(' · '),
       kind: failed.isEmpty ? NoticeKind.success : NoticeKind.warning,
     );
@@ -207,9 +207,9 @@ mixin _CullJobs on _CullSelections {
     if (!mounted) return;
     final summary = RenameSummary(results);
     final parts = [
-      'Renamed ${summary.renamed} photo(s)',
-      if (summary.unchanged > 0) '${summary.unchanged} unchanged',
-      if (summary.failed > 0) '${summary.failed} failed',
+      '已重命名 ${summary.renamed} 张照片',
+      if (summary.unchanged > 0) '${summary.unchanged} 个未更改',
+      if (summary.failed > 0) '${summary.failed} 个失败',
     ];
     _notify(
       parts.join(' · '),
@@ -238,8 +238,7 @@ mixin _CullJobs on _CullSelections {
       await openInApp(editor.path, paths);
       if (mounted) {
         _notify(
-          'Opening ${paths.length} photo${paths.length == 1 ? '' : 's'} in '
-          '${editor.label}',
+          '正在 ${editor.label} 中打开 ${paths.length} 张照片',
         );
       }
     } on Object catch (e) {
@@ -256,7 +255,7 @@ mixin _CullJobs on _CullSelections {
     if (!mounted) return;
     if (editors.isEmpty) {
       _notify(
-        'No editors configured yet — add one in Settings',
+        '尚未配置编辑器——请在设置中添加',
         kind: NoticeKind.warning,
       );
       return;
@@ -347,7 +346,7 @@ mixin _CullJobs on _CullSelections {
     _gridFocus.requestFocus();
     if (changed != null) {
       _notify(
-        'Performance set to ${changed.label} — restart Cullimingo to apply',
+        '性能已设为 ${changed.label}——重启 Cullimingo 后生效',
         kind: NoticeKind.warning,
       );
     }
@@ -377,6 +376,6 @@ mixin _CullJobs on _CullSelections {
     final importId = ref.read(currentImportProvider);
     if (importId == null) return;
     ref.read(similarGroupsProvider.notifier).clearFor(importId);
-    _notify('Cleared similar grouping');
+    _notify('已清除相似分组');
   }
 }

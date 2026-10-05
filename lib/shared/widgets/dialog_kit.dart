@@ -382,7 +382,7 @@ class DialogPathRow extends StatelessWidget {
           ),
         ),
         const SizedBox(width: AppSpacing.sm),
-        OutlinedButton(onPressed: onPick, child: const Text('Choose…')),
+        OutlinedButton(onPressed: onPick, child: const Text('选择…')),
       ],
     ),
   );
@@ -395,7 +395,7 @@ Future<String?> promptForName(
   BuildContext context, {
   required String title,
   String initial = '',
-  String hint = 'Customer / assignment name',
+  String hint = '客户 / 任务名称',
 }) async {
   final name = await showDialog<String>(
     context: context,
@@ -446,7 +446,7 @@ class _NamePromptState extends State<_NamePrompt> {
     actions: [
       TextButton(
         onPressed: () => Navigator.of(context).pop(),
-        child: const Text('Cancel'),
+        child: const Text('取消'),
       ),
       FilledButton(
         onPressed: () => Navigator.of(context).pop(_name.text),

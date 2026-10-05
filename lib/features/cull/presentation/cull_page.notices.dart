@@ -47,10 +47,10 @@ mixin _CullNotices on ConsumerState<CullPage> {
       Notice(
         kind: NoticeKind.info,
         icon: Icons.system_update_alt,
-        message: 'Cullimingo ${update.version} is available.',
+        message: 'Cullimingo ${update.version} 已可用。',
         actions: [
           (
-            label: 'Download',
+            label: '下载',
             onTap: () =>
                 unawaited(openExternally(update.releaseUrl.toString())),
           ),

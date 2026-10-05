@@ -5,92 +5,92 @@ import 'package:flutter/services.dart';
 /// app combos are intentionally NOT here — they stay fixed.
 enum CullAction {
   /// Flag as pick.
-  pick('Pick', LogicalKeyboardKey.keyP),
+  pick('精选', LogicalKeyboardKey.keyP),
 
   /// Flag as reject.
-  reject('Reject', LogicalKeyboardKey.keyX),
+  reject('剔除', LogicalKeyboardKey.keyX),
 
   /// Clear the rating. `0` matches the de-facto culling standard (Photo
   /// Mechanic, Lightroom, Capture One all clear/zero a rating with `0`); Delete
   /// stays a fixed secondary.
-  clearRating('Clear rating', LogicalKeyboardKey.digit0),
+  clearRating('清除星级', LogicalKeyboardKey.digit0),
 
   /// Rate 1 star.
-  rate1('Rate 1', LogicalKeyboardKey.digit1),
+  rate1('评 1 星', LogicalKeyboardKey.digit1),
 
   /// Rate 2 stars.
-  rate2('Rate 2', LogicalKeyboardKey.digit2),
+  rate2('评 2 星', LogicalKeyboardKey.digit2),
 
   /// Rate 3 stars.
-  rate3('Rate 3', LogicalKeyboardKey.digit3),
+  rate3('评 3 星', LogicalKeyboardKey.digit3),
 
   /// Rate 4 stars.
-  rate4('Rate 4', LogicalKeyboardKey.digit4),
+  rate4('评 4 星', LogicalKeyboardKey.digit4),
 
   /// Rate 5 stars.
-  rate5('Rate 5', LogicalKeyboardKey.digit5),
+  rate5('评 5 星', LogicalKeyboardKey.digit5),
 
   /// Colour label red.
-  colorRed('Colour: red', LogicalKeyboardKey.digit6),
+  colorRed('色标：红', LogicalKeyboardKey.digit6),
 
   /// Colour label yellow.
-  colorYellow('Colour: yellow', LogicalKeyboardKey.digit7),
+  colorYellow('色标：黄', LogicalKeyboardKey.digit7),
 
   /// Colour label green.
-  colorGreen('Colour: green', LogicalKeyboardKey.digit8),
+  colorGreen('色标：绿', LogicalKeyboardKey.digit8),
 
   /// Colour label blue.
-  colorBlue('Colour: blue', LogicalKeyboardKey.digit9),
+  colorBlue('色标：蓝', LogicalKeyboardKey.digit9),
 
   /// Colour label purple. Purple is the odd colour out across cullers (none
   /// give it a number key), so it parks on Backspace, freed by clear-rating
   /// moving to `0`.
-  colorPurple('Colour: purple', LogicalKeyboardKey.backspace),
+  colorPurple('色标：紫', LogicalKeyboardKey.backspace),
 
   /// Toggle the photo in the selection.
-  select('Select', LogicalKeyboardKey.space),
+  select('选择', LogicalKeyboardKey.space),
 
   /// Open / close the loupe.
-  loupe('Loupe', LogicalKeyboardKey.keyF),
+  loupe('放大视图', LogicalKeyboardKey.keyF),
 
   /// Compare the selection.
-  compare('Compare selected', LogicalKeyboardKey.keyC),
+  compare('对比已选', LogicalKeyboardKey.keyC),
 
   /// Compare the focused photo's group.
-  compareBurst("Compare focused photo's group", LogicalKeyboardKey.keyB),
+  compareBurst("对比焦点照片的组", LogicalKeyboardKey.keyB),
 
   /// Toggle the info inspector.
-  inspector('Info inspector', LogicalKeyboardKey.keyI),
+  inspector('信息检查器', LogicalKeyboardKey.keyI),
 
   /// Edit keywords.
-  keywords('Edit keywords', LogicalKeyboardKey.keyK),
+  keywords('编辑关键字', LogicalKeyboardKey.keyK),
 
   /// Edit IPTC metadata (caption, creator, credit, location…).
-  metadata('Edit metadata', LogicalKeyboardKey.keyM),
+  metadata('编辑元数据', LogicalKeyboardKey.keyM),
 
   /// Stamp the saved metadata template onto the selection/focused photo. `T`
   /// for template — plain T is free (⌘/Ctrl+T is new-tab, checked before the
   /// cull keys).
-  applyTemplate('Apply metadata template', LogicalKeyboardKey.keyT),
+  applyTemplate('应用元数据模板', LogicalKeyboardKey.keyT),
 
   /// Rename the selection in place. `R` for rename — plain R is free
   /// (⌘/Ctrl+R is refresh-folder, checked before the cull keys). Photo
   /// Mechanic uses M, but M is already Edit-metadata here; rebindable anyway.
-  rename('Rename…', LogicalKeyboardKey.keyR),
+  rename('重命名…', LogicalKeyboardKey.keyR),
 
   /// Rotate the selection 90° clockwise. `.` (period) — the `[`/`]` keys that
   /// Lightroom uses are reserved here for loupe zoom, so rotate parks on the
   /// adjacent `,`/`.` pair. Rebindable.
-  rotateRight('Rotate right', LogicalKeyboardKey.period),
+  rotateRight('向右旋转', LogicalKeyboardKey.period),
 
   /// Rotate the selection 90° counter-clockwise. `,` (comma) — see
   /// [rotateRight].
-  rotateLeft('Rotate left', LogicalKeyboardKey.comma),
+  rotateLeft('向左旋转', LogicalKeyboardKey.comma),
 
   /// Grow the selection to include every frame of each selected photo's
   /// exposure bracket (its ±EV siblings). `G` for group — free across the
   /// keymap. Rebindable.
-  expandBrackets('Expand selection to bracket', LogicalKeyboardKey.keyG);
+  expandBrackets('扩展选择到包围曝光', LogicalKeyboardKey.keyG);
 
   const CullAction(this.label, this.defaultKey);
 
@@ -111,10 +111,10 @@ String keyDisplayLabel(LogicalKeyboardKey key) {
 }
 
 final Map<LogicalKeyboardKey, String> _namedKeys = {
-  LogicalKeyboardKey.space: 'Space',
-  LogicalKeyboardKey.backspace: 'Backspace',
-  LogicalKeyboardKey.delete: 'Delete',
-  LogicalKeyboardKey.enter: 'Enter',
+  LogicalKeyboardKey.space: '空格',
+  LogicalKeyboardKey.backspace: '退格',
+  LogicalKeyboardKey.delete: '删除',
+  LogicalKeyboardKey.enter: '回车',
   LogicalKeyboardKey.tab: 'Tab',
   LogicalKeyboardKey.arrowLeft: '←',
   LogicalKeyboardKey.arrowRight: '→',

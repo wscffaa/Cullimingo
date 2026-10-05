@@ -53,11 +53,11 @@ extension ColorLabelX on ColorLabel {
   /// Capitalised display name (e.g. "Red") for tooltips and labels — so colour
   /// meaning is never conveyed by the swatch alone.
   String get displayName => switch (this) {
-    ColorLabel.none => 'None',
-    ColorLabel.red => 'Red',
-    ColorLabel.yellow => 'Yellow',
-    ColorLabel.green => 'Green',
-    ColorLabel.blue => 'Blue',
-    ColorLabel.purple => 'Purple',
+    ColorLabel.none => '无',
+    ColorLabel.red => '红',
+    ColorLabel.yellow => '黄',
+    ColorLabel.green => '绿',
+    ColorLabel.blue => '蓝',
+    ColorLabel.purple => '紫',
   };
 }

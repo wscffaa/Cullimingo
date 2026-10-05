@@ -30,8 +30,8 @@ class FilterBar extends ConsumerWidget {
     // "Similar" once a perceptual-hash pass has run for this folder, else the
     // free capture-time bursts.
     final groupLabel = ref.watch(currentSimilarGroupsProvider) != null
-        ? 'Similar'
-        : 'Bursts';
+        ? '相似'
+        : '连拍';
     final groupCount = ref.watch(effectiveGroupsProvider).memberIds.length;
     final pairCount = ref.watch(rawJpegPairsProvider).pairCount;
     final bracketCount = ref.watch(bracketGroupsProvider).bracketCount;
@@ -64,23 +64,23 @@ class FilterBar extends ConsumerWidget {
             const _SearchField(),
             const _Divider(),
             _Chip(
-              label: 'All (${all.length})',
+              label: '全部（${all.length}）',
               selected: !filter.isActive,
               onTap: controller.clear,
             ),
             _Chip(
-              label: 'Selected ($selectedCount)',
+              label: '已选（$selectedCount）',
               selected: filter.selectedOnly,
               onTap: controller.toggleSelectedOnly,
             ),
             const _Divider(),
             _Chip(
-              label: 'Picks (${count((p) => p.flag == PickFlag.pick)})',
+              label: '精选（${count((p) => p.flag == PickFlag.pick)}）',
               selected: filter.flag == PickFlag.pick,
               onTap: () => controller.toggleFlag(PickFlag.pick),
             ),
             _Chip(
-              label: 'Rejected (${count((p) => p.flag == PickFlag.reject)})',
+              label: '已剔除（${count((p) => p.flag == PickFlag.reject)}）',
               selected: filter.flag == PickFlag.reject,
               onTap: () => controller.toggleFlag(PickFlag.reject),
             ),
@@ -105,7 +105,7 @@ class FilterBar extends ConsumerWidget {
             // (flags / stars / colours) stay inline. Each dropdown tints when
             // any of its filters is active, and its items carry live counts.
             _FilterMenuButton(
-              label: 'Metadata',
+              label: '元数据',
               active: filter.hasKeyword || filter.needsCaption,
               menuChildren: [
                 CheckboxMenuButton(
@@ -113,7 +113,7 @@ class FilterBar extends ConsumerWidget {
                   closeOnActivate: false,
                   onChanged: (_) => controller.toggleHasKeyword(),
                   child: Text(
-                    'Keyworded (${count((p) => p.keywords.isNotEmpty)})',
+                    '已加关键字（${count((p) => p.keywords.isNotEmpty)}）',
                   ),
                 ),
                 CheckboxMenuButton(
@@ -121,14 +121,13 @@ class FilterBar extends ConsumerWidget {
                   closeOnActivate: false,
                   onChanged: (_) => controller.toggleNeedsCaption(),
                   child: Text(
-                    'Needs caption '
-                    '(${count((p) => p.iptc.caption.trim().isEmpty)})',
+                    '缺说明（${count((p) => p.iptc.caption.trim().isEmpty)}）',
                   ),
                 ),
               ],
             ),
             _FilterMenuButton(
-              label: 'Grouping',
+              label: '分组',
               active:
                   filter.burstsOnly ||
                   filter.hideJpegPairs ||
@@ -139,7 +138,7 @@ class FilterBar extends ConsumerWidget {
                   value: filter.burstsOnly,
                   closeOnActivate: false,
                   onChanged: (_) => controller.toggleBurstsOnly(),
-                  child: Text('$groupLabel ($groupCount)'),
+                  child: Text('$groupLabel（$groupCount）'),
                 ),
                 // Only offered when the folder actually has exposure brackets.
                 if (bracketCount > 0)
@@ -147,7 +146,7 @@ class FilterBar extends ConsumerWidget {
                     value: filter.collapseBrackets,
                     closeOnActivate: false,
                     onChanged: (_) => controller.toggleCollapseBrackets(),
-                    child: Text('Stack brackets ($bracketCount)'),
+                    child: Text('堆叠包围曝光（$bracketCount）'),
                   ),
                 // Only offered when the folder actually has RAW+JPEG pairs.
                 if (pairCount > 0)
@@ -155,7 +154,7 @@ class FilterBar extends ConsumerWidget {
                     value: filter.hideJpegPairs,
                     closeOnActivate: false,
                     onChanged: (_) => controller.toggleHideJpegPairs(),
-                    child: Text('Hide JPEG ($pairCount)'),
+                    child: Text('隐藏 JPEG（$pairCount）'),
                   ),
                 // File-type radio (All / RAW / JPEG) — shown when the folder
                 // mixes both, or while a type filter is still active.
@@ -167,7 +166,7 @@ class FilterBar extends ConsumerWidget {
                     closeOnActivate: false,
                     onChanged: (v) =>
                         controller.setFileType(v ?? FileTypeFilter.all),
-                    child: const Text('All file types'),
+                    child: const Text('全部文件类型'),
                   ),
                   RadioMenuButton<FileTypeFilter>(
                     value: FileTypeFilter.raw,
@@ -175,7 +174,7 @@ class FilterBar extends ConsumerWidget {
                     closeOnActivate: false,
                     onChanged: (v) =>
                         controller.setFileType(v ?? FileTypeFilter.all),
-                    child: Text('RAW only ($rawCount)'),
+                    child: Text('仅 RAW（$rawCount）'),
                   ),
                   RadioMenuButton<FileTypeFilter>(
                     value: FileTypeFilter.jpeg,
@@ -183,7 +182,7 @@ class FilterBar extends ConsumerWidget {
                     closeOnActivate: false,
                     onChanged: (v) =>
                         controller.setFileType(v ?? FileTypeFilter.all),
-                    child: Text('JPEG only ($jpegCount)'),
+                    child: Text('仅 JPEG（$jpegCount）'),
                   ),
                 ],
               ],
@@ -298,7 +297,7 @@ class _SearchFieldState extends ConsumerState<_SearchField> {
             isDense: true,
             filled: true,
             fillColor: AppColors.surfaceElevated,
-            hintText: 'Search filename…',
+            hintText: '搜索文件名…',
             hintStyle: const TextStyle(
               fontSize: 12,
               color: AppColors.textSecondary,
@@ -410,7 +409,7 @@ class _StarToggle extends StatelessWidget {
       onPressed: onTap,
       iconSize: 16,
       visualDensity: VisualDensity.compact,
-      tooltip: 'Rating ≥ $star',
+      tooltip: '星级 ≥ $star',
       icon: Icon(
         active ? Icons.star_rounded : Icons.star_outline_rounded,
         color: active ? AppColors.ratingGold : AppColors.textSecondary,
@@ -436,8 +435,8 @@ class _ColorToggle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
       child: Tooltip(
         message: selected
-            ? '${label.displayName} label — showing only these'
-            : 'Filter: ${label.displayName} label',
+            ? '只看 ${label.displayName} 色标'
+            : '筛选：${label.displayName} 色标',
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
@@ -500,7 +499,7 @@ class _FilterPresetsButton extends ConsumerWidget {
     final presetsController = ref.read(filterPresetsProvider.notifier);
 
     return PopupMenuButton<Object>(
-      tooltip: 'Filter presets',
+      tooltip: '筛选预设',
       icon: hasPresets
           ? const Badge(
               backgroundColor: AppColors.accent,
@@ -522,7 +521,7 @@ class _FilterPresetsButton extends ConsumerWidget {
         PopupMenuItem<Object>(
           value: _saveCurrentFilter,
           enabled: filter.isActive,
-          child: const Text('Save current filter…'),
+          child: const Text('保存当前筛选…'),
         ),
         if (hasPresets) const PopupMenuDivider(),
         for (final preset in presets)
@@ -534,7 +533,7 @@ class _FilterPresetsButton extends ConsumerWidget {
                   child: Text(preset.name, overflow: TextOverflow.ellipsis),
                 ),
                 IconButton(
-                  tooltip: 'Delete',
+                  tooltip: '删除',
                   iconSize: 16,
                   visualDensity: VisualDensity.compact,
                   icon: const Icon(Icons.delete_outline),
@@ -556,17 +555,17 @@ class _FilterPresetsButton extends ConsumerWidget {
     return showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Save filter preset'),
+        title: const Text('保存筛选预设'),
         content: TextField(
           controller: controller,
           autofocus: true,
-          decoration: const InputDecoration(hintText: 'Preset name'),
+          decoration: const InputDecoration(hintText: '预设名称'),
           onSubmitted: (value) => Navigator.of(context).pop(value),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: const Text('取消'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(controller.text),

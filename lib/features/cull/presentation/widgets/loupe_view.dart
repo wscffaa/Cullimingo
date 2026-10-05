@@ -419,7 +419,7 @@ class _LoupeViewState extends ConsumerState<LoupeView> {
         ),
         SizedBox(height: AppSpacing.sm),
         Text(
-          'Can’t display this file',
+          '无法显示此文件',
           style: TextStyle(color: AppColors.textSecondary),
         ),
       ],
@@ -586,7 +586,7 @@ class _LoupeViewState extends ConsumerState<LoupeView> {
                               iconSize: 64,
                               onPressed: () =>
                                   unawaited(openExternally(photo.path)),
-                              tooltip: 'Open in system player',
+                              tooltip: '在系统播放器中打开',
                               icon: const Icon(Icons.play_circle_fill_rounded),
                               color: Colors.white70,
                             ),
@@ -619,8 +619,8 @@ class _LoupeViewState extends ConsumerState<LoupeView> {
                                   onPressed: () =>
                                       setState(() => _showCrop = !_showCrop),
                                   tooltip: _showCrop
-                                      ? 'Hide crop outline'
-                                      : 'Show crop outline',
+                                      ? '隐藏裁剪框'
+                                      : '显示裁剪框',
                                   icon: Icon(
                                     _showCrop
                                         ? Icons.crop_rounded
@@ -635,7 +635,7 @@ class _LoupeViewState extends ConsumerState<LoupeView> {
                                 ),
                               IconButton(
                                 onPressed: widget.onClose,
-                                tooltip: 'Close loupe (Esc)',
+                                tooltip: '关闭放大视图（Esc）',
                                 icon: const Icon(Icons.close_rounded),
                                 color: AppColors.textPrimary,
                                 style: IconButton.styleFrom(
@@ -972,7 +972,7 @@ class _LoupeToolbar extends StatelessWidget {
           ),
           IconButton(
             onPressed: onToggleFilmstrip,
-            tooltip: filmstripOpen ? 'Hide filmstrip' : 'Show filmstrip',
+            tooltip: filmstripOpen ? '隐藏胶片条' : '显示胶片条',
             icon: Icon(
               Icons.view_carousel_outlined,
               size: 18,
@@ -981,7 +981,7 @@ class _LoupeToolbar extends StatelessWidget {
           ),
           IconButton(
             onPressed: onToggleInspector,
-            tooltip: inspectorOpen ? 'Hide info (I)' : 'Show info (I)',
+            tooltip: inspectorOpen ? '隐藏信息（I）' : '显示信息（I）',
             icon: Icon(
               Icons.info_outline,
               size: 18,
@@ -1032,7 +1032,7 @@ class _AnalysisMenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final anyOpen = histogramOpen || clippingOpen || peakingOpen;
     return PopupMenuButton<_AnalysisToggle>(
-      tooltip: 'Analysis overlays',
+      tooltip: '分析叠加层',
       popUpAnimationStyle: kMenuAnimationStyle,
       icon: Icon(
         Icons.insights_rounded,
@@ -1053,17 +1053,17 @@ class _AnalysisMenuButton extends StatelessWidget {
         CheckedPopupMenuItem(
           value: _AnalysisToggle.histogram,
           checked: histogramOpen,
-          child: const Text('Histogram'),
+          child: const Text('直方图'),
         ),
         CheckedPopupMenuItem(
           value: _AnalysisToggle.clipping,
           checked: clippingOpen,
-          child: const Text('Clipping warnings'),
+          child: const Text('过曝警告'),
         ),
         CheckedPopupMenuItem(
           value: _AnalysisToggle.peaking,
           checked: peakingOpen,
-          child: const Text('Focus peaking'),
+          child: const Text('峰值对焦'),
         ),
       ],
     );
@@ -1227,7 +1227,7 @@ class _MarkFlashContent extends StatelessWidget {
   Widget _body() {
     final rating = flash.rating;
     if (rating != null) {
-      if (rating == 0) return const _FlashLabel('No rating');
+      if (rating == 0) return const _FlashLabel('无星级');
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -1244,20 +1244,20 @@ class _MarkFlashContent extends StatelessWidget {
     if (flag != null) {
       return switch (flag) {
         PickFlag.pick => const _FlashLabel(
-          'Pick',
+          '已精选',
           icon: Icons.check_circle_rounded,
           color: AppColors.labelGreen,
         ),
         PickFlag.reject => const _FlashLabel(
-          'Rejected',
+          '已剔除',
           icon: Icons.cancel_rounded,
           color: AppColors.labelRed,
         ),
-        PickFlag.none => const _FlashLabel('Flag cleared'),
+        PickFlag.none => const _FlashLabel('已清除标记'),
       };
     }
     final color = flash.color!;
-    if (color == ColorLabel.none) return const _FlashLabel('Colour cleared');
+    if (color == ColorLabel.none) return const _FlashLabel('已清除色标');
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

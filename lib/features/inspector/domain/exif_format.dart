@@ -63,13 +63,13 @@ String formatCrop(double width, double height, double angle) {
 /// Human label for an EXIF orientation (1–8): `Normal`, `Rotated 90° CW`,
 /// mirror variants, etc. Null only for out-of-range input (row shows `—`).
 String? formatOrientation(int orientation) => switch (orientation) {
-  1 => 'Normal',
-  2 => 'Mirrored',
-  3 => 'Rotated 180°',
-  4 => 'Mirrored, 180°',
-  5 => 'Mirrored, 90° CCW',
-  6 => 'Rotated 90° CW',
-  7 => 'Mirrored, 90° CW',
-  8 => 'Rotated 90° CCW',
+  1 => '正常',
+  2 => '镜像',
+  3 => '旋转 180°',
+  4 => '镜像，180°',
+  5 => '镜像，逆时针 90°',
+  6 => '顺时针旋转 90°',
+  7 => '镜像，顺时针 90°',
+  8 => '逆时针旋转 90°',
   _ => null,
 };

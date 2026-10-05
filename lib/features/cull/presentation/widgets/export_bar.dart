@@ -9,7 +9,7 @@ class ExportProgressCard extends StatelessWidget {
     required this.done,
     required this.total,
     required this.onCancel,
-    this.verb = 'Exporting',
+    this.verb = '导出',
     super.key,
   });
 
@@ -52,7 +52,7 @@ class ExportProgressCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '$verb $done of $total…',
+                    '$verb $done / $total…',
                     style: const TextStyle(
                       color: AppColors.textPrimary,
                       fontSize: 13,
@@ -68,7 +68,7 @@ class ExportProgressCard extends StatelessWidget {
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  child: const Text('Cancel'),
+                  child: const Text('取消'),
                 ),
               ],
             ),

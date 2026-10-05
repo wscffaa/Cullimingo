@@ -41,18 +41,18 @@ class CullEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
             const Text(
-              'Open a folder of RAWs or JPEGs to start culling',
+              '打开 RAW 或 JPEG 文件夹开始筛选',
               style: TextStyle(color: AppColors.textSecondary),
             ),
             const SizedBox(height: AppSpacing.lg),
             FilledButton.icon(
               onPressed: onOpenFolder,
               icon: const Icon(Icons.folder_open, size: 18),
-              label: const Text('Open folder'),
+              label: const Text('打开文件夹'),
             ),
             const SizedBox(height: AppSpacing.lg),
             const Text(
-              'Version $kAppVersion',
+              '版本 $kAppVersion',
               style: TextStyle(
                 color: AppColors.textSecondary,
                 fontSize: 11,
@@ -83,7 +83,7 @@ class NoMatchesState extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           const Text(
-            'No photos match the current filter',
+            '没有符合当前筛选的照片',
             style: TextStyle(color: AppColors.textSecondary),
           ),
           const SizedBox(height: AppSpacing.lg),
@@ -91,7 +91,7 @@ class NoMatchesState extends ConsumerWidget {
             onPressed: () =>
                 ref.read(photoFilterControllerProvider.notifier).clear(),
             icon: const Icon(Icons.clear_all, size: 18),
-            label: const Text('Clear filters'),
+            label: const Text('清除筛选'),
           ),
         ],
       ),

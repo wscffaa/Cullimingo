@@ -87,7 +87,7 @@ Future<void> showIptcEditor(BuildContext context, WidgetRef ref) async {
   }
 
   Future<String?> pickTemplatePath() async {
-    const group = XTypeGroup(label: 'XMP templates', extensions: ['xmp']);
+    const group = XTypeGroup(label: 'XMP 模板', extensions: ['xmp']);
     return (await openFile(acceptedTypeGroups: [group]))?.path;
   }
 
@@ -676,7 +676,7 @@ class _IptcEditorDialogState extends State<IptcEditorDialog> {
       if (mounted) {
         await showErrorNotice(
           context,
-          title: 'Could not load the template',
+          title: '无法加载模板',
           message: e is TemplateFileException ? e.message : '$e',
         );
       }
@@ -688,7 +688,7 @@ class _IptcEditorDialogState extends State<IptcEditorDialog> {
   /// "Save as template…": the current non-empty fields + tables become a named
   /// snapshot (Settings → Metadata templates). An existing name is updated.
   Future<void> _saveAsTemplate() async {
-    final name = await promptForName(context, title: 'Save as template');
+    final name = await promptForName(context, title: '另存为模板');
     if (name == null || name.isEmpty || !mounted) return;
     await widget.onSaveTemplate!(name, templateFromIptc(_currentIptc()));
   }
@@ -707,7 +707,7 @@ class _IptcEditorDialogState extends State<IptcEditorDialog> {
     );
     final dialog = AlertDialog(
       backgroundColor: AppColors.surfaceElevated,
-      title: const Text('Metadata'),
+      title: const Text('元数据'),
       content: SizedBox(
         width: w,
         height: h,
@@ -776,7 +776,7 @@ class _IptcEditorDialogState extends State<IptcEditorDialog> {
           children: [
             DialogUtilityButton(
               label: 'Clear',
-              tooltip: 'Empty every field and table',
+              tooltip: '清空所有字段和表格',
               onPressed: _clearFields,
             ),
             if (widget.templates.snapshots.isNotEmpty ||
@@ -789,21 +789,21 @@ class _IptcEditorDialogState extends State<IptcEditorDialog> {
               ),
             if (widget.onSaveTemplate != null)
               DialogUtilityButton(
-                label: 'Save as…',
-                tooltip: 'Save these fields as a named metadata template',
+                label: '另存为…',
+                tooltip: '将这些字段保存为命名元数据模板',
                 onPressed: () => unawaited(_saveAsTemplate()),
               ),
             const DialogActionsRule(),
             DialogUtilityButton(
               label: 'Copy',
-              tooltip: 'Copy all IPTC fields (⌘/Ctrl+Shift+C)',
+              tooltip: '复制全部 IPTC 字段（⌘/Ctrl+Shift+C）',
               onPressed: _copy,
             ),
             ValueListenableBuilder<Map<IptcField, String>?>(
               valueListenable: iptcClipboard,
               builder: (_, clip, _) => DialogUtilityButton(
                 label: 'Paste',
-                tooltip: 'Paste copied IPTC fields (⌘/Ctrl+Shift+V)',
+                tooltip: '粘贴复制的 IPTC 字段（⌘/Ctrl+Shift+V）',
                 onPressed: clip == null ? null : _paste,
               ),
             ),
@@ -814,7 +814,7 @@ class _IptcEditorDialogState extends State<IptcEditorDialog> {
           children: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: const Text('取消'),
             ),
             const SizedBox(width: AppSpacing.sm),
             FilledButton(onPressed: _save, child: const Text('Save')),
@@ -902,29 +902,29 @@ class _IptcEditorDialogState extends State<IptcEditorDialog> {
   /// Location group grows a "From GPS" action when the serial wiring can
   /// reverse-geocode.
   static const List<String> _locationColumns = [
-    'Sublocation',
-    'City',
+    '子地点',
+    '城市',
     'State',
-    'Country',
+    '国家',
     'ISO',
-    'World region',
-    'Location ID',
+    '世界地区',
+    '地点 ID',
   ];
   static const List<String> _artworkColumns = [
     'Title',
-    'Creator',
-    'Source',
-    'Copyright',
+    '创作者',
+    '来源',
+    '版权',
   ];
-  static const List<String> _entityColumns = ['Name', 'Identifier'];
+  static const List<String> _entityColumns = ['名称', '标识符'];
   static const List<String> _licensorColumns = [
-    'Name',
+    '名称',
     'ID',
     'Phone',
     'Email',
     'URL',
   ];
-  static const List<String> _registryColumns = ['Item ID', 'Org ID'];
+  static const List<String> _registryColumns = ['条目 ID', '机构 ID'];
 
   /// The six structured-table editors for the current photo (serial mode only).
   /// Each reports its matrix back and marks the tables dirty so navigation/save
@@ -947,22 +947,22 @@ class _IptcEditorDialogState extends State<IptcEditorDialog> {
     );
 
     return [
-      table('Locations shown', _locationColumns, _locationsShown, (r) {
+      table('所示地点', _locationColumns, _locationsShown, (r) {
         _locationsShown = r;
       }),
-      table('Artwork or object', _artworkColumns, _artwork, (r) {
+      table('艺术品或对象', _artworkColumns, _artwork, (r) {
         _artwork = r;
       }),
-      table('Image creators', _entityColumns, _imageCreators, (r) {
+      table('图像创作者', _entityColumns, _imageCreators, (r) {
         _imageCreators = r;
       }),
-      table('Copyright owners', _entityColumns, _copyrightOwners, (r) {
+      table('版权所有者', _entityColumns, _copyrightOwners, (r) {
         _copyrightOwners = r;
       }),
       table('Licensors', _licensorColumns, _licensors, (r) {
         _licensors = r;
       }),
-      table('Registry entries', _registryColumns, _registryEntries, (r) {
+      table('注册条目', _registryColumns, _registryEntries, (r) {
         _registryEntries = r;
       }),
     ];
@@ -1028,10 +1028,10 @@ class _IptcEditorDialogState extends State<IptcEditorDialog> {
 /// to one or more [IptcFieldGroup]s; the layout mirrors the metadata-template
 /// editor's rail so the two dialogs feel like one family.
 enum _EditorSection {
-  content('Content', Icons.subject, [IptcFieldGroup.description]),
-  location('Location', Icons.place_outlined, [IptcFieldGroup.location]),
-  rights('Rights', Icons.copyright_outlined, [IptcFieldGroup.credit]),
-  status('Status', Icons.assignment_outlined, [
+  content('内容', Icons.subject, [IptcFieldGroup.description]),
+  location('地点', Icons.place_outlined, [IptcFieldGroup.location]),
+  rights('权利', Icons.copyright_outlined, [IptcFieldGroup.credit]),
+  status('状态', Icons.assignment_outlined, [
     IptcFieldGroup.status,
     IptcFieldGroup.releases,
   ]),
@@ -1039,7 +1039,7 @@ enum _EditorSection {
 
   /// The repeatable structured tables — not tied to a flat field group. Shown
   /// only in serial (per-photo) mode.
-  tables('Tables', Icons.table_rows_outlined, []);
+  tables('表格', Icons.table_rows_outlined, []);
 
   const _EditorSection(this.label, this.icon, this.groups);
 
@@ -1074,7 +1074,7 @@ class _LoadTemplateMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => PopupMenuButton<String>(
-    tooltip: 'Stamp a metadata template onto the fields',
+    tooltip: '将元数据模板盖印到各字段',
     color: AppColors.surfaceElevated,
     onSelected: (value) {
       if (value == _fileEntry) {
@@ -1106,7 +1106,7 @@ class _LoadTemplateMenu extends StatelessWidget {
           value: _fileEntry,
           height: 32,
           child: Text(
-            'From XMP file…',
+            '来自 XMP 文件…',
             style: TextStyle(fontSize: 13, color: AppColors.textPrimary),
           ),
         ),
@@ -1146,8 +1146,8 @@ class _FromGpsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Tooltip(
     message: onPressed == null
-        ? 'This photo has no GPS position'
-        : 'Fill city/state/country from the photo’s GPS position',
+        ? '此照片没有 GPS 位置'
+        : '根据照片的 GPS 位置填充城市/省州/国家',
     child: TextButton.icon(
       onPressed: onPressed,
       style: TextButton.styleFrom(
@@ -1155,7 +1155,7 @@ class _FromGpsButton extends StatelessWidget {
         textStyle: const TextStyle(fontSize: 12),
       ),
       icon: const Icon(Icons.place_outlined, size: 14),
-      label: const Text('From GPS'),
+      label: const Text('来自 GPS'),
     ),
   );
 }
@@ -1205,7 +1205,7 @@ class _SerialHeader extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                '${index + 1} of $total',
+                '第 ${index + 1} / $total 张',
                 style: const TextStyle(
                   color: AppColors.textSecondary,
                   fontSize: 11,
@@ -1217,13 +1217,12 @@ class _SerialHeader extends StatelessWidget {
         IconButton(
           onPressed: onPrev,
           tooltip:
-              'Previous photo — saves edits '
-              '(⌘/Ctrl+PgUp or ⌘/Ctrl+Shift+Enter)',
+              '上一张——保存修改（⌘/Ctrl+PgUp 或 ⌘/Ctrl+Shift+Enter）',
           icon: const Icon(Icons.chevron_left, size: 20),
         ),
         IconButton(
           onPressed: onNext,
-          tooltip: 'Next photo — saves edits (⌘/Ctrl+PgDn or ⌘/Ctrl+Enter)',
+          tooltip: '下一张——保存修改（⌘/Ctrl+PgDn 或 ⌘/Ctrl+Enter）',
           icon: const Icon(Icons.chevron_right, size: 20),
         ),
       ],
@@ -1373,7 +1372,7 @@ class _BatchBanner extends StatelessWidget {
       border: Border.all(color: AppColors.border),
     ),
     child: Text(
-      'Editing $count photos — only fields you change are applied.',
+      '正在编辑 $count 张照片——仅应用你修改的字段。',
       style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
     ),
   );
@@ -1465,7 +1464,7 @@ class _SubjectCodesFieldState extends State<_SubjectCodesField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Media topics',
+            '媒体主题',
             style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
           ),
           const SizedBox(height: AppSpacing.xs),
@@ -1476,8 +1475,8 @@ class _SubjectCodesFieldState extends State<_SubjectCodesField> {
             decoration: InputDecoration(
               isDense: true,
               hintText: widget.mixed
-                  ? 'Mixed — leave to keep each photo’s value'
-                  : 'Type to search the IPTC vocabulary…',
+                  ? '混合——保留各照片原值'
+                  : '输入以搜索 IPTC 词汇…',
               hintStyle: const TextStyle(
                 color: AppColors.textSecondary,
                 fontStyle: FontStyle.italic,
@@ -1511,7 +1510,7 @@ class _SubjectCodesFieldState extends State<_SubjectCodesField> {
                       child: Text(
                         topic.parent.isEmpty
                             ? topic.label
-                            : '${topic.label}  ‹ ${topic.parent}',
+                            : '${topic.label} ‹ ${topic.parent}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -1594,7 +1593,7 @@ class _DateCreatedFieldState extends State<_DateCreatedField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Date created',
+            '创建日期',
             style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
           ),
           const SizedBox(height: AppSpacing.xs),
@@ -1607,7 +1606,7 @@ class _DateCreatedFieldState extends State<_DateCreatedField> {
                   label: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      current == null ? 'Not set' : displayDateTime(current),
+                      current == null ? '未设置' : displayDateTime(current),
                       style: const TextStyle(fontSize: 13),
                     ),
                   ),
@@ -1615,7 +1614,7 @@ class _DateCreatedFieldState extends State<_DateCreatedField> {
               ),
               if (_isSet)
                 IconButton(
-                  tooltip: 'Clear (use capture time)',
+                  tooltip: '清除（使用拍摄时间）',
                   onPressed: _clear,
                   icon: const Icon(Icons.clear, size: 16),
                 ),
@@ -1625,7 +1624,7 @@ class _DateCreatedFieldState extends State<_DateCreatedField> {
             const Padding(
               padding: EdgeInsets.only(top: 2),
               child: Text(
-                'From capture time',
+                '来自拍摄时间',
                 style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
               ),
             ),
@@ -1676,7 +1675,7 @@ class _Field extends StatelessWidget {
           style: const TextStyle(fontSize: 13),
           decoration: InputDecoration(
             isDense: true,
-            hintText: mixed ? 'Mixed — leave to keep each photo’s value' : null,
+            hintText: mixed ? '混合——保留各照片原值' : null,
             hintStyle: const TextStyle(
               color: AppColors.textSecondary,
               fontStyle: FontStyle.italic,

@@ -83,25 +83,25 @@ class NamePreset {
   /// switchers from Photo Mechanic / Capture One find familiar starting points.
   static const List<NamePreset> builtIns = [
     NamePreset(
-      name: 'Keep filenames',
+      name: '保留文件名',
       folderPattern: '',
       filePattern: '{origname}',
       builtIn: true,
     ),
     NamePreset(
-      name: 'Year / date_shoot / name',
+      name: '年份 / 日期_拍摄 / 名称',
       folderPattern: '{date:year}/{date:iso}_{shoot}',
       filePattern: '{origname}',
       builtIn: true,
     ),
     NamePreset(
-      name: 'Year / month / name',
+      name: '年份 / 月 / 名称',
       folderPattern: '{date:year}/{date:monthNumber}',
       filePattern: '{origname}',
       builtIn: true,
     ),
     NamePreset(
-      name: 'Timestamped',
+      name: '时间戳',
       folderPattern: '{date:year}/{date:iso}_{shoot}',
       filePattern: '{date:iso}_{date:time}_{seq:4}',
       builtIn: true,

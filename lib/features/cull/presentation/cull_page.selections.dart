@@ -25,8 +25,7 @@ mixin _CullSelections on _CullWorkspace {
 
     if (!mounted) return;
     _notify(
-      'Selected ${ids.length} of ${list.filenames.length} from ${file.name}'
-      '${_bracketSuffix(ids, selected)}',
+      '已从 ${file.name} 中选中 ${ids.length} / ${list.filenames.length} 张${_bracketSuffix(ids, selected)}',
     );
   }
 
@@ -45,8 +44,7 @@ mixin _CullSelections on _CullWorkspace {
     _gridFocus.requestFocus();
     if (!mounted) return;
     _notify(
-      'Selected ${ids.length} of ${names.length} name(s)'
-      '${_bracketSuffix(ids, selected)}',
+      '已从 ${names.length} 个名称中选中 ${ids.length} 张${_bracketSuffix(ids, selected)}',
       kind: ids.isEmpty ? NoticeKind.warning : NoticeKind.success,
     );
   }
@@ -70,7 +68,7 @@ mixin _CullSelections on _CullWorkspace {
   /// A note like " (+6 bracket frames)" when auto-expand added photos.
   String _bracketSuffix(Set<int> matched, Set<int> selected) {
     final extra = selected.length - matched.length;
-    return extra > 0 ? ' (+$extra bracket frames)' : '';
+    return extra > 0 ? '（另含 $extra 张包围曝光）' : '';
   }
 
   /// Grows the current selection to every frame of each selected photo's
@@ -93,14 +91,14 @@ mixin _CullSelections on _CullWorkspace {
       for (final id in selected) ...groups.groupOf(id),
     };
     if (expanded.length == selected.length) {
-      _notify('No bracket members to add');
+      _notify('没有可添加的包围曝光成员');
       _gridFocus.requestFocus();
       return;
     }
     ref.read(cullControllerProvider.notifier).setSelection(expanded);
     _gridFocus.requestFocus();
     _notify(
-      'Expanded ${selected.length} → ${expanded.length} photos',
+      '已从 ${selected.length} 张扩展到 ${expanded.length} 张',
       kind: NoticeKind.success,
     );
   }
@@ -119,7 +117,7 @@ mixin _CullSelections on _CullWorkspace {
       _notify('No bracket siblings to update', kind: NoticeKind.warning);
     } else {
       _notify(
-        'Applied marks to $n bracket frame(s)',
+        '已将标记应用到 $n 张包围曝光',
         kind: NoticeKind.success,
       );
     }
@@ -135,7 +133,7 @@ mixin _CullSelections on _CullWorkspace {
     if (n == 0) {
       _notify('Select 2+ photos to stack', kind: NoticeKind.warning);
     } else {
-      _notify('Stacked $n photos', kind: NoticeKind.success);
+      _notify('已堆叠 $n 张照片', kind: NoticeKind.success);
     }
   }
 
@@ -150,7 +148,7 @@ mixin _CullSelections on _CullWorkspace {
     if (n == 0) {
       _notify('Select photos to unstack', kind: NoticeKind.warning);
     } else {
-      _notify('Unstacked $n photos', kind: NoticeKind.success);
+      _notify('已取消堆叠 $n 张照片', kind: NoticeKind.success);
     }
   }
 
@@ -173,12 +171,11 @@ mixin _CullSelections on _CullWorkspace {
     contentPadding: EdgeInsets.zero,
     dense: true,
     title: const Text(
-      'Only RAWs (skip JPEG twins)',
+      '仅 RAW（跳过对应 JPEG）',
       style: TextStyle(fontSize: 13),
     ),
     subtitle: const Text(
-      'When a name has both a RAW and a JPEG, select just the RAW. A JPEG '
-      'with no RAW twin is still selected.',
+      '当同一文件名同时有 RAW 和 JPEG 时，只选择 RAW。没有对应 RAW 的 JPEG 仍会被选中。',
       style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
     ),
   );
@@ -192,7 +189,7 @@ mixin _CullSelections on _CullWorkspace {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('Find photos by filename'),
+          title: const Text('按文件名查找照片'),
           content: SizedBox(
             width: 460,
             child: Column(
@@ -200,9 +197,7 @@ mixin _CullSelections on _CullWorkspace {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Paste a list of filenames (from Capture One, Lightroom or '
-                  'ContactSheet). Any separator works, and the extension is '
-                  'optional — a JPEG list still selects your RAWs.',
+                  '粘贴文件名列表（来自 Capture One、Lightroom 或 ContactSheet）。分隔符不限，扩展名可省略——JPEG 列表同样能选中你的 RAW。',
                   style: TextStyle(
                     color: AppColors.textSecondary,
                     fontSize: 12,
@@ -230,7 +225,7 @@ mixin _CullSelections on _CullWorkspace {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: const Text('取消'),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(
@@ -255,7 +250,7 @@ mixin _CullSelections on _CullWorkspace {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('Import selection list'),
+          title: const Text('导入选择列表'),
           content: SizedBox(
             width: 420,
             child: Column(
@@ -263,7 +258,7 @@ mixin _CullSelections on _CullWorkspace {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '$nameCount name(s) from $fileName.',
+                  '来自 $fileName 的 $nameCount 个名称。',
                   style: const TextStyle(
                     color: AppColors.textSecondary,
                     fontSize: 12,
@@ -280,11 +275,11 @@ mixin _CullSelections on _CullWorkspace {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: const Text('取消'),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(rawOnly),
-              child: const Text('Import'),
+              child: const Text('导入'),
             ),
           ],
         ),
@@ -300,14 +295,14 @@ mixin _CullSelections on _CullWorkspace {
     if (importId == null) return;
     if (ids.isEmpty) {
       _notify(
-        'Select photos first to save a selection',
+        '请先选择照片再保存选择',
         kind: NoticeKind.warning,
       );
       return;
     }
     final name = await _promptText(
-      title: 'Save selection',
-      hint: 'Selection name',
+      title: '保存选择',
+      hint: '选择名称',
     );
     if (name == null || name.trim().isEmpty) return;
     await ref
@@ -319,7 +314,7 @@ mixin _CullSelections on _CullWorkspace {
         );
     if (!mounted) return;
     _notify(
-      'Saved "${name.trim()}" (${ids.length} photo(s))',
+      '已保存“${name.trim()}”（${ids.length} 张）',
       kind: NoticeKind.success,
     );
     _gridFocus.requestFocus();
@@ -333,14 +328,14 @@ mixin _CullSelections on _CullWorkspace {
           selection.photoIds.toSet(),
         );
     _gridFocus.requestFocus();
-    _notify('Loaded "${selection.name}" (${selection.photoIds.length})');
+    _notify('已加载“${selection.name}”（${selection.photoIds.length} 张）');
   }
 
   /// Deletes a saved selection.
   Future<void> _deleteSelection(SavedSelection selection) async {
     await ref.read(appDatabaseProvider).deleteSavedSelection(selection.id);
     if (!mounted) return;
-    _notify('Deleted "${selection.name}"');
+    _notify('已删除“${selection.name}”');
   }
 
   /// Shows a single-line text dialog and returns the entered text (or null if
@@ -363,7 +358,7 @@ mixin _CullSelections on _CullWorkspace {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: const Text('取消'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(controller.text),

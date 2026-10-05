@@ -352,11 +352,11 @@ class _ContactSheetDialogState extends ConsumerState<_ContactSheetDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
         FilledButton(
           onPressed: _canSubmit ? _submit : null,
-          child: Text(_pullMode ? 'Pull marks' : 'Send $count'),
+          child: Text(_pullMode ? '拉取标记' : '发送 $count'),
         ),
       ],
     );
@@ -368,13 +368,13 @@ class _ContactSheetDialogState extends ConsumerState<_ContactSheetDialog> {
       SegmentedButton<bool>(
         segments: const [
           ButtonSegment(value: false, label: Text('Send')),
-          ButtonSegment(value: true, label: Text('Pull marks')),
+          ButtonSegment(value: true, label: Text('拉取标记')),
         ],
         selected: {_pullMode},
         onSelectionChanged: (s) => setState(() => _pullMode = s.first),
       ),
       const SizedBox(height: AppSpacing.md),
-      const DialogSection('Server'),
+      const DialogSection('服务器'),
       if (!_editServer && _canConnect)
         // Configured — one calm line instead of URL + token fields.
         Row(
@@ -398,7 +398,7 @@ class _ContactSheetDialogState extends ConsumerState<_ContactSheetDialog> {
             ),
             TextButton(
               onPressed: () => setState(() => _editServer = true),
-              child: const Text('Change'),
+              child: const Text('更换'),
             ),
           ],
         )
@@ -413,22 +413,22 @@ class _ContactSheetDialogState extends ConsumerState<_ContactSheetDialog> {
         TextField(
           controller: _token,
           obscureText: true,
-          decoration: dialogInputDecoration('Access token (cs_pat_…)'),
+          decoration: dialogInputDecoration('访问令牌（cs_pat_…）'),
           style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
           onChanged: (_) => setState(() {}),
         ),
       ],
       const SizedBox(height: AppSpacing.lg),
-      const DialogSection('Gallery'),
+      const DialogSection('画廊'),
       Row(
         children: [
           Expanded(
             child: Text(
               _galleries == null
                   ? (_pullMode
-                        ? 'Load the gallery the client reviewed.'
-                        : 'Create a new gallery, or load existing ones.')
-                  : '${flattenGalleryTree(_galleries!).length} galleries',
+                        ? '加载客户浏览过的画廊。'
+                        : '创建新画廊，或加载已有画廊。')
+                  : '${flattenGalleryTree(_galleries!).length} 个画廊',
               style: const TextStyle(
                 color: AppColors.textSecondary,
                 fontSize: 13,
@@ -440,8 +440,8 @@ class _ContactSheetDialogState extends ConsumerState<_ContactSheetDialog> {
             onPressed: _canConnect && !_loading ? _loadGalleries : null,
             child: Text(
               _loading
-                  ? 'Loading…'
-                  : (_galleries == null ? 'Load existing' : 'Reload'),
+                  ? '正在加载…'
+                  : (_galleries == null ? '加载已有' : '重新加载'),
             ),
           ),
         ],
@@ -482,7 +482,7 @@ class _ContactSheetDialogState extends ConsumerState<_ContactSheetDialog> {
         const SizedBox(height: AppSpacing.sm),
         TextField(
           controller: _fallbackName,
-          decoration: dialogInputDecoration('New gallery name'),
+          decoration: dialogInputDecoration('新画廊名称'),
           style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
           onChanged: (_) => setState(() {}),
         ),
@@ -498,20 +498,19 @@ class _ContactSheetDialogState extends ConsumerState<_ContactSheetDialog> {
       if (_pullMode) ...[
         const DialogSection('Pull'),
         const Text(
-          'Fetches client ratings + colours and applies them to the matching '
-          'photos by filename (selecting the ones the client marked).',
+          '按文件名拉取客户评分 + 色标并应用到匹配的照片（即客户标记的那些）。',
           style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
         ),
         const SizedBox(height: AppSpacing.xs),
         DialogCheckbox(
           value: _importCollections,
           onChanged: (v) => setState(() => _importCollections = v ?? false),
-          label: 'Import collections as saved selections',
+          label: '将收藏导入为已保存选择',
         ),
       ] else ...[
-        const DialogSection('Size & quality'),
+        const DialogSection('尺寸与质量'),
         DialogField(
-          label: 'Long edge',
+          label: '长边',
           child: DialogDropdown<int>(
             value: _sizeValue,
             onChanged: (v) => setState(() => _sizeValue = v!),
@@ -522,7 +521,7 @@ class _ContactSheetDialogState extends ConsumerState<_ContactSheetDialog> {
           ),
         ),
         DialogField(
-          label: 'Quality',
+          label: '质量',
           child: Row(
             children: [
               Expanded(
@@ -547,7 +546,7 @@ class _ContactSheetDialogState extends ConsumerState<_ContactSheetDialog> {
         ),
         const SizedBox(height: AppSpacing.xs),
         const Text(
-          'Renders JPEGs (in-camera look) and uploads them to the gallery.',
+          '渲染 JPEG（机内观感）并上传到画廊。',
           style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
         ),
       ],
@@ -670,7 +669,7 @@ class _GalleryPickerState extends State<_GalleryPicker> {
       children: [
         TextField(
           controller: _search,
-          decoration: dialogInputDecoration('Search galleries…').copyWith(
+          decoration: dialogInputDecoration('搜索画廊…').copyWith(
             prefixIcon: const Icon(Icons.search, size: 18),
             isDense: true,
           ),
@@ -690,7 +689,7 @@ class _GalleryPickerState extends State<_GalleryPicker> {
               ? const Padding(
                   padding: EdgeInsets.all(AppSpacing.md),
                   child: Text(
-                    'No galleries match.',
+                    '没有匹配的画廊。',
                     style: TextStyle(
                       color: AppColors.textSecondary,
                       fontSize: 13,
@@ -710,7 +709,7 @@ class _GalleryPickerState extends State<_GalleryPicker> {
                       else
                         _PickerRow(
                           depth: 0,
-                          label: 'New gallery…',
+                          label: '新建画廊…',
                           leading: const _CoverBox(
                             child: Icon(Icons.add, size: 18),
                           ),
@@ -838,7 +837,7 @@ class _PickerRow extends StatelessWidget {
             const SizedBox(width: AppSpacing.xs),
             _RowIconButton(
               icon: Icons.add,
-              tooltip: 'New sub-gallery',
+              tooltip: '新建子画廊',
               onTap: onAddChild!,
             ),
           ],
@@ -913,7 +912,7 @@ class _NewGalleryRowState extends State<_NewGalleryRow> {
               isDense: true,
               border: InputBorder.none,
               contentPadding: EdgeInsets.zero,
-              hintText: 'New gallery name…',
+              hintText: '新画廊名称…',
               hintStyle: TextStyle(
                 color: AppColors.textSecondary,
                 fontSize: 13,
@@ -924,13 +923,13 @@ class _NewGalleryRowState extends State<_NewGalleryRow> {
         if (widget.onAddChild != null)
           _RowIconButton(
             icon: Icons.add,
-            tooltip: 'Nested sub-gallery',
+            tooltip: '嵌套子画廊',
             onTap: widget.onAddChild!,
           ),
         if (widget.onRemove != null)
           _RowIconButton(
             icon: Icons.close,
-            tooltip: 'Remove',
+            tooltip: '移除',
             onTap: widget.onRemove!,
           ),
       ],

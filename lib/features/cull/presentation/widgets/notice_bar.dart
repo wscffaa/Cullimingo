@@ -95,7 +95,7 @@ class NoticeBar extends StatelessWidget {
             TextButton(onPressed: action.onTap, child: Text(action.label)),
           IconButton(
             onPressed: onDismiss,
-            tooltip: 'Dismiss',
+            tooltip: '关闭',
             iconSize: 18,
             icon: const Icon(Icons.close, color: AppColors.textSecondary),
           ),

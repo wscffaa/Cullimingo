@@ -58,12 +58,12 @@ mixin _CullKeyboard on _CullJobs {
 
   Future<void> _undoMarks() async {
     final undone = await ref.read(cullControllerProvider.notifier).undo();
-    _notify(undone == null ? 'Nothing to undo' : 'Undid $undone');
+    _notify(undone == null ? '没有可撤销的操作' : '已撤销 $undone');
   }
 
   Future<void> _redoMarks() async {
     final redone = await ref.read(cullControllerProvider.notifier).redo();
-    _notify(redone == null ? 'Nothing to redo' : 'Redid $redone');
+    _notify(redone == null ? '没有可重做的操作' : '已重做 $redone');
   }
 
   void _showShortcuts() => showKeyboardShortcuts(context);

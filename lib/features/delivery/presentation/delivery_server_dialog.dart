@@ -141,7 +141,7 @@ class _DeliveryServerDialogState extends State<_DeliveryServerDialog> {
     setState(() {
       _testing = false;
       _testOk = message == null;
-      _testResult = message ?? 'Connection OK — logged in, folder reachable.';
+      _testResult = message ?? '连接正常——已登录，文件夹可访问。';
     });
   }
 
@@ -173,7 +173,7 @@ class _DeliveryServerDialogState extends State<_DeliveryServerDialog> {
   Widget build(BuildContext context) {
     final valid = _serverFromFields() != null;
     return AlertDialog(
-      title: Text(widget.initial == null ? 'Add server' : 'Edit server'),
+      title: Text(widget.initial == null ? '添加服务器' : '编辑服务器'),
       content: SizedBox(
         width: 400,
         child: SingleChildScrollView(
@@ -181,7 +181,7 @@ class _DeliveryServerDialogState extends State<_DeliveryServerDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _field(_name, 'Name (e.g. AP wire)'),
+              _field(_name, '名称（如 AP 通讯社）'),
               DialogDropdown<DeliveryProtocol>(
                 value: _protocol,
                 items: [
@@ -194,8 +194,7 @@ class _DeliveryServerDialogState extends State<_DeliveryServerDialog> {
                 const Padding(
                   padding: EdgeInsets.only(top: AppSpacing.xs),
                   child: Text(
-                    'Plain FTP sends the password unencrypted — fine on a '
-                    'LAN/VPN, avoid on the open internet.',
+                    '明文 FTP 会未加密地传输密码——在局域网/专用网络中可用，公开互联网上请勿使用。',
                     style: TextStyle(
                       color: AppColors.textSecondary,
                       fontSize: 11,
@@ -217,10 +216,10 @@ class _DeliveryServerDialogState extends State<_DeliveryServerDialog> {
                     value: _allowSelfSigned,
                     onChanged: (v) =>
                         setState(() => _allowSelfSigned = v ?? false),
-                    label: 'Accept self-signed certificate',
+                    label: '接受自签名证书',
                   ),
                 ),
-              _field(_username, 'Username (empty = anonymous)'),
+              _field(_username, '用户名（留空 = 匿名）'),
               if (_protocol == DeliveryProtocol.sftp)
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,14 +227,14 @@ class _DeliveryServerDialogState extends State<_DeliveryServerDialog> {
                     Expanded(
                       child: _field(
                         _keyFile,
-                        'Private key file (empty = password auth)',
+                        '私钥文件（留空 = 密码认证）',
                       ),
                     ),
                     const SizedBox(width: AppSpacing.xs),
                     IconButton(
                       iconSize: 16,
                       visualDensity: VisualDensity.compact,
-                      tooltip: 'Choose key file',
+                      tooltip: '选择密钥文件',
                       icon: const Icon(Icons.folder_open),
                       onPressed: () => unawaited(_pickKeyFile()),
                     ),
@@ -245,11 +244,11 @@ class _DeliveryServerDialogState extends State<_DeliveryServerDialog> {
                 _password,
                 _protocol == DeliveryProtocol.sftp &&
                         _keyFile.text.trim().isNotEmpty
-                    ? 'Key passphrase (empty = unencrypted key)'
-                    : 'Password',
+                    ? '密钥口令（留空 = 密钥未加密）'
+                    : '密码',
                 obscure: true,
               ),
-              _field(_remoteDir, 'Remote folder (e.g. incoming/photos)'),
+              _field(_remoteDir, '远程文件夹（如 incoming/photos）'),
               Row(
                 children: [
                   OutlinedButton.icon(
@@ -263,7 +262,7 @@ class _DeliveryServerDialogState extends State<_DeliveryServerDialog> {
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.network_check, size: 16),
-                    label: const Text('Test connection'),
+                    label: const Text('测试连接'),
                   ),
                 ],
               ),
@@ -285,7 +284,7 @@ class _DeliveryServerDialogState extends State<_DeliveryServerDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: const Text('取消'),
         ),
         FilledButton(onPressed: valid ? _save : null, child: const Text('OK')),
       ],

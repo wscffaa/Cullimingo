@@ -100,7 +100,7 @@ class FtpClient implements DeliveryClient {
     try {
       socket = await Socket.connect(host, port, timeout: timeout);
     } on Object catch (e) {
-      throw FtpException('Could not connect to $host:$port — $e');
+      throw FtpException('无法连接 $host:$port——$e');
     }
     _attach(socket);
     _expect(await _readReply(), const {220}, 'greeting');
@@ -118,7 +118,7 @@ class FtpClient implements DeliveryClient {
           onBadCertificate: onBadCertificate,
         ).timeout(timeout);
       } on Object catch (e) {
-        throw FtpException('TLS handshake with $host failed — $e');
+        throw FtpException('与 $host 的 TLS 握手失败——$e');
       }
       _pending.clear();
       _lines.clear();
@@ -150,7 +150,7 @@ class FtpClient implements DeliveryClient {
       if (cwd.code == 250) continue;
       final mkd = await _command('MKD $segment');
       if (mkd.code != 257) {
-        throw FtpException('Could not create "$segment" on $host', mkd);
+        throw FtpException('无法在 $host 上创建“$segment”', mkd);
       }
       _expect(await _command('CWD $segment'), const {250}, 'CWD $segment');
     }
@@ -163,7 +163,7 @@ class FtpClient implements DeliveryClient {
     try {
       final stor = await _command('STOR $remoteName');
       if (stor.code != 150 && stor.code != 125) {
-        throw FtpException('Server refused upload of "$remoteName"', stor);
+        throw FtpException('服务器拒绝了“$remoteName”的上传', stor);
       }
       if (secure) {
         // PROT P: the data channel gets its own TLS handshake (after STOR is
@@ -177,7 +177,7 @@ class FtpClient implements DeliveryClient {
       await data.addStream(bytes);
       await data.flush();
       await data.close();
-      _expect(await _readReply(), const {226, 250}, 'transfer of $remoteName');
+      _expect(await _readReply(), const {226, 250}, '传输 $remoteName');
     } finally {
       data.destroy();
     }
@@ -225,12 +225,12 @@ class FtpClient implements DeliveryClient {
       }
     }
     if (dataPort == null) {
-      throw FtpException('Could not parse the passive-mode reply from $host');
+      throw FtpException('无法解析来自 $host 的被动模式回复');
     }
     try {
       return await Socket.connect(host, dataPort, timeout: timeout);
     } on Object catch (e) {
-      throw FtpException('Data connection to $host:$dataPort failed — $e');
+      throw FtpException('到 $host:$dataPort 的数据连接失败——$e');
     }
   }
 
@@ -244,7 +244,7 @@ class FtpClient implements DeliveryClient {
 
   void _expect(FtpReply reply, Set<int> allowed, String step) {
     if (!allowed.contains(reply.code)) {
-      throw FtpException('$host refused $step', reply);
+      throw FtpException('$host 拒绝了 $step', reply);
     }
   }
 
@@ -253,7 +253,7 @@ class FtpClient implements DeliveryClient {
     final first = await _readLine();
     final code = first.length >= 3 ? int.tryParse(first.substring(0, 3)) : null;
     if (code == null) {
-      throw FtpException('Malformed reply from $host: "$first"');
+      throw FtpException('来自 $host 的异常回复：“$first”');
     }
     final text = StringBuffer(first.length > 4 ? first.substring(4) : '');
     if (first.length > 3 && first[3] == '-') {
@@ -272,13 +272,13 @@ class FtpClient implements DeliveryClient {
   Future<String> _readLine() async {
     while (_lines.isEmpty) {
       final error = _socketError;
-      if (error != null) throw FtpException('Connection to $host — $error');
-      if (_closed) throw FtpException('$host closed the connection');
+      if (error != null) throw FtpException('到 $host 的连接——$error');
+      if (_closed) throw FtpException('$host 已关闭连接');
       final wakeup = _wakeup = Completer<void>();
       try {
         await wakeup.future.timeout(timeout);
       } on TimeoutException {
-        throw FtpException('$host did not answer within ${timeout.inSeconds}s');
+        throw FtpException('$host 在 ${timeout.inSeconds} 秒内未响应');
       }
     }
     return _lines.removeFirst();

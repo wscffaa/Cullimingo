@@ -136,16 +136,16 @@ class ContactSheetClient {
     } on ContactSheetException {
       rethrow;
     } on Object catch (e) {
-      throw ContactSheetException('Could not reach ContactSheet ($e)');
+      throw ContactSheetException('无法连接 ContactSheet（$e）');
     }
   }
 
   void _ensureStatus(http.Response res, int expected) {
     if (res.statusCode == expected) return;
     final reason = switch (res.statusCode) {
-      401 || 403 => 'Not authorised — check the token and its scopes',
-      404 => 'Not found — check the URL or gallery',
-      _ => 'Server returned ${res.statusCode}',
+      401 || 403 => '未授权——请检查令牌及其权限范围',
+      404 => '未找到——请检查 URL 或画廊',
+      _ => '服务器返回 ${res.statusCode}',
     };
     throw ContactSheetException(reason, statusCode: res.statusCode);
   }

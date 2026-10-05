@@ -195,7 +195,7 @@ class _PhotoCellState extends State<PhotoCell> {
             right: AppSpacing.xs,
             child: Tooltip(
               message:
-                  'Sidecar changed outside Cullimingo (resolved newest-wins)',
+                  '附属文件在 Cullimingo 外被修改（按最新内容解决）',
               child: Icon(
                 Icons.sync_problem_rounded,
                 size: 18,
@@ -339,7 +339,7 @@ class _PhotoCellState extends State<PhotoCell> {
             bottom: AppSpacing.sm - 1,
             right: _cropBadgeRight,
             child: const Tooltip(
-              message: 'Cropped in Lightroom / Camera Raw',
+              message: '在 Lightroom / Camera Raw 中裁剪过',
               child: Icon(
                 Icons.crop_rounded,
                 size: 13,
@@ -367,19 +367,19 @@ class _PhotoCellState extends State<PhotoCell> {
                     if (widget.onRotateLeft != null)
                       _HoverAction(
                         icon: Icons.rotate_left_rounded,
-                        tooltip: 'Rotate left',
+                        tooltip: '向左旋转',
                         onTap: widget.onRotateLeft!,
                       ),
                     if (widget.onRotateRight != null)
                       _HoverAction(
                         icon: Icons.rotate_right_rounded,
-                        tooltip: 'Rotate right',
+                        tooltip: '向右旋转',
                         onTap: widget.onRotateRight!,
                       ),
                     if (widget.onEditMetadata != null)
                       _HoverAction(
                         icon: Icons.edit_note_rounded,
-                        tooltip: 'Edit metadata',
+                        tooltip: '编辑元数据',
                         onTap: widget.onEditMetadata!,
                       ),
                   ],

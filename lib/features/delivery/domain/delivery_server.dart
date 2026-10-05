@@ -25,7 +25,7 @@ enum DeliveryProtocol {
   /// Short label for dropdowns.
   String get label => switch (this) {
     DeliveryProtocol.ftp => 'FTP',
-    DeliveryProtocol.ftps => 'FTPS (explicit TLS)',
+    DeliveryProtocol.ftps => 'FTPS（显式 TLS）',
     DeliveryProtocol.sftp => 'SFTP',
   };
 

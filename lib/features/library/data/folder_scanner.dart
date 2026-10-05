@@ -239,7 +239,7 @@ Future<FolderScan> walkFolder(
       '${entities.length} entries found so far',
     );
     unreadable.add(
-      ScanProblem(root, 'listing stalled (device unresponsive)'),
+      ScanProblem(root, '列表读取停滞（设备无响应）'),
     );
   }
 
@@ -268,7 +268,7 @@ Future<FolderScan> walkFolder(
       appTalker.warning(
         'Skipping ${e.path}: stat() stalled (device unresponsive)',
       );
-      unreadable.add(ScanProblem(e.path, 'stat stalled (device unresponsive)'));
+      unreadable.add(ScanProblem(e.path, '属性读取停滞（设备无响应）'));
       continue;
     }
     out.add(

@@ -60,7 +60,7 @@ class CullToolbar extends StatelessWidget {
                 color: i <= photo.rating
                     ? AppColors.ratingGold
                     : AppColors.textSecondary,
-                tooltip: 'Rate $i',
+                tooltip: '评 $i 星',
                 onTap: () => onRating(photo.rating == i ? 0 : i),
               ),
           ],
@@ -74,7 +74,7 @@ class CullToolbar extends StatelessWidget {
               color: photo.flag == PickFlag.pick
                   ? AppColors.selection
                   : AppColors.textSecondary,
-              tooltip: 'Pick (P)',
+              tooltip: '精选（P）',
               onTap: () => onFlag(
                 photo.flag == PickFlag.pick ? PickFlag.none : PickFlag.pick,
               ),
@@ -84,7 +84,7 @@ class CullToolbar extends StatelessWidget {
               color: photo.flag == PickFlag.reject
                   ? AppColors.labelRed
                   : AppColors.textSecondary,
-              tooltip: 'Reject (X)',
+              tooltip: '剔除（X）',
               onTap: () => onFlag(
                 photo.flag == PickFlag.reject ? PickFlag.none : PickFlag.reject,
               ),
@@ -115,15 +115,15 @@ class CullToolbar extends StatelessWidget {
               ? AppColors.textSecondary
               : AppColors.accent,
           tooltip: photo.keywords.isEmpty
-              ? 'Keywords (K)'
-              : 'Keywords: ${photo.keywords.join(', ')}',
+              ? '关键字（K）'
+              : '关键字：${photo.keywords.join(', ')}',
           onTap: onKeywords,
         ),
         if (onEditMetadata != null)
           _IconButton(
             icon: Icons.edit_note_rounded,
             color: AppColors.textSecondary,
-            tooltip: 'Edit metadata (M)',
+            tooltip: '编辑元数据（M）',
             onTap: onEditMetadata!,
           ),
         if (onRotateLeft != null || onRotateRight != null) ...[
@@ -135,14 +135,14 @@ class CullToolbar extends StatelessWidget {
                 _IconButton(
                   icon: Icons.rotate_left_rounded,
                   color: AppColors.textSecondary,
-                  tooltip: 'Rotate left',
+                  tooltip: '向左旋转',
                   onTap: onRotateLeft!,
                 ),
               if (onRotateRight != null)
                 _IconButton(
                   icon: Icons.rotate_right_rounded,
                   color: AppColors.textSecondary,
-                  tooltip: 'Rotate right',
+                  tooltip: '向右旋转',
                   onTap: onRotateRight!,
                 ),
             ],
@@ -208,7 +208,7 @@ class _ColorSwatch extends StatelessWidget {
     final key = _keys[label];
     return IconButton(
       onPressed: onTap,
-      tooltip: key == null ? label.name : '${label.name} ($key)',
+      tooltip: key == null ? label.name : '${label.name}（$key）',
       visualDensity: VisualDensity.compact,
       constraints: const BoxConstraints(minWidth: 30, minHeight: 32),
       padding: EdgeInsets.zero,

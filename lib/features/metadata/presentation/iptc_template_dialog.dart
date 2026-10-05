@@ -243,7 +243,7 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
       if (mounted) {
         await showErrorNotice(
           context,
-          title: 'Could not load the template',
+          title: '无法加载模板',
           message: e is TemplateFileException ? e.message : '$e',
         );
       }
@@ -263,7 +263,7 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
       if (mounted) {
         await showErrorNotice(
           context,
-          title: 'Could not save the template',
+          title: '无法保存模板',
           message: e is TemplateFileException ? e.message : '$e',
         );
       }
@@ -271,7 +271,7 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
   }
 
   static const XTypeGroup _xmpGroup = XTypeGroup(
-    label: 'XMP templates',
+    label: 'XMP 模板',
     extensions: ['xmp', 'XMP'],
   );
 
@@ -298,18 +298,18 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
     'Sublocation',
     'City',
     'State',
-    'Country',
+    '国家',
     'ISO',
-    'World region',
-    'Location ID',
+    '世界地区',
+    '地点 ID',
   ];
   static const List<String> _artworkColumns = [
     'Title',
-    'Creator',
-    'Source',
-    'Copyright',
+    '创作者',
+    '来源',
+    '版权',
   ];
-  static const List<String> _entityColumns = ['Name', 'Identifier'];
+  static const List<String> _entityColumns = ['Name', '标识符'];
   static const List<String> _licensorColumns = [
     'Name',
     'ID',
@@ -317,7 +317,7 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
     'Email',
     'URL',
   ];
-  static const List<String> _registryColumns = ['Item ID', 'Org ID'];
+  static const List<String> _registryColumns = ['条目 ID', '机构 ID'];
 
   /// The `_TemplateField` rows for every field in [groups], in enum order.
   /// Date Created is skipped: stamping one fixed capture date onto a batch of
@@ -363,28 +363,28 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
     _TemplateTab.tables => [
       IptcTableField(
         key: ValueKey('locations-$_generation'),
-        title: 'Locations shown',
+        title: '所示地点',
         columns: _locationColumns,
         rows: _locationsShown,
         onChanged: (r) => _locationsShown = r,
       ),
       IptcTableField(
         key: ValueKey('artwork-$_generation'),
-        title: 'Artwork or object',
+        title: '艺术品或对象',
         columns: _artworkColumns,
         rows: _artwork,
         onChanged: (r) => _artwork = r,
       ),
       IptcTableField(
         key: ValueKey('creators-$_generation'),
-        title: 'Image creators',
+        title: '图像创作者',
         columns: _entityColumns,
         rows: _imageCreators,
         onChanged: (r) => _imageCreators = r,
       ),
       IptcTableField(
         key: ValueKey('owners-$_generation'),
-        title: 'Copyright owners',
+        title: '版权所有者',
         columns: _entityColumns,
         rows: _copyrightOwners,
         onChanged: (r) => _copyrightOwners = r,
@@ -398,7 +398,7 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
       ),
       IptcTableField(
         key: ValueKey('registry-$_generation'),
-        title: 'Registry entries',
+        title: '注册条目',
         columns: _registryColumns,
         rows: _registryEntries,
         onChanged: (r) => _registryEntries = r,
@@ -419,7 +419,7 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
     );
     return AlertDialog(
       backgroundColor: AppColors.surfaceElevated,
-      title: const Text('Metadata template'),
+      title: const Text('元数据模板'),
       content: SizedBox(
         width: w,
         height: h,
@@ -427,9 +427,7 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const _Hint(
-              'Tick the fields to stamp onto photos. Unticked fields are left '
-              'untouched. Use {year} {date} {name} {camera} variables and '
-              '=code= replacements — they expand per photo when applied.',
+              '勾选要盖印到照片上的字段。未勾选的字段保持原样。可使用 {year} {date} {name} {camera} 变量和 =code= 替换——应用时会按每张照片展开。',
             ),
             Expanded(
               child: Row(
@@ -468,17 +466,17 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
           children: [
             DialogUtilityButton(
               label: 'Clear',
-              tooltip: 'Empty every field, keyword and table',
+              tooltip: '清空所有字段、关键字和表格',
               onPressed: _clear,
             ),
             DialogUtilityButton(
-              label: 'Load XMP…',
-              tooltip: 'Load an XMP template file (Photo Mechanic / Bridge)',
+              label: '加载 XMP…',
+              tooltip: '加载 XMP 模板文件（Photo Mechanic / Bridge）',
               onPressed: () => unawaited(_loadXmp()),
             ),
             DialogUtilityButton(
-              label: 'Save XMP…',
-              tooltip: 'Save these values as an XMP template file',
+              label: '保存 XMP…',
+              tooltip: '将这些值保存为 XMP 模板文件',
               onPressed: () => unawaited(_saveXmp()),
             ),
           ],
@@ -488,7 +486,7 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
           children: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: const Text('取消'),
             ),
             const SizedBox(width: AppSpacing.sm),
             FilledButton(onPressed: _save, child: const Text('Save')),
@@ -517,13 +515,13 @@ class _IptcTemplateDialogState extends State<IptcTemplateDialog> {
 
 /// The sections of the metadata-template editor, shown in the left nav-rail.
 enum _TemplateTab {
-  content('Content', Icons.subject),
-  location('Location', Icons.place_outlined),
-  rights('Rights', Icons.copyright_outlined),
-  status('Status', Icons.assignment_outlined),
+  content('内容', Icons.subject),
+  location('地点', Icons.place_outlined),
+  rights('权利', Icons.copyright_outlined),
+  status('状态', Icons.assignment_outlined),
   ai('AI', Icons.auto_awesome_outlined),
-  tables('Tables', Icons.table_rows_outlined),
-  keywords('Keywords', Icons.tag);
+  tables('表格', Icons.table_rows_outlined),
+  keywords('关键字', Icons.tag);
 
   const _TemplateTab(this.label, this.icon);
 
@@ -638,7 +636,7 @@ class _RecentMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => PopupMenuButton<String>(
-    tooltip: 'Recent values',
+    tooltip: '最近使用的值',
     icon: const Icon(
       Icons.arrow_drop_down,
       size: 20,
@@ -688,7 +686,7 @@ class _KeywordsField extends StatelessWidget {
           _ActiveBox(active: active, onChanged: onActiveChanged),
           const SizedBox(width: AppSpacing.xs),
           const Text(
-            'Keywords',
+            '关键字',
             style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
           ),
           const Spacer(),

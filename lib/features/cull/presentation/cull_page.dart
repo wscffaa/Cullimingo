@@ -187,8 +187,7 @@ class _CullPageState extends ConsumerState<CullPage>
         final n = next.count;
         if (n > 0) {
           _notify(
-            '$n ${n == 1 ? 'mark' : 'marks'} saved, but the .xmp sidecar '
-            "couldn't be written — check the folder is writable.",
+            '$n 条标记已保存，但 .xmp 附属文件无法写入——请检查文件夹是否可写。',
             kind: NoticeKind.warning,
           );
         }
@@ -296,7 +295,7 @@ class _CullPageState extends ConsumerState<CullPage>
                             loading: () => const Center(
                               child: CircularProgressIndicator(),
                             ),
-                            error: (e, _) => Center(child: Text('Error: $e')),
+                            error: (e, _) => Center(child: Text('错误：$e')),
                             data: (photos) => photos.isEmpty
                                 ? CullEmptyState(onOpenFolder: _openFolder)
                                 : filtered.isEmpty

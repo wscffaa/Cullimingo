@@ -8,31 +8,31 @@ import 'package:path/path.dart' as p;
 enum PhotoSortKey {
   /// EXIF capture time (`capturedAt`). The default, and the original fixed
   /// grid order.
-  captureTime('Capture Time'),
+  captureTime('拍摄时间'),
 
   /// Filesystem modification time (`mtime`).
-  modificationTime('Modification Time'),
+  modificationTime('修改时间'),
 
   /// File name (basename), compared naturally so `IMG_2` sorts before `IMG_10`.
-  filename('Filename'),
+  filename('文件名'),
 
   /// Star rating (0–5).
-  rating('Rating'),
+  rating('星级'),
 
   /// Colour label.
-  colorClass('Color Class'),
+  colorClass('色标类别'),
 
   /// Camera model.
-  camera('Camera'),
+  camera('相机'),
 
   /// Lens model.
-  lens('Lens'),
+  lens('镜头'),
 
   /// Pixel width.
-  width('Width'),
+  width('宽度'),
 
   /// Pixel height.
-  height('Height');
+  height('高度');
 
   const PhotoSortKey(this.label);
 

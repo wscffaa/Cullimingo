@@ -227,8 +227,7 @@ Stream<TransferProgress> runTransfer({
               source: item.source,
               outcome: sidecarResult.outcome,
               message:
-                  "Photo copied, but its sidecar wasn't: "
-                  '${sidecarResult.message ?? sidecarResult.outcome.name}',
+                  '照片已复制，但其附属文件未复制：${sidecarResult.message ?? sidecarResult.outcome.name}',
             );
           }
         }

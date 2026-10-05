@@ -4,17 +4,17 @@ import 'package:path/path.dart' as p;
 /// the editor's insert menu. We use readable `{token}` names rather than Photo
 /// Mechanic's cryptic `%`/`{}` codes — the whole point of "better than PM".
 const Map<String, String> kTemplateVariableHelp = {
-  'year': "Capture year, e.g. 2026 (today's if the photo has no date)",
-  'month': 'Capture month, 01–12',
-  'day': 'Capture day, 01–31',
-  'date': 'Capture date, YYYY-MM-DD',
-  'time': 'Capture time, HH:MM:SS',
-  'filename': 'File name with extension, e.g. DSC_0001.ARW',
-  'name': 'File name without extension, e.g. DSC_0001',
-  'ext': 'File extension without the dot, e.g. ARW',
-  'camera': 'Camera model (blank if unknown)',
-  'lens': 'Lens model (blank if unknown)',
-  'seq': 'Running number across the applied photos, starting at 1',
+  'year': "拍摄年份，如 2026（照片无日期时用今天）",
+  'month': '拍摄月份，01–12',
+  'day': '拍摄日，01–31',
+  'date': '拍摄日期，YYYY-MM-DD',
+  'time': '拍摄时间，HH:MM:SS',
+  'filename': '含扩展名的文件名，如 DSC_0001.ARW',
+  'name': '不含扩展名的文件名，如 DSC_0001',
+  'ext': '不含点的扩展名，如 ARW',
+  'camera': '相机机型（未知时为空）',
+  'lens': '镜头型号（未知时为空）',
+  'seq': '跨应用照片的流水号，从 1 开始',
 };
 
 /// Builds the `{token}` → value map for one photo. Date tokens fall back to the

@@ -14,7 +14,7 @@ sealed class CullUndoEntry {
   String get noun;
 
   /// Human-readable summary for the notice bar ("rating (3 photos)").
-  String describe() => photoCount == 1 ? noun : '$noun ($photoCount photos)';
+  String describe() => photoCount == 1 ? noun : '$noun（$photoCount 张）';
 }
 
 /// A star-rating change.
@@ -32,7 +32,7 @@ class RatingUndoEntry extends CullUndoEntry {
   int get photoCount => before.length;
 
   @override
-  String get noun => 'rating';
+  String get noun => '星级';
 }
 
 /// A pick/reject flag change.
@@ -50,7 +50,7 @@ class FlagUndoEntry extends CullUndoEntry {
   int get photoCount => before.length;
 
   @override
-  String get noun => 'flag';
+  String get noun => '标记';
 }
 
 /// A colour-label change.
@@ -68,7 +68,7 @@ class ColorUndoEntry extends CullUndoEntry {
   int get photoCount => before.length;
 
   @override
-  String get noun => 'colour label';
+  String get noun => '色标';
 }
 
 /// A rotation. Stored as the applied delta, not a snapshot: undo applies the
@@ -91,7 +91,7 @@ class RotationUndoEntry extends CullUndoEntry {
   int get photoCount => photoIds.length;
 
   @override
-  String get noun => 'rotation';
+  String get noun => '旋转';
 }
 
 /// A manual bracket-stack / unstack change.
@@ -116,7 +116,7 @@ class StackUndoEntry extends CullUndoEntry {
   int get photoCount => before.length;
 
   @override
-  String get noun => stacking ? 'stack' : 'unstack';
+  String get noun => stacking ? '堆叠' : '取消堆叠';
 }
 
 /// A bounded undo/redo stack for cull-mark changes. Pure bookkeeping — the

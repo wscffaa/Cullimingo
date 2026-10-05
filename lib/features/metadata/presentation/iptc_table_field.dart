@@ -127,7 +127,7 @@ class _IptcTableFieldState extends State<IptcTableField> {
                 SizedBox(
                   width: 32,
                   child: IconButton(
-                    tooltip: 'Remove row',
+                    tooltip: '删除行',
                     iconSize: 18,
                     padding: EdgeInsets.zero,
                     icon: const Icon(
@@ -145,7 +145,7 @@ class _IptcTableFieldState extends State<IptcTableField> {
           child: TextButton.icon(
             onPressed: _addRow,
             icon: const Icon(Icons.add, size: 16),
-            label: const Text('Add row'),
+            label: const Text('添加行'),
           ),
         ),
       ],

@@ -17,7 +17,7 @@ void showLogViewer(BuildContext context) {
       MaterialPageRoute<void>(
         builder: (context) => TalkerScreen(
           talker: appTalker,
-          appBarTitle: 'Cullimingo Logs',
+          appBarTitle: 'Cullimingo 日志',
           theme: TalkerScreenTheme.fromTheme(Theme.of(context)),
         ),
       ),
@@ -42,8 +42,7 @@ void showAboutCullimingo(BuildContext context) {
     children: const [
       SizedBox(height: 12),
       Text(
-        'A fast, cross-platform photo culling app. '
-        'Ingest, cull, filter, export, hand off — speed is the product.',
+        '一款快速的跨平台照片筛选应用。导入、筛选、过滤、导出、移交——速度即产品。',
       ),
     ],
   );
