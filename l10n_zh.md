@@ -794,3 +794,10 @@
 | `Yellow` | 黄 | `shared/models/cull_marks.dart` |
 | `Choose…` | 选择… | `shared/widgets/dialog_kit.dart` |
 | `Customer / assignment name` | 客户 / 任务名称 | `shared/widgets/dialog_kit.dart` |
+
+## 新增功能字符串（日期筛选，zh-cn 自有功能）
+
+| 英文 | 中文 | 所在文件 |
+|---|---|---|
+| Date (feature-added) | 日期 | lib/features/filter/presentation/filter_bar.dart |
+| All dates (feature-added) | 全部日期 | lib/features/filter/presentation/filter_bar.dart |
