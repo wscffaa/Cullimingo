@@ -137,7 +137,7 @@ void main() {
     expect(
       find.descendant(
         of: find.byType(AlertDialog),
-        matching: find.text('Metadata'),
+        matching: find.text('元数据'),
       ),
       findsOneWidget,
     );

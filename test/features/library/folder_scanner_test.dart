@@ -171,7 +171,7 @@ void main() {
         );
         expect(await names(scan.files), {'p1.jpg'});
         expect(scan.unreadable.single.path, tmp.path);
-        expect(scan.unreadable.single.reason, contains('stalled'));
+        expect(scan.unreadable.single.reason, contains('停滞'));
       },
       timeout: const Timeout(Duration(seconds: 30)),
     );

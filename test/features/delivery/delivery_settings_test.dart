@@ -83,7 +83,7 @@ void main() {
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
     // Delivery servers now live under the dialog's "Delivery" nav-rail tab.
-    await tester.tap(find.text('Delivery'));
+    await tester.tap(find.text('交付'));
     await tester.pumpAndSettle();
   }
 
@@ -127,18 +127,18 @@ void main() {
     tester,
   ) async {
     await pumpDialog(tester);
-    await tester.tap(find.text('Add server…'));
+    await tester.tap(find.text('添加服务器…'));
     await tester.pumpAndSettle();
 
-    await tester.enterText(fieldWithHint('Name (e.g. AP wire)'), 'Reuters');
+    await tester.enterText(fieldWithHint('名称（如 AP 通讯社）'), 'Reuters');
     await tester.enterText(fieldWithHint('Host'), 'wire.example.com');
     await tester.enterText(
-      fieldWithHint('Username (empty = anonymous)'),
+      fieldWithHint('用户名（留空 = 匿名）'),
       'niels',
     );
-    await tester.enterText(fieldWithHint('Password'), 'hunter2');
+    await tester.enterText(fieldWithHint('密码'), 'hunter2');
     await tester.enterText(
-      fieldWithHint('Remote folder (e.g. incoming/photos)'),
+      fieldWithHint('远程文件夹（如 incoming/photos）'),
       'in/tray',
     );
     await tester.pump();
@@ -165,15 +165,15 @@ void main() {
     secrets.secrets[deliveryPasswordKey(seed.id)] = 'old-pass';
     await pumpDialog(tester);
 
-    await tester.tap(find.byTooltip('Edit server'));
+    await tester.tap(find.byTooltip('编辑服务器'));
     await tester.pumpAndSettle();
     // The stored password is pre-filled for editing.
     expect(
-      tester.widget<TextField>(fieldWithHint('Password')).controller?.text,
+      tester.widget<TextField>(fieldWithHint('密码')).controller?.text,
       'old-pass',
     );
-    await tester.enterText(fieldWithHint('Name (e.g. AP wire)'), 'AP Berlin');
-    await tester.enterText(fieldWithHint('Password'), 'new-pass');
+    await tester.enterText(fieldWithHint('名称（如 AP 通讯社）'), 'AP Berlin');
+    await tester.enterText(fieldWithHint('密码'), 'new-pass');
     await tester.pump();
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
@@ -194,7 +194,7 @@ void main() {
     secrets.secrets[deliveryPasswordKey(seed.id)] = 'old-pass';
     await pumpDialog(tester);
 
-    await tester.tap(find.byTooltip('Remove server'));
+    await tester.tap(find.byTooltip('删除服务器'));
     await tester.pump();
     expect(find.textContaining('AP wire'), findsNothing);
 
@@ -209,16 +209,16 @@ void main() {
     tester,
   ) async {
     await pumpDialog(tester);
-    await tester.tap(find.text('Add server…'));
+    await tester.tap(find.text('添加服务器…'));
     await tester.pumpAndSettle();
-    await tester.enterText(fieldWithHint('Name (e.g. AP wire)'), 'Reuters');
+    await tester.enterText(fieldWithHint('名称（如 AP 通讯社）'), 'Reuters');
     await tester.enterText(fieldWithHint('Host'), 'wire.example.com');
-    await tester.enterText(fieldWithHint('Password'), 'hunter2');
+    await tester.enterText(fieldWithHint('密码'), 'hunter2');
     await tester.pump();
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Cancel'));
+    await tester.tap(find.text('取消'));
     await tester.pumpAndSettle();
 
     expect(settingsFile().existsSync(), isFalse);
@@ -229,7 +229,7 @@ void main() {
     tester,
   ) async {
     await pumpDialog(tester);
-    await tester.tap(find.text('Add server…'));
+    await tester.tap(find.text('添加服务器…'));
     await tester.pumpAndSettle();
 
     FilledButton okButton() => tester.widget<FilledButton>(
@@ -237,7 +237,7 @@ void main() {
     );
     expect(okButton().onPressed, isNull);
 
-    await tester.enterText(fieldWithHint('Name (e.g. AP wire)'), 'X');
+    await tester.enterText(fieldWithHint('名称（如 AP 通讯社）'), 'X');
     await tester.enterText(fieldWithHint('Host'), 'h');
     await tester.enterText(fieldWithHint('Port'), 'nope');
     await tester.pump();

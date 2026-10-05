@@ -95,15 +95,15 @@ void main() {
     await tester.pumpAndSettle();
 
     // Title reflects the count, and the form is shown.
-    expect(find.text('Export 2 photos'), findsOneWidget);
-    expect(find.text('Long edge'), findsOneWidget);
+    expect(find.text('导出 2 张照片'), findsOneWidget);
+    expect(find.text('长边'), findsOneWidget);
     expect(find.text('2048 px'), findsOneWidget);
 
     // The live preview runs the real planner: keep-names forces .jpg.
     expect(find.textContaining('DSC_0001.jpg'), findsOneWidget);
 
     // The honest expectations note is present.
-    expect(find.textContaining('not a Capture One'), findsOneWidget);
+    expect(find.textContaining('不是 Capture One'), findsOneWidget);
 
     // The dialog only configures — it never runs the export inline anymore.
     expect(find.textContaining('Exporting'), findsNothing);
@@ -113,7 +113,7 @@ void main() {
     tester,
   ) async {
     final sources = [_src('/s/DSC_0001.ARW'), _src('/s/DSC_0002.JPG')];
-    final request = await openAndAct(tester, sources, tap: 'Export 2');
+    final request = await openAndAct(tester, sources, tap: '导出 2 张');
 
     expect(request, isNotNull);
     expect(request!.destinationRoot, dest);
@@ -150,22 +150,22 @@ void main() {
       await tester.pumpAndSettle();
 
       // Switch the destination mode to beside-the-originals.
-      await tester.tap(find.text('Choose a folder…'));
+      await tester.tap(find.text('选择文件夹…'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Same folder as originals').last);
+      await tester.tap(find.text('与原文件同文件夹').last);
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Export 1'));
+      await tester.tap(find.text('导出 1 张'));
       await tester.pumpAndSettle();
 
       expect(result!.nextToOriginals, isTrue);
       expect(result!.destinationRoot, isNull);
-      expect(result!.subfolder, 'Exports'); // the default subfolder
+      expect(result!.subfolder, '导出'); // the default subfolder
     },
   );
 
   testWidgets('Cancel returns null (no export)', (tester) async {
-    final request = await openAndAct(tester, [_src('/s/a.JPG')], tap: 'Cancel');
+    final request = await openAndAct(tester, [_src('/s/a.JPG')], tap: '取消');
     expect(request, isNull);
   });
 
@@ -195,14 +195,14 @@ void main() {
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Format'), findsOneWidget);
+    expect(find.text('格式'), findsOneWidget);
     await tester.tap(find.text('JPEG'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('WebP'));
     await tester.pumpAndSettle();
     expect(find.textContaining('a.webp'), findsOneWidget);
 
-    await tester.tap(find.text('Export 1'));
+    await tester.tap(find.text('导出 1 张'));
     await tester.pumpAndSettle();
     expect(result!.preset.format, ExportFormat.webp);
     expect(result!.plan.single.relPath, 'a.webp');
@@ -227,7 +227,7 @@ void main() {
     );
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
-    expect(find.text('Format'), findsNothing);
+    expect(find.text('格式'), findsNothing);
   });
 
   group('with a configured delivery server', () {
@@ -253,7 +253,7 @@ void main() {
     testWidgets('no server selected → plain local request', (tester) async {
       final request = await openAndAct(tester, [
         _src('/s/a.JPG'),
-      ], tap: 'Export 1');
+      ], tap: '导出 1 张');
       expect(request!.server, isNull);
       expect(request.destinationRoot, dest);
     });
@@ -282,16 +282,16 @@ void main() {
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Local folder'));
+      await tester.tap(find.text('本地文件夹'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Upload to AP wire (FTPS (explicit TLS))'));
+      await tester.tap(find.text('上传到 AP wire（FTPS（显式 TLS））'));
       await tester.pumpAndSettle();
 
       // Uploading only: no folder fields, button says upload.
-      expect(find.text('Choose a folder…'), findsNothing);
-      expect(find.text('Open folder when done'), findsNothing);
+      expect(find.text('选择文件夹…'), findsNothing);
+      expect(find.text('完成后打开文件夹'), findsNothing);
 
-      await tester.tap(find.text('Export & upload 1'));
+      await tester.tap(find.text('导出并上传 1 张'));
       await tester.pumpAndSettle();
 
       expect(result!.server, server);
@@ -302,14 +302,14 @@ void main() {
       // remembered destination re-enables the button.
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Local folder'));
+      await tester.tap(find.text('本地文件夹'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Upload to AP wire (FTPS (explicit TLS))'));
+      await tester.tap(find.text('上传到 AP wire（FTPS（显式 TLS））'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Also keep a local copy'));
+      await tester.tap(find.text('同时保留本地副本'));
       await tester.pumpAndSettle();
-      expect(find.text('Open folder when done'), findsOneWidget);
-      await tester.tap(find.text('Export & upload 1'));
+      expect(find.text('完成后打开文件夹'), findsOneWidget);
+      await tester.tap(find.text('导出并上传 1 张'));
       await tester.pumpAndSettle();
       expect(result!.server, server);
       expect(result!.destinationRoot, dest);

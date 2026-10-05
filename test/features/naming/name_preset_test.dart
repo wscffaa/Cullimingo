@@ -70,13 +70,13 @@ void main() {
     test('rewrites engine tokens to friendly labels and back', () {
       const engine = '{shoot}_{seq:4}/{date:iso}';
       final display = engineToDisplay(engine);
-      expect(display, '{Job name}_{Counter 4}/{Date (2026-07-02)}');
+      expect(display, '{任务名称}_{计数器（4 位）}/{日期（2026-07-02）}');
       expect(displayToEngine(display), engine);
     });
 
     test('free-typed literal text and unknown tokens pass through', () {
-      expect(displayToEngine('my {Job name}-final'), 'my {shoot}-final');
-      expect(engineToDisplay('my {shoot}-final'), 'my {Job name}-final');
+      expect(displayToEngine('my {任务名称}-final'), 'my {shoot}-final');
+      expect(engineToDisplay('my {shoot}-final'), 'my {任务名称}-final');
       // An unknown token is left untouched (not a crash, not a rewrite).
       expect(displayToEngine('{Mystery}'), '{Mystery}');
     });

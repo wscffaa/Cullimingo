@@ -93,11 +93,11 @@ void main() {
     expect((await row(ids[1])).rating, 5);
 
     // One undo takes back the whole batch, restoring per-photo old values.
-    expect(await controller().undo(), 'rating (2 photos)');
+    expect(await controller().undo(), '星级（2 张）');
     expect((await row(ids[0])).rating, 2);
     expect((await row(ids[1])).rating, 0);
 
-    expect(await controller().redo(), 'rating (2 photos)');
+    expect(await controller().redo(), '星级（2 张）');
     expect((await row(ids[0])).rating, 5);
     expect((await row(ids[1])).rating, 5);
   });
@@ -107,11 +107,11 @@ void main() {
     await controller().applyFlag(PickFlag.reject);
     await controller().applyColor(ColorLabel.red);
 
-    expect(await controller().undo(), 'colour label');
+    expect(await controller().undo(), '色标');
     expect((await row(ids[2])).colorLabel, ColorLabel.none);
     expect((await row(ids[2])).flag, PickFlag.reject);
 
-    expect(await controller().undo(), 'flag');
+    expect(await controller().undo(), '标记');
     expect((await row(ids[2])).flag, PickFlag.none);
 
     expect(await controller().undo(), isNull);
@@ -135,11 +135,11 @@ void main() {
     await controller().applyRotation(1);
     expect((await row(ids[0])).userRotation, 1);
 
-    expect(await controller().undo(), 'rotation (2 photos)');
+    expect(await controller().undo(), '旋转（2 张）');
     expect((await row(ids[0])).userRotation, 0);
     expect((await row(ids[1])).userRotation, 0);
 
-    expect(await controller().redo(), 'rotation (2 photos)');
+    expect(await controller().redo(), '旋转（2 张）');
     expect((await row(ids[1])).userRotation, 1);
   });
 

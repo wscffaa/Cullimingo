@@ -131,9 +131,9 @@ void main() {
         IptcCore(caption: 'Two', credit: 'AP'),
       ]);
 
-      expect(find.textContaining('Editing 2 photos'), findsOneWidget);
+      expect(find.textContaining('正在编辑 2 张照片'), findsOneWidget);
       // Caption disagrees → a Mixed hint is shown on its field.
-      expect(find.textContaining('Mixed'), findsWidgets);
+      expect(find.textContaining('混合'), findsWidgets);
       // Structured tables are per-photo (serial) only — hidden in batch.
       expect(find.text('Tables'), findsNothing);
     },
@@ -148,7 +148,7 @@ void main() {
     ]);
 
     // credit agrees across both → prefilled, editable as one value.
-    await selectSection(tester, 'Rights');
+    await selectSection(tester, '权利');
     final creditField = tester.widget<TextField>(fieldOf(IptcField.credit));
     expect(creditField.controller!.text, 'AP');
   });
@@ -184,7 +184,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Touch only credit; leave the mixed caption alone.
-    await selectSection(tester, 'Rights');
+    await selectSection(tester, '权利');
     await tester.enterText(fieldOf(IptcField.credit), 'Reuters');
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
@@ -351,11 +351,11 @@ void main() {
       expect(textOf(tester, IptcField.caption), ' injury time');
 
       // The hot code filled fields in other sections; navigate to read them.
-      await selectSection(tester, 'Location');
+      await selectSection(tester, '地点');
       expect(textOf(tester, IptcField.city), 'München');
       expect(textOf(tester, IptcField.state), 'Bayern');
       expect(textOf(tester, IptcField.country), 'Germany');
-      await selectSection(tester, 'Rights');
+      await selectSection(tester, '权利');
       // The nested text code inside the hot value expanded immediately.
       expect(textOf(tester, IptcField.credit), 'Associated Press');
     });
@@ -472,7 +472,7 @@ void main() {
         (t) async {
           await t.tap(find.text('Load'));
           await t.pumpAndSettle();
-          await t.tap(find.text('From XMP file…'));
+          await t.tap(find.text('来自 XMP 文件…'));
           // The parse runs in a real isolate — let it finish outside fake
           // async.
           await t.runAsync(
@@ -501,7 +501,7 @@ void main() {
           savedTemplate = template;
         },
         (t) async {
-          await t.tap(find.text('Save as…'));
+          await t.tap(find.text('另存为…'));
           await t.pumpAndSettle();
           await t.enterText(
             find.descendant(
@@ -525,7 +525,7 @@ void main() {
     testWidgets('Load and Save as… are hidden without wiring', (tester) async {
       await run(tester, const [IptcCore()], (t) async {
         expect(find.text('Load'), findsNothing);
-        expect(find.text('Save as…'), findsNothing);
+        expect(find.text('另存为…'), findsNothing);
         expect(find.text('Clear'), findsOneWidget);
       });
     });

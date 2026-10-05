@@ -66,28 +66,28 @@ void main() {
   });
 
   test('describe names the mark and pluralizes the photo count', () {
-    expect(rating(1).describe(), 'rating');
+    expect(rating(1).describe(), '星级');
     expect(
       const RatingUndoEntry(before: {1: 0, 2: 3}, after: 5).describe(),
-      'rating (2 photos)',
+      '星级（2 张）',
     );
     expect(
       const FlagUndoEntry(
         before: {1: PickFlag.none},
         after: PickFlag.reject,
       ).describe(),
-      'flag',
+      '标记',
     );
     expect(
       const ColorUndoEntry(
         before: {1: ColorLabel.none, 2: ColorLabel.red, 3: ColorLabel.none},
         after: ColorLabel.blue,
       ).describe(),
-      'colour label (3 photos)',
+      '色标（3 张）',
     );
     expect(
       const RotationUndoEntry(photoIds: [1, 2], quarterTurnsCW: 1).describe(),
-      'rotation (2 photos)',
+      '旋转（2 张）',
     );
   });
 }

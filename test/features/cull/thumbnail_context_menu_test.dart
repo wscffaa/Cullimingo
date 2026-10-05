@@ -100,12 +100,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text(revealInFileManagerLabel), findsOneWidget);
     // The metadata editor + rotate actions are reachable from the menu.
-    expect(find.text('Edit metadata…'), findsOneWidget);
-    expect(find.text('Rotate left'), findsOneWidget);
-    expect(find.text('Rotate right'), findsOneWidget);
+    expect(find.text('编辑元数据…'), findsOneWidget);
+    expect(find.text('向左旋转'), findsOneWidget);
+    expect(find.text('向右旋转'), findsOneWidget);
 
     // Rate it 3 from the menu's star palette.
-    await tester.tap(find.byTooltip('Rate 3'));
+    await tester.tap(find.byTooltip('评 3 星'));
     await tester.pumpAndSettle();
 
     final rows = await tester.runAsync(
@@ -124,8 +124,8 @@ void main() {
     await tester.tap(find.byType(PhotoCell).first, buttons: kSecondaryButton);
     await tester.pumpAndSettle();
 
-    expect(find.text('Send to ContactSheet…'), findsOneWidget);
-    expect(find.text('Pull marks from ContactSheet…'), findsOneWidget);
+    expect(find.text('发送到 ContactSheet…'), findsOneWidget);
+    expect(find.text('从 ContactSheet 拉取标记…'), findsOneWidget);
 
     await tester.tapAt(const Offset(20, 20));
     await tester.pumpAndSettle();
@@ -140,7 +140,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(revealInFileManagerLabel), findsOneWidget); // menu is open
-    expect(find.text('Send to ContactSheet…'), findsNothing);
+    expect(find.text('发送到 ContactSheet…'), findsNothing);
 
     await tester.tapAt(const Offset(20, 20));
     await tester.pumpAndSettle();
@@ -204,10 +204,11 @@ void main() {
       // The multi-selection must survive the right-click (bug: it used to
       // collapse to just the clicked cell before the context menu opened).
       expect(container.read(cullControllerProvider).selectedIds, ids.toSet());
-      // (Two matches are expected: the toolbar's library-count label happens
-      // to read the same for this 2-photo fixture, plus the menu's own
-      // selection-count header.)
-      expect(find.text('2 photos'), findsNWidgets(2));
+      // (Two labels carry the count: the toolbar's library-count label
+      // reads "2 张" for this 2-photo fixture, and the menu's own
+      // selection-count header reads "2 张照片".)
+      expect(find.text('2 张'), findsOneWidget);
+      expect(find.text('2 张照片'), findsOneWidget);
 
       // Close it — see the cleanup note in the previous test.
       await tester.tapAt(const Offset(20, 20));
@@ -230,20 +231,21 @@ void main() {
 
     await tester.tap(find.byType(PhotoCell).first, buttons: kSecondaryButton);
     await tester.pumpAndSettle();
-    expect(find.text('2 photos'), findsNWidgets(2));
+    expect(find.text('2 张'), findsOneWidget);
+    expect(find.text('2 张照片'), findsOneWidget);
 
     // The menu has many entries and overflows the test viewport, so "Delete…"
     // (last, alone behind a divider) needs scrolling into view first.
-    await tester.ensureVisible(find.text('Delete…'));
+    await tester.ensureVisible(find.text('删除…'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Delete…'));
+    await tester.tap(find.text('删除…'));
     await tester.pumpAndSettle();
 
     // Confirmation names the whole selection, not just the clicked photo.
-    expect(find.textContaining('Move 2 photos to the Trash?'), findsOneWidget);
+    expect(find.textContaining('将 2 张照片移到废纸篓？'), findsOneWidget);
 
     // Cancel must leave both rows and the selection untouched.
-    await tester.tap(find.text('Cancel'));
+    await tester.tap(find.text('取消'));
     await tester.pumpAndSettle();
     expect(find.byType(PhotoCell), findsNWidgets(2));
     final remaining = await tester.runAsync(

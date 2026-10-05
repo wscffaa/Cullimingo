@@ -76,6 +76,9 @@ class PhotoFilterController extends _$PhotoFilterController {
 
   /// Sets the live filename search text (empty clears it).
   void setQuery(String value) => state = state.withQuery(value);
+
+  /// Restricts the grid to one capture day (a `yyyymmdd` key), null clears it.
+  void setDay(int? day) => state = state.withDay(day);
 }
 
 /// Startup seed for [FilterPresets] — the presets persisted last session,
@@ -315,6 +318,36 @@ final effectiveGroupsProvider = Provider<BurstGroups>(
       ref.watch(currentSimilarGroupsProvider) ?? ref.watch(burstGroupsProvider),
   name: 'effectiveGroups',
 );
+
+/// The slice of the photo stream the capture-day list depends on.
+final _dayInputProvider = Provider<_Projection<DateTime?>>((ref) {
+  final photos = ref.watch(photosProvider).value ?? const <Photo>[];
+  return _Projection([for (final p in photos) p.capturedAt]);
+}, name: 'dayInput');
+
+/// One capture day with its photo count, for the 日期 menu.
+typedef DayCount = ({int key, DateTime date, int count});
+
+/// Every capture day present in the current import, newest first, with live
+/// photo counts. Photos without EXIF capture time are not listed (and are
+/// hidden while a day filter is active).
+final availableDaysProvider = Provider<List<DayCount>>((ref) {
+  final counts = <int, ({DateTime date, int count})>{};
+  for (final ts in ref.watch(_dayInputProvider).items) {
+    final key = dayKeyOf(ts);
+    if (key == null) continue;
+    final e = counts[key];
+    counts[key] = e == null
+        ? (date: DateTime(ts!.year, ts.month, ts.day), count: 1)
+        : (date: e.date, count: e.count + 1);
+  }
+  final out = [
+    for (final e in counts.entries)
+      (key: e.key, date: e.value.date, count: e.value.count),
+  ];
+  out.sort((a, b) => b.key.compareTo(a.key));
+  return out;
+}, name: 'availableDays');
 
 /// The photos shown in the grid after the active filter is applied. Classic
 /// provider because it exposes the drift-generated `Photo` type (codegen can't

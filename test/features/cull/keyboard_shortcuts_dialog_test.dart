@@ -37,9 +37,9 @@ void main() {
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Keyboard shortcuts'), findsOneWidget);
-    expect(find.text('Pick'), findsOneWidget);
-    expect(find.text('Customize…'), findsOneWidget);
+    expect(find.text('键盘快捷键'), findsOneWidget);
+    expect(find.text('精选'), findsOneWidget);
+    expect(find.text('自定义…'), findsOneWidget);
   });
 
   testWidgets('editor opens and lists rebindable actions', (tester) async {
@@ -63,8 +63,8 @@ void main() {
     await tester.tap(find.text('open'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Customize shortcuts'), findsOneWidget);
-    expect(find.text('Reset to defaults'), findsOneWidget);
-    expect(find.text('Pick'), findsOneWidget);
+    expect(find.text('自定义快捷键'), findsOneWidget);
+    expect(find.text('恢复默认'), findsOneWidget);
+    expect(find.text('精选'), findsOneWidget);
   });
 }

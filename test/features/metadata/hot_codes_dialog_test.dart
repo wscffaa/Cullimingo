@@ -35,8 +35,8 @@ void main() {
     final result = await open(tester, const HotCodes());
 
     // The empty table seeds one blank entry with a City field row.
-    await tester.enterText(find.widgetWithText(TextField, 'e.g. arena'), 'hq');
-    await tester.enterText(find.widgetWithText(TextField, 'value'), 'Bonn');
+    await tester.enterText(find.widgetWithText(TextField, '例如 arena'), 'hq');
+    await tester.enterText(find.widgetWithText(TextField, '值'), 'Bonn');
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
@@ -53,17 +53,17 @@ void main() {
     );
     final result = await open(tester, initial);
 
-    expect(find.text('Hot codes'), findsOneWidget);
+    expect(find.text('快捷代码'), findsOneWidget);
     // Both field rows render with their values.
     expect(find.widgetWithText(TextField, 'München'), findsOneWidget);
     expect(find.widgetWithText(TextField, 'Bayern'), findsOneWidget);
 
     // Add a third field to the code (prefills the first unused field).
-    await tester.tap(find.text('Add field'));
+    await tester.tap(find.text('添加字段'));
     await tester.pumpAndSettle();
     // `.last` = the freshly added row (hint Texts exist on filled fields too).
     await tester.enterText(
-      find.widgetWithText(TextField, 'value').last,
+      find.widgetWithText(TextField, '值').last,
       'Allianz Arena',
     );
     await tester.tap(find.text('Save'));
@@ -88,7 +88,7 @@ void main() {
 
   testWidgets('Cancel returns null', (tester) async {
     final result = await open(tester, const HotCodes());
-    await tester.tap(find.text('Cancel'));
+    await tester.tap(find.text('取消'));
     await tester.pumpAndSettle();
     expect(result(), isNull);
   });

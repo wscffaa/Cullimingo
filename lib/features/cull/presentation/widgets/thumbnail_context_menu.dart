@@ -232,7 +232,7 @@ class _RatingRow extends StatelessWidget {
           IconButton(
             iconSize: 18,
             visualDensity: VisualDensity.compact,
-            tooltip: 'Rate $i',
+            tooltip: '评 $i 星',
             icon: Icon(
               i <= photo.rating
                   ? Icons.star_rounded

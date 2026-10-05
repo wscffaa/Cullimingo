@@ -742,7 +742,7 @@ class _MarksRow extends StatelessWidget {
             FlagBadge(flag: flag, size: 16),
             const SizedBox(width: AppSpacing.xs),
             Text(
-              flag == PickFlag.pick ? 'Pick' : '剔除',
+              flag == PickFlag.pick ? '精选' : '剔除',
               style: const TextStyle(
                 color: AppColors.textPrimary,
                 fontSize: 13,
@@ -754,10 +754,7 @@ class _MarksRow extends StatelessWidget {
     );
   }
 
-  static String _name(ColorLabel c) {
-    final n = c.name;
-    return '${n[0].toUpperCase()}${n.substring(1)}';
-  }
+  static String _name(ColorLabel c) => c.displayName;
 }
 
 class _Keywords extends StatelessWidget {

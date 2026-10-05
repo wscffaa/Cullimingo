@@ -33,7 +33,7 @@ void main() {
   Finder subjectField() => find.byWidgetPredicate(
     (w) =>
         w is TextField &&
-        (w.decoration?.hintText?.contains('IPTC vocabulary') ?? false),
+        (w.decoration?.hintText?.contains('IPTC 词汇') ?? false),
   );
 
   testWidgets('typing shows vocabulary suggestions; picking inserts the code', (
@@ -89,6 +89,6 @@ void main() {
   ) async {
     await pumpEditor(tester, vocab: const MediaTopics([]));
     expect(subjectField(), findsNothing);
-    expect(find.text('Media topics'), findsOneWidget);
+    expect(find.text('媒体主题'), findsOneWidget);
   });
 }

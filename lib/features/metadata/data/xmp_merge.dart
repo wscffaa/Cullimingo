@@ -25,14 +25,14 @@ const String _nsXml = 'http://www.w3.org/XML/1998/namespace';
 const Map<String, Set<String>> _ownedByNs = {
   _nsXmp: {'Rating', 'Label'},
   kCullimingoNs: {'flag', 'StackId', 'EditStatus'},
-  _nsTiff: {'方向'},
+  _nsTiff: {'Orientation'},
   _nsDc: {'subject', 'description', 'title', 'rights', 'creator'},
   _nsPhotoshop: {
     'DateCreated',
     'Headline',
     'AuthorsPosition',
     'Credit',
-    '来源',
+    'Source',
     'Instructions',
     'City',
     'State',

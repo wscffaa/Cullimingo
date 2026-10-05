@@ -14,12 +14,14 @@ Photo _photo({
   String caption = '',
   String? path,
   bool isRaw = false,
+  DateTime? capturedAt,
 }) {
   return Photo(
     id: id,
     importId: 1,
     path: path ?? '/x/$id.jpg',
     mtime: DateTime(2026),
+    capturedAt: capturedAt,
     orientation: 1,
     userRotation: 0,
     hasCrop: false,
@@ -86,10 +88,10 @@ void main() {
     await tester.pump(); // photos stream emits
 
     // "Needs caption" now lives inside the "Metadata" dropdown.
-    await tester.tap(find.text('Metadata'));
+    await tester.tap(find.text('元数据'));
     await tester.pumpAndSettle();
 
-    final entry = find.text('Needs caption (2)');
+    final entry = find.text('缺说明（2）');
     expect(entry, findsOneWidget);
 
     await tester.tap(entry);
@@ -122,10 +124,10 @@ void main() {
 
       // The RAW/JPEG radios live inside the "Grouping" dropdown, shown because
       // the folder mixes both types.
-      await tester.tap(find.text('Grouping'));
+      await tester.tap(find.text('分组'));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('JPEG only (1)'));
+      await tester.tap(find.text('仅 JPEG（1）'));
       await tester.pump();
       expect(
         container.read(photoFilterControllerProvider).fileType,
@@ -148,11 +150,11 @@ void main() {
         .setFileType(FileTypeFilter.jpeg);
     await tester.pump();
 
-    await tester.tap(find.text('Grouping'));
+    await tester.tap(find.text('分组'));
     await tester.pumpAndSettle();
-    expect(find.text('All file types'), findsOneWidget);
+    expect(find.text('全部文件类型'), findsOneWidget);
 
-    await tester.tap(find.text('All file types'));
+    await tester.tap(find.text('全部文件类型'));
     await tester.pump();
     expect(
       container.read(photoFilterControllerProvider).fileType,
@@ -175,9 +177,45 @@ void main() {
     expect(container.read(filteredPhotosProvider).map((p) => p.id), [1]);
 
     // Clearing the whole filter via "All" empties the search box too.
-    await tester.tap(find.text('All (2)'));
+    await tester.tap(find.text('全部（2）'));
     await tester.pump();
     expect(container.read(photoFilterControllerProvider).query, '');
     expect(find.text('dsc_004'), findsNothing);
+  });
+
+  testWidgets('日期 menu filters the grid by capture day and back', (
+    tester,
+  ) async {
+    final dayA = DateTime(2026, 10, 2, 9, 30);
+    final dayB = DateTime(2026, 10, 3, 18, 0);
+    final container = await _pumpBar(tester, [
+      _photo(id: 1, capturedAt: dayA),
+      _photo(id: 2, capturedAt: dayB),
+      _photo(id: 3, capturedAt: dayB),
+      _photo(id: 4), // no EXIF capture time — must not appear in the menu
+    ]);
+
+    await tester.tap(find.text('日期'));
+    await tester.pumpAndSettle();
+
+    // (a) both capture days are listed with live counts, newest first;
+    // the photo without a capture time is not listed at all.
+    expect(find.text('全部日期（4）'), findsOneWidget);
+    expect(find.text('10月3日（2）'), findsOneWidget);
+    expect(find.text('10月2日（1）'), findsOneWidget);
+
+    // (b) picking one day restricts the grid to that day's photos.
+    await tester.tap(find.text('10月2日（1）'));
+    await tester.pump();
+    expect(container.read(photoFilterControllerProvider).day, dayKeyOf(dayA));
+    expect(container.read(filteredPhotosProvider).map((p) => p.id), [1]);
+
+    // (c) "全部日期" restores the full grid.
+    await tester.tap(find.text('日期'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('全部日期（4）'));
+    await tester.pump();
+    expect(container.read(photoFilterControllerProvider).day, isNull);
+    expect(container.read(filteredPhotosProvider).length, 4);
   });
 }

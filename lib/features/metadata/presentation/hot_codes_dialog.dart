@@ -249,7 +249,7 @@ class _HotCodesDialogState extends State<HotCodesDialog> {
               style: const TextStyle(fontSize: 13),
               decoration: const InputDecoration(
                 isDense: true,
-                hintText: 'value',
+                hintText: '值',
                 border: OutlineInputBorder(),
               ),
             ),

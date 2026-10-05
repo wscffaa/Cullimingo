@@ -23,7 +23,7 @@ Future<bool?> showDeleteSelectedPhotosDialog(
   context,
   title: count == 1 ? '删除照片' : '删除 $count 张照片',
   count: count,
-  descriptor: count == 1 ? 'photo' : 'photos',
+  descriptor: '张照片',
 );
 
 Future<bool?> _showTrashConfirmDialog(
@@ -37,7 +37,7 @@ Future<bool?> _showTrashConfirmDialog(
     builder: (context) => AlertDialog(
       title: Text(title),
       content: Text(
-        '将 $count $descriptor 移到废纸篓？\n\n原图及其 .xmp 附属文件将离开此文件夹。不会永久删除——可从废纸篓恢复。',
+        '将 $count $descriptor移到废纸篓？\n\n原图及其 .xmp 附属文件将离开此文件夹。不会永久删除——可从废纸篓恢复。',
       ),
       actions: [
         TextButton(

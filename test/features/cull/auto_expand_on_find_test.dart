@@ -117,7 +117,7 @@ void main() {
   ) async {
     final ids = await pumpPage(tester);
 
-    await tester.tap(find.byTooltip('Find by filename (⌘F)'));
+    await tester.tap(find.byTooltip('按文件名查找（⌘F）'));
     await tester.pumpAndSettle();
     // The client only sent back the normal exposure's filename.
     await tester.enterText(

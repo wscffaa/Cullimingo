@@ -43,15 +43,15 @@ void main() {
     final result = await pumpDialog(tester);
 
     // Default protocol is FTPS → toggle visible, key-file field not.
-    expect(find.text('Accept self-signed certificate'), findsOneWidget);
+    expect(find.text('接受自签名证书'), findsOneWidget);
     expect(
-      fieldWithHint('Private key file (empty = password auth)'),
+      fieldWithHint('私钥文件（留空 = 密码认证）'),
       findsNothing,
     );
 
-    await tester.enterText(fieldWithHint('Name (e.g. AP wire)'), 'Wire');
+    await tester.enterText(fieldWithHint('名称（如 AP 通讯社）'), 'Wire');
     await tester.enterText(fieldWithHint('Host'), 'h');
-    await tester.tap(find.text('Accept self-signed certificate'));
+    await tester.tap(find.text('接受自签名证书'));
     await tester.pump();
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
@@ -64,20 +64,20 @@ void main() {
       'passphrase once a key is set', (tester) async {
     final result = await pumpDialog(tester);
 
-    await tester.tap(find.text('FTPS (explicit TLS)'));
+    await tester.tap(find.text('FTPS（显式 TLS）'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('SFTP').last);
     await tester.pumpAndSettle();
 
-    expect(find.text('Accept self-signed certificate'), findsNothing);
-    final keyField = fieldWithHint('Private key file (empty = password auth)');
+    expect(find.text('接受自签名证书'), findsNothing);
+    final keyField = fieldWithHint('私钥文件（留空 = 密码认证）');
     expect(keyField, findsOneWidget);
-    expect(fieldWithHint('Password'), findsOneWidget);
+    expect(fieldWithHint('密码'), findsOneWidget);
 
     await tester.enterText(keyField, '/home/n/.ssh/id_ed25519');
     await tester.pump();
     expect(
-      fieldWithHint('Key passphrase (empty = unencrypted key)'),
+      fieldWithHint('密钥口令（留空 = 密钥未加密）'),
       findsOneWidget,
     );
 
@@ -87,7 +87,7 @@ void main() {
       '22',
     );
 
-    await tester.enterText(fieldWithHint('Name (e.g. AP wire)'), 'Wire');
+    await tester.enterText(fieldWithHint('名称（如 AP 通讯社）'), 'Wire');
     await tester.enterText(fieldWithHint('Host'), 'h');
     await tester.pump();
     await tester.tap(find.text('OK'));

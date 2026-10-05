@@ -181,7 +181,7 @@ void main() {
           isA<TemplateFileException>().having(
             (e) => e.message,
             'message',
-            contains('could not be opened'),
+            contains('无法打开该文件'),
           ),
         ),
       );
@@ -198,7 +198,7 @@ void main() {
           isA<TemplateFileException>().having(
             (e) => e.message,
             'message',
-            contains('not an XMP template'),
+            contains('不是 XMP 模板'),
           ),
         ),
       );
@@ -220,7 +220,7 @@ void main() {
           isA<TemplateFileException>().having(
             (e) => e.message,
             'message',
-            contains('no template fields'),
+            contains('不包含模板字段'),
           ),
         ),
       );

@@ -21,7 +21,7 @@ void main() {
       notifier().startExport(10);
       expect(
         read().export,
-        const JobProgress(verb: 'Exporting', done: 0, total: 10),
+        const JobProgress(verb: '导出', done: 0, total: 10),
       );
       notifier().tickExport(4);
       expect(read().export!.done, 4);
@@ -76,7 +76,7 @@ void main() {
       notifier().startFindSimilar(50);
       expect(
         read().findSimilar,
-        const JobProgress(verb: 'Finding similar', done: 0, total: 50),
+        const JobProgress(verb: '查找相似', done: 0, total: 50),
       );
       notifier().tickFindSimilar(48);
       expect(read().findSimilar!.done, 48);

@@ -179,7 +179,7 @@ void main() {
           isA<FtpException>().having(
             (e) => e.message,
             'message',
-            contains('TLS handshake'),
+            contains('TLS 握手'),
           ),
         ),
       );

@@ -106,7 +106,7 @@ void main() {
 
     await tester.sendKeyEvent(LogicalKeyboardKey.keyX); // reject
     await pumpFlash(tester);
-    expect(find.text('Rejected'), findsOneWidget);
+    expect(find.text('已剔除'), findsOneWidget);
   });
 
   testWidgets('no confirmation flash when the setting is off', (tester) async {
@@ -114,7 +114,7 @@ void main() {
 
     await tester.sendKeyEvent(LogicalKeyboardKey.keyX); // reject
     await pumpFlash(tester);
-    expect(find.text('Rejected'), findsNothing);
+    expect(find.text('已剔除'), findsNothing);
   });
 
   testWidgets('suppressed under auto-advance (the advance is the confirm)', (
@@ -127,6 +127,6 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.keyX);
     await pumpFlash(tester);
     expect(find.text('2 / 3'), findsOneWidget); // advanced
-    expect(find.text('Rejected'), findsNothing); // but not flashed
+    expect(find.text('已剔除'), findsNothing); // but not flashed
   });
 }

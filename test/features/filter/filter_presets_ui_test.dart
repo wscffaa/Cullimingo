@@ -70,7 +70,7 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.filter_alt_outlined));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Save current filter…'));
+    await tester.tap(find.text('保存当前筛选…'));
     await tester.pumpAndSettle();
 
     // Scope to the dialog's field — the filter bar now also has a search box.

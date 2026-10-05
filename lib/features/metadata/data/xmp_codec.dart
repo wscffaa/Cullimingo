@@ -672,7 +672,7 @@ XmpData decodeXmp(String source) {
     authorTitle: simple('AuthorsPosition'),
     copyright: langAltOrSimple('rights'),
     credit: simple('Credit'),
-    source: simple('来源'),
+    source: simple('Source'),
     instructions: simple('Instructions'),
     location: simple('Location'),
     city: simple('City'),
@@ -739,7 +739,7 @@ XmpData decodeXmp(String source) {
     keywords: lisUnder('subject'),
     iptc: iptc,
     dateCreated: DateTime.tryParse(simple('DateCreated')),
-    orientation: _orientationFromXmp(simpleOrNull('方向')),
+    orientation: _orientationFromXmp(simpleOrNull('Orientation')),
     crop: _cropFromXmp(simpleOrNull),
     // Preserves the null (absent) / "" (unstacked) / id (stacked) trichotomy.
     stackId: simpleOrNull('StackId'),

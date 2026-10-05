@@ -53,10 +53,10 @@ void main() {
   });
 
   test('formatOrientation', () {
-    expect(formatOrientation(1), 'Normal');
-    expect(formatOrientation(6), 'Rotated 90° CW');
-    expect(formatOrientation(8), 'Rotated 90° CCW');
-    expect(formatOrientation(3), 'Rotated 180°');
+    expect(formatOrientation(1), '正常');
+    expect(formatOrientation(6), '顺时针旋转 90°');
+    expect(formatOrientation(8), '逆时针旋转 90°');
+    expect(formatOrientation(3), '旋转 180°');
     expect(formatOrientation(99), isNull);
   });
 

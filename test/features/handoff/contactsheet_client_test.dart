@@ -170,7 +170,7 @@ void main() {
         throwsA(
           isA<ContactSheetException>()
               .having((e) => e.statusCode, 'statusCode', 401)
-              .having((e) => e.message, 'message', contains('token')),
+              .having((e) => e.message, 'message', contains('令牌')),
         ),
       );
     });

@@ -88,7 +88,7 @@ void main() {
     );
 
     expect(find.text('DSC_0001.jpg'), findsOneWidget);
-    expect(find.text('1 of 3'), findsOneWidget);
+    expect(find.text('第 1 / 3 张'), findsOneWidget);
     final prev = tester.widget<IconButton>(
       find.widgetWithIcon(IconButton, Icons.chevron_left),
     );
@@ -112,7 +112,7 @@ void main() {
 
     expect(applied.indexes, [0]);
     expect(applied.changes.single, {IptcField.caption: 'One captioned'});
-    expect(find.text('2 of 3'), findsOneWidget);
+    expect(find.text('第 2 / 3 张'), findsOneWidget);
     expect(tester.widget<TextField>(caption()).controller!.text, 'Two');
 
     // Back: photo 1 shows the value that was written through.
@@ -143,7 +143,7 @@ void main() {
 
     // Content is the default tab, where Date Created lives.
     expect(find.text('2026-06-25 10:01'), findsOneWidget);
-    expect(find.text('From capture time'), findsOneWidget);
+    expect(find.text('来自拍摄时间'), findsOneWidget);
   });
 
   testWidgets('the Tables section edits a photo’s structured tables', (
@@ -163,7 +163,7 @@ void main() {
     );
     await pumpSerial(tester, s);
 
-    await tester.tap(find.text('Tables'));
+    await tester.tap(find.text('表格'));
     await tester.pumpAndSettle();
 
     // The seeded image-creator row shows in the first table cell.
@@ -189,7 +189,7 @@ void main() {
     await tester.tap(find.byIcon(Icons.chevron_right));
     await tester.pumpAndSettle();
     expect(applied.indexes, isEmpty);
-    expect(find.text('2 of 2'), findsOneWidget);
+    expect(find.text('第 2 / 2 张'), findsOneWidget);
   });
 
   testWidgets('⌘Enter walks forward, ⌘⇧Enter walks back', (tester) async {
@@ -201,11 +201,11 @@ void main() {
 
     await tester.enterText(caption(), 'First');
     await cmdEnter(tester);
-    expect(find.text('2 of 3'), findsOneWidget);
+    expect(find.text('第 2 / 3 张'), findsOneWidget);
     expect(applied.indexes, [0]);
 
     await cmdEnter(tester, shift: true);
-    expect(find.text('1 of 3'), findsOneWidget);
+    expect(find.text('第 1 / 3 张'), findsOneWidget);
   });
 
   testWidgets('⌘PgDn/⌘PgUp page-flip through the walk', (tester) async {
@@ -224,15 +224,15 @@ void main() {
 
     await tester.enterText(caption(), 'First');
     await cmdPage(tester, LogicalKeyboardKey.pageDown);
-    expect(find.text('2 of 2'), findsOneWidget);
+    expect(find.text('第 2 / 2 张'), findsOneWidget);
     expect(applied.indexes, [0]); // navigation auto-saved the edit
 
     // At the end the flip stops — no close (unlike ⌘Enter).
     await cmdPage(tester, LogicalKeyboardKey.pageDown);
-    expect(find.text('2 of 2'), findsOneWidget);
+    expect(find.text('第 2 / 2 张'), findsOneWidget);
 
     await cmdPage(tester, LogicalKeyboardKey.pageUp);
-    expect(find.text('1 of 2'), findsOneWidget);
+    expect(find.text('第 1 / 2 张'), findsOneWidget);
   });
 
   testWidgets('⌘Enter on the last photo saves and closes', (tester) async {
@@ -243,7 +243,7 @@ void main() {
     );
 
     await cmdEnter(tester); // 1 → 2, nothing to save
-    expect(find.text('2 of 2'), findsOneWidget);
+    expect(find.text('第 2 / 2 张'), findsOneWidget);
 
     await tester.enterText(caption(), 'Last one');
     await cmdEnter(tester); // at the end: apply + close
@@ -278,7 +278,7 @@ void main() {
     );
 
     await tester.enterText(caption(), 'Discard me');
-    await tester.tap(find.text('Cancel'));
+    await tester.tap(find.text('取消'));
     await tester.pumpAndSettle();
 
     expect(applied.indexes, isEmpty);
@@ -321,8 +321,8 @@ void main() {
         gpsSerial(applied, hasGps: [true, true], geocoded: geocoded),
       );
 
-      await selectSection(tester, 'Location');
-      await tester.tap(find.text('From GPS'));
+      await selectSection(tester, '地点');
+      await tester.tap(find.text('来自 GPS'));
       await tester.pumpAndSettle();
       expect(geocoded, [0]);
 
@@ -355,9 +355,9 @@ void main() {
         gpsSerial(applied, hasGps: [false, true], geocoded: []),
       );
 
-      await selectSection(tester, 'Location');
+      await selectSection(tester, '地点');
       final button = tester.widget<TextButton>(
-        find.widgetWithText(TextButton, 'From GPS'),
+        find.widgetWithText(TextButton, '来自 GPS'),
       );
       expect(button.onPressed, isNull);
     });

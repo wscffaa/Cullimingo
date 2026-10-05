@@ -122,7 +122,7 @@ void main() {
     await tester.enterText(find.byType(TextField).at(2), 'My Shoot');
     await tester.pump();
 
-    await tester.tap(find.text('Send 2'));
+    await tester.tap(find.text('发送 2'));
     await tester.pumpAndSettle();
 
     expect(result(), isA<ContactSheetSend>());
@@ -152,7 +152,7 @@ void main() {
 
     // The primary action reads "Pull marks" (not "Send 1") — pull is active
     // from the right-click "Pull marks…" entry, no toggle needed.
-    expect(find.widgetWithText(FilledButton, 'Pull marks'), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, '拉取标记'), findsOneWidget);
     expect(find.widgetWithText(FilledButton, 'Send 1'), findsNothing);
   });
 
@@ -163,7 +163,7 @@ void main() {
 
     final send = tester.widget<FilledButton>(
       find.ancestor(
-        of: find.text('Send 1'),
+        of: find.text('发送 1'),
         matching: find.byType(FilledButton),
       ),
     );
@@ -183,11 +183,11 @@ void main() {
     // Collapsed: host summary + Change, no URL/token fields — only the
     // new-gallery-name field remains.
     expect(find.text('cs.example.com'), findsOneWidget);
-    expect(find.text('Change'), findsOneWidget);
+    expect(find.text('更换'), findsOneWidget);
     expect(find.byType(TextField), findsOneWidget);
 
     // Change expands the fields again, prefilled from the stores.
-    await tester.tap(find.text('Change'));
+    await tester.tap(find.text('更换'));
     await tester.pump();
     final fields = find.byType(TextField);
     expect(fields, findsNWidgets(3));

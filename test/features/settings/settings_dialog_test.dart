@@ -136,42 +136,42 @@ void main() {
   testWidgets('shows the settings sections across tabs', (tester) async {
     await pumpDialog(tester);
 
-    expect(find.text('Settings'), findsOneWidget);
+    expect(find.text('设置'), findsOneWidget);
     // General is the default tab.
-    expect(find.text('PERFORMANCE'), findsOneWidget);
-    expect(find.text('INTERFACE'), findsOneWidget);
-    expect(find.text('Show button tooltips'), findsOneWidget);
-    expect(find.text('STARTUP'), findsOneWidget);
-    expect(find.text('Reopen last folders on startup'), findsOneWidget);
-    expect(find.text('CACHE'), findsOneWidget);
-    expect(find.text('Clear thumbnail cache'), findsOneWidget);
+    expect(find.text('性能'), findsOneWidget);
+    expect(find.text('界面'), findsOneWidget);
+    expect(find.text('显示按钮提示'), findsOneWidget);
+    expect(find.text('启动'), findsOneWidget);
+    expect(find.text('启动时重新打开上次文件夹'), findsOneWidget);
+    expect(find.text('缓存'), findsOneWidget);
+    expect(find.text('清除缩略图缓存'), findsOneWidget);
 
-    await openTab(tester, 'Delivery');
+    await openTab(tester, '交付');
     expect(find.text('CONTACTSHEET'), findsOneWidget);
 
-    await openTab(tester, 'About');
-    expect(find.text('ABOUT'), findsOneWidget);
-    expect(find.text('View logs'), findsOneWidget);
-    expect(find.text('About & licenses'), findsOneWidget);
+    await openTab(tester, '关于');
+    expect(find.text('关于'), findsWidgets); // 标签页与节标题同为「关于」（大写对中文无效）
+    expect(find.text('查看日志'), findsOneWidget);
+    expect(find.text('关于与许可'), findsOneWidget);
   });
 
   testWidgets('View logs opens the log viewer', (tester) async {
     await pumpDialog(tester);
-    await openTab(tester, 'About');
+    await openTab(tester, '关于');
 
-    await tester.ensureVisible(find.text('View logs'));
-    await tester.tap(find.text('View logs'));
+    await tester.ensureVisible(find.text('查看日志'));
+    await tester.tap(find.text('查看日志'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Cullimingo Logs'), findsOneWidget);
+    expect(find.text('Cullimingo 日志'), findsOneWidget);
   });
 
   testWidgets('About & licenses shows the about dialog', (tester) async {
     await pumpDialog(tester);
-    await openTab(tester, 'About');
+    await openTab(tester, '关于');
 
-    await tester.ensureVisible(find.text('About & licenses'));
-    await tester.tap(find.text('About & licenses'));
+    await tester.ensureVisible(find.text('关于与许可'));
+    await tester.tap(find.text('关于与许可'));
     await tester.pumpAndSettle();
 
     // The about dialog shows the app name + version (and a View-licenses link).
@@ -182,7 +182,7 @@ void main() {
   testWidgets('Cancel returns null', (tester) async {
     final result = await pumpDialog(tester);
 
-    await tester.tap(find.text('Cancel'));
+    await tester.tap(find.text('取消'));
     await tester.pumpAndSettle();
 
     expect(result(), isNull);
@@ -213,12 +213,12 @@ void main() {
     var cleared = false;
     await pumpDialog(tester, onClearCache: () async => cleared = true);
 
-    await tester.ensureVisible(find.text('Clear thumbnail cache'));
-    await tester.tap(find.text('Clear thumbnail cache'));
+    await tester.ensureVisible(find.text('清除缩略图缓存'));
+    await tester.tap(find.text('清除缩略图缓存'));
     await tester.pumpAndSettle();
 
     expect(cleared, isTrue);
-    expect(find.text('Thumbnail cache cleared'), findsOneWidget);
+    expect(find.text('缩略图缓存已清除'), findsOneWidget);
   });
 
   group('template snapshots', () {
@@ -264,9 +264,9 @@ void main() {
     ) async {
       seedTwoSnapshots();
       await pumpDialog(tester);
-      await openTab(tester, 'Metadata');
+      await openTab(tester, '元数据');
 
-      expect(find.text('Edit "Wire" (1 fields)…'), findsOneWidget);
+      expect(find.text('编辑“Wire”（1 个字段）…'), findsOneWidget);
 
       await tester.ensureVisible(find.text('Wire'));
       await tester.tap(find.text('Wire'));
@@ -274,7 +274,7 @@ void main() {
       await tester.tap(find.text('Agency').last);
       await tester.pumpAndSettle();
 
-      expect(find.text('Edit "Agency" (1 fields)…'), findsOneWidget);
+      expect(find.text('编辑“Agency”（1 个字段）…'), findsOneWidget);
 
       await tester.tap(find.text('Apply'));
       await tester.pumpAndSettle();
@@ -293,51 +293,53 @@ void main() {
         },
       });
       await pumpDialog(tester);
-      await openTab(tester, 'Metadata');
+      await openTab(tester, '元数据');
 
-      expect(find.text('Default'), findsOneWidget);
-      expect(find.text('Edit "Default" (1 fields)…'), findsOneWidget);
+      expect(find.text('默认'), findsOneWidget);
+      expect(find.text('编辑“默认”（1 个字段）…'), findsOneWidget);
     });
 
     testWidgets('New template prompts for a name and opens the editor', (
       tester,
     ) async {
       await pumpDialog(tester);
-      await openTab(tester, 'Metadata');
+      await openTab(tester, '元数据');
 
-      expect(find.text('No saved templates'), findsOneWidget);
-      expect(find.text('Set up template…'), findsOneWidget);
+      expect(find.text('没有已保存模板'), findsOneWidget);
+      expect(find.text('设置模板…'), findsOneWidget);
 
-      await tester.ensureVisible(find.byTooltip('New template'));
-      await tester.tap(find.byTooltip('New template'));
+      await tester.ensureVisible(find.byTooltip('新建模板'));
+      await tester.tap(find.byTooltip('新建模板'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField).last, 'Bundesliga');
       await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
 
       // The template editor opens for the new snapshot; Save adds it.
-      expect(find.text('Metadata template'), findsOneWidget);
+      // The dialog title (元数据模板) matches the section header behind it
+      // once translated — English kept them distinct (template / templates).
+      expect(find.text('元数据模板'), findsWidgets);
       await tester.tap(find.text('Save'));
       await tester.pumpAndSettle();
 
       expect(find.text('Bundesliga'), findsOneWidget);
-      expect(find.text('Edit "Bundesliga" (0 fields)…'), findsOneWidget);
+      expect(find.text('编辑“Bundesliga”（0 个字段）…'), findsOneWidget);
     });
 
     testWidgets('cancelling the editor adds no snapshot', (tester) async {
       await pumpDialog(tester);
-      await openTab(tester, 'Metadata');
+      await openTab(tester, '元数据');
 
-      await tester.ensureVisible(find.byTooltip('New template'));
-      await tester.tap(find.byTooltip('New template'));
+      await tester.ensureVisible(find.byTooltip('新建模板'));
+      await tester.tap(find.byTooltip('新建模板'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField).last, 'Bundesliga');
       await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Cancel').last);
+      await tester.tap(find.text('取消').last);
       await tester.pumpAndSettle();
 
-      expect(find.text('No saved templates'), findsOneWidget);
+      expect(find.text('没有已保存模板'), findsOneWidget);
       expect(find.text('Bundesliga'), findsNothing);
     });
 
@@ -346,16 +348,16 @@ void main() {
     ) async {
       seedTwoSnapshots();
       await pumpDialog(tester);
-      await openTab(tester, 'Metadata');
+      await openTab(tester, '元数据');
 
-      await tester.ensureVisible(find.byTooltip('Rename template'));
-      await tester.tap(find.byTooltip('Rename template'));
+      await tester.ensureVisible(find.byTooltip('重命名模板'));
+      await tester.tap(find.byTooltip('重命名模板'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField).last, 'AP');
       await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Edit "AP" (1 fields)…'), findsOneWidget);
+      expect(find.text('编辑“AP”（1 个字段）…'), findsOneWidget);
       expect(find.text('Wire'), findsNothing);
     });
 
@@ -364,20 +366,20 @@ void main() {
     ) async {
       seedTwoSnapshots();
       await pumpDialog(tester);
-      await openTab(tester, 'Metadata');
+      await openTab(tester, '元数据');
 
-      await tester.ensureVisible(find.byTooltip('Delete template'));
-      await tester.tap(find.byTooltip('Delete template'));
+      await tester.ensureVisible(find.byTooltip('删除模板'));
+      await tester.tap(find.byTooltip('删除模板'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Edit "Agency" (1 fields)…'), findsOneWidget);
+      expect(find.text('编辑“Agency”（1 个字段）…'), findsOneWidget);
       expect(find.text('Wire'), findsNothing);
 
-      await tester.tap(find.byTooltip('Delete template'));
+      await tester.tap(find.byTooltip('删除模板'));
       await tester.pumpAndSettle();
 
-      expect(find.text('No saved templates'), findsOneWidget);
-      expect(find.text('Set up template…'), findsOneWidget);
+      expect(find.text('没有已保存模板'), findsOneWidget);
+      expect(find.text('设置模板…'), findsOneWidget);
     });
   });
 }

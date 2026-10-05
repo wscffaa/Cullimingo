@@ -111,10 +111,10 @@ void main() {
     // Space selects the focused (second) photo → status bar reflects the count.
     await tester.sendKeyEvent(LogicalKeyboardKey.space);
     await tester.pump();
-    expect(find.text('Export 1 selected'), findsOneWidget);
+    expect(find.text('导出已选 1 张'), findsOneWidget);
 
     // Filtering to Picks leaves only the flagged photo in the grid.
-    await tester.tap(find.textContaining('Picks'));
+    await tester.tap(find.textContaining('精选'));
     await tester.pump();
     expect(find.byType(PhotoCell), findsOneWidget);
   });
@@ -170,7 +170,7 @@ void main() {
     await tester.sendKeyUpEvent(LogicalKeyboardKey.meta);
     await tester.pump();
 
-    expect(find.text('Export 3 selected'), findsOneWidget);
+    expect(find.text('导出已选 3 张'), findsOneWidget);
   });
 
   testWidgets('rating/colour/flag keys toggle off when pressed twice', (

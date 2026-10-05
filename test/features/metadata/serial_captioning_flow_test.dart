@@ -119,7 +119,7 @@ void main() {
     await tester.pump();
     await tester.sendKeyEvent(LogicalKeyboardKey.keyM);
     await tester.pumpAndSettle();
-    expect(find.text('1 of 2'), findsOneWidget);
+    expect(find.text('第 1 / 2 张'), findsOneWidget);
     // Scoped to the dialog — the grid cell behind it shows the filename too.
     expect(
       find.descendant(
@@ -144,7 +144,7 @@ void main() {
     await tester.sendKeyUpEvent(LogicalKeyboardKey.metaLeft);
     await tester.pumpAndSettle();
 
-    expect(find.text('2 of 2'), findsOneWidget);
+    expect(find.text('第 2 / 2 张'), findsOneWidget);
     // The grid's focus followed the walk.
     final photos = await tester.runAsync(
       () => db.watchPhotosForImport(importId).first,

@@ -99,7 +99,7 @@ void main() {
     );
     final ids = photos!.map((p) => p.id).toList();
 
-    await tester.tap(find.byTooltip('Find by filename (⌘F)'));
+    await tester.tap(find.byTooltip('按文件名查找（⌘F）'));
     await tester.pumpAndSettle();
 
     // Bare names, no extension — must still match the .ARW files. Listed in

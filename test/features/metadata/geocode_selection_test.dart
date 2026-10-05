@@ -135,13 +135,13 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.more_vert));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Fill location from GPS'));
+    await tester.tap(find.text('从 GPS 填充位置'));
     await tester.pumpAndSettle();
 
     expect(
       find.text(
-        'Filled location on 1 photo(s) · 1 without GPS · '
-        '1 with no place nearby',
+        '已为 1 张照片填充位置 · 1 张无 GPS · '
+        '1 张附近无地点',
       ),
       findsOneWidget,
     );
@@ -174,11 +174,11 @@ void main() {
 
     await tester.tap(find.byIcon(Icons.more_vert));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Fill location from GPS'));
+    await tester.tap(find.text('从 GPS 填充位置'));
     await tester.pumpAndSettle();
 
     expect(
-      find.text('No location filled — 1 without GPS'),
+      find.text('未填充位置——1 张无 GPS'),
       findsOneWidget,
     );
   });

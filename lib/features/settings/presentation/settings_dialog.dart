@@ -562,7 +562,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
         label: '启动时检查更新',
       ),
       const SizedBox(height: AppSpacing.lg),
-      const DialogSection('Cache'),
+      const DialogSection('缓存'),
       Align(
         alignment: Alignment.centerLeft,
         child: OutlinedButton.icon(
@@ -779,7 +779,7 @@ class _SettingsDialogState extends ConsumerState<_SettingsDialog> {
   ];
 
   List<Widget> _aboutSection() => [
-    const DialogSection('About'),
+    const DialogSection('关于'),
     const Text(
       'Cullimingo · 版本 $kAppVersion',
       style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
@@ -809,7 +809,7 @@ enum _SettingsTab {
   general('常规', Icons.tune),
   metadata('元数据', Icons.sell_outlined),
   delivery('交付', Icons.cloud_upload_outlined),
-  about('About', Icons.info_outline);
+  about('关于', Icons.info_outline);
 
   const _SettingsTab(this.label, this.icon);
 

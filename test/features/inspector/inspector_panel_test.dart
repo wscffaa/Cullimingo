@@ -16,7 +16,7 @@ void main() {
     await tester.pumpWidget(
       host(InspectorPanelBody(data: null, onClose: () {})),
     );
-    expect(find.text('No photo selected'), findsOneWidget);
+    expect(find.text('未选择照片'), findsOneWidget);
   });
 
   testWidgets('renders marks and formatted EXIF for the focused photo', (
@@ -58,8 +58,8 @@ void main() {
     expect(find.text('_AIV1234.ARW'), findsOneWidget);
     expect(find.text('RAW'), findsOneWidget);
     // Marks: colour + flag labels.
-    expect(find.text('Green'), findsOneWidget);
-    expect(find.text('Pick'), findsOneWidget);
+    expect(find.text('绿'), findsOneWidget);
+    expect(find.text('精选'), findsOneWidget);
     expect(find.text('portrait'), findsOneWidget);
     // EXIF formatted via the pure formatters.
     expect(find.text('Sony ILCE-7M4'), findsOneWidget);
@@ -96,9 +96,9 @@ void main() {
       host(InspectorPanelBody(data: data, onClose: () {})),
     );
 
-    expect(find.text('Locations shown'), findsOneWidget);
+    expect(find.text('所示地点'), findsOneWidget);
     expect(find.text('Munich · Germany'), findsOneWidget);
-    expect(find.text('Image creators'), findsOneWidget);
+    expect(find.text('图像创作者'), findsOneWidget);
     expect(find.text('Jane Doe'), findsOneWidget);
   });
 
@@ -116,7 +116,7 @@ void main() {
       host(InspectorPanelBody(data: data, onClose: () {})),
     );
 
-    expect(find.text('No marks'), findsOneWidget);
+    expect(find.text('无标记'), findsOneWidget);
     expect(find.text('RAW'), findsNothing);
     // Lens/exposure/etc. all absent → em dashes present.
     expect(find.text('—'), findsWidgets);
@@ -170,7 +170,7 @@ void main() {
       host(InspectorPanelBody(data: data, onClose: () {})),
     );
 
-    expect(find.text('No caption or credit'), findsOneWidget);
+    expect(find.text('无说明或署名'), findsOneWidget);
     // No Edit button when no callback is wired.
     expect(find.text('Edit'), findsNothing);
   });
@@ -259,9 +259,9 @@ void main() {
       tester,
     ) async {
       final saves = await pump(tester);
-      await tester.tap(find.text('+ Add field'));
+      await tester.tap(find.text('添加字段'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Headline'));
+      await tester.tap(find.text('标题'));
       await tester.pumpAndSettle();
 
       await tester.enterText(find.byType(TextField), 'March downtown');
@@ -284,7 +284,7 @@ void main() {
       await tester.tap(find.text('Reuters'));
       await tester.pump();
       expect(find.byType(TextField), findsNothing);
-      expect(find.text('+ Add field'), findsNothing);
+      expect(find.text('添加字段'), findsNothing);
     });
   });
 }

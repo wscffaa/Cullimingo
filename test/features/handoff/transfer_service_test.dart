@@ -137,7 +137,7 @@ void main() {
       // Reported, and the photo stays with its marks.
       final summary = TransferSummary([for (final t in ticks) t.last]);
       expect(summary.failed, 1);
-      expect(ticks.single.last.message, contains('sidecar'));
+      expect(ticks.single.last.message, contains('附属文件'));
       expect(photo.existsSync(), isTrue);
       expect(sidecar.existsSync(), isTrue);
     });

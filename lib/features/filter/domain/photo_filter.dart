@@ -24,6 +24,7 @@ class PhotoFilter {
     this.collapseBrackets = false,
     this.fileType = FileTypeFilter.all,
     this.query = '',
+    this.day,
   });
 
   /// Rebuilds a filter from a saved-preset [json] (see [toJson]). Missing keys
@@ -90,6 +91,12 @@ class PhotoFilter {
   /// omits it.
   final String query;
 
+  /// Restricts the grid to a single capture day, as a `yyyymmdd` key (see
+  /// [dayKeyOf]); null = any day. Photos without EXIF capture time are hidden
+  /// while a day is set. Transient like [query] — a day only means something
+  /// inside one shoot, so it is not part of a saved preset.
+  final int? day;
+
   /// Whether any constraint is set.
   bool get isActive =>
       minRating > 0 ||
@@ -102,6 +109,7 @@ class PhotoFilter {
       hideJpegPairs ||
       collapseBrackets ||
       fileType != FileTypeFilter.all ||
+      day != null ||
       query.trim().isNotEmpty;
 
   /// True if [photo] passes every active constraint that this object can judge
@@ -112,6 +120,7 @@ class PhotoFilter {
     if (color != null && photo.colorLabel != color) return false;
     if (hasKeyword && photo.keywords.isEmpty) return false;
     if (needsCaption && photo.iptc.caption.trim().isNotEmpty) return false;
+    if (day != null && dayKeyOf(photo.capturedAt) != day) return false;
     switch (fileType) {
       case FileTypeFilter.all:
         break;
@@ -183,6 +192,9 @@ class PhotoFilter {
   /// Returns a copy with the live filename search set (empty clears it).
   PhotoFilter withQuery(String value) => _copyWith(query: value);
 
+  /// Returns a copy with the capture-day constraint set (null clears it).
+  PhotoFilter withDay(int? value) => _copyWith(day: () => value);
+
   // Nullable fields use a thunk so passing null clears them (vs "absent").
   PhotoFilter _copyWith({
     int? minRating,
@@ -196,6 +208,7 @@ class PhotoFilter {
     bool? collapseBrackets,
     FileTypeFilter? fileType,
     String? query,
+    int? Function()? day,
   }) => PhotoFilter(
     minRating: minRating ?? this.minRating,
     flag: flag != null ? flag() : this.flag,
@@ -208,8 +221,14 @@ class PhotoFilter {
     collapseBrackets: collapseBrackets ?? this.collapseBrackets,
     fileType: fileType ?? this.fileType,
     query: query ?? this.query,
+    day: day != null ? day() : this.day,
   );
 }
+
+/// The capture day of [d] as a `yyyymmdd` integer key (local calendar date,
+/// matching how EXIF capture times are stored); null in, null out.
+int? dayKeyOf(DateTime? d) =>
+    d == null ? null : d.year * 10000 + d.month * 100 + d.day;
 
 /// The file-type quick-filter: show all files, only RAW, or only JPEG. RAW is
 /// judged from [Photo.isRaw]; JPEG from the path extension ([isJpegPath]), so

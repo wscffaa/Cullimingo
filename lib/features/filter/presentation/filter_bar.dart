@@ -43,6 +43,7 @@ class FilterBar extends ConsumerWidget {
     // to clear it short of "All".
     final rawCount = count((p) => p.isRaw);
     final jpegCount = count((p) => isJpegPath(p.path));
+    final days = ref.watch(availableDaysProvider);
     final showFileType =
         (rawCount > 0 && jpegCount > 0) ||
         filter.fileType != FileTypeFilter.all;
@@ -99,6 +100,31 @@ class FilterBar extends ConsumerWidget {
                   selected: filter.color == label,
                   onTap: () => controller.toggleColor(label),
                 ),
+            const _Divider(),
+            // 按拍摄日筛选：单选某一天只看这一天；一天卡跨多天时最快的心智模型。
+            if (days.isNotEmpty || filter.day != null)
+              _FilterMenuButton(
+                label: '日期',
+                active: filter.day != null,
+                menuChildren: [
+                  RadioMenuButton<int>(
+                    value: 0,
+                    groupValue: filter.day ?? 0,
+                    closeOnActivate: true,
+                    onChanged: (_) => controller.setDay(null),
+                    child: Text('全部日期（${all.length}）'),
+                  ),
+                  for (final d in days)
+                    RadioMenuButton<int>(
+                      value: d.key,
+                      groupValue: filter.day ?? 0,
+                      closeOnActivate: true,
+                      onChanged: (v) =>
+                          controller.setDay(v == 0 ? null : v),
+                      child: Text(_dayLabel(d, days)),
+                    ),
+                ],
+              ),
             const _Divider(),
             // The situational attribute/grouping filters live in two grouped
             // dropdowns so the bar stays scannable; the core cull filters above
@@ -192,6 +218,15 @@ class FilterBar extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// 日期菜单项的标签：与最新一天同年时省去年份，跨年才带年份。
+String _dayLabel(DayCount day, List<DayCount> all) {
+  final refYear = all.isEmpty ? day.date.year : all.first.date.year;
+  final base = day.date.year == refYear
+      ? '${day.date.month}月${day.date.day}日'
+      : '${day.date.year}年${day.date.month}月${day.date.day}日';
+  return '$base（${day.count}）';
 }
 
 class _Chip extends StatelessWidget {

@@ -95,7 +95,7 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.keyK);
     await tester.pumpAndSettle();
 
-    expect(find.text('Keywords'), findsOneWidget);
+    expect(find.text('关键字'), findsOneWidget);
     await tester.enterText(
       find.descendant(
         of: find.byType(AlertDialog),
@@ -118,12 +118,12 @@ void main() {
     await tester.pump();
     await tester.sendKeyEvent(LogicalKeyboardKey.keyK);
     await tester.pumpAndSettle();
-    expect(find.text('Keywords'), findsOneWidget);
+    expect(find.text('关键字'), findsOneWidget);
 
     // Tap the barrier (top-left corner, outside the dialog). A form dialog is
     // not barrier-dismissible, so it must stay open.
     await tester.tapAt(const Offset(5, 5));
     await tester.pumpAndSettle();
-    expect(find.text('Keywords'), findsOneWidget);
+    expect(find.text('关键字'), findsOneWidget);
   });
 }

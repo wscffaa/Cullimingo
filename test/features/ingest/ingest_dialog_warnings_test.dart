@@ -89,7 +89,7 @@ Future<void> _settle(WidgetTester tester) async {
 }
 
 Future<void> _import(WidgetTester tester) async {
-  await tester.tap(find.widgetWithText(FilledButton, 'Import 2 photos'));
+  await tester.tap(find.widgetWithText(FilledButton, '导入 2 张照片'));
   await _settle(tester);
 }
 
@@ -104,15 +104,15 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.textContaining("2 items on the source couldn't be read"),
+      find.textContaining('来源上的 2 个项目无法读取'),
       findsOneWidget,
     );
-    expect(find.textContaining("Don't format the card"), findsOneWidget);
+    expect(find.textContaining('请勿格式化存储卡'), findsOneWidget);
     // Paths are shown relative to the card, with the OS reason.
-    expect(find.text('• PRIVATE: Permission denied'), findsOneWidget);
+    expect(find.text('• PRIVATE：Permission denied'), findsOneWidget);
     // The readable files can still be imported.
     expect(
-      find.widgetWithText(FilledButton, 'Import 2 photos'),
+      find.widgetWithText(FilledButton, '导入 2 张照片'),
       findsOneWidget,
     );
   });
@@ -149,15 +149,15 @@ void main() {
     );
     await _import(tester);
 
-    expect(find.text("Couldn't read on the source"), findsOneWidget);
+    expect(find.text('在来源上无法读取'), findsOneWidget);
     expect(
       find.byKey(const ValueKey('ingest-summary-unreadable')),
       findsOneWidget,
     );
-    expect(find.text('Still being written (import again)'), findsOneWidget);
+    expect(find.text('仍在写入（请重新导入）'), findsOneWidget);
     // Never "complete" while part of the card was never imported.
-    expect(find.text('Import complete'), findsNothing);
-    expect(find.text('Import finished with issues'), findsOneWidget);
+    expect(find.text('导入完成'), findsNothing);
+    expect(find.text('导入完成但有问题'), findsOneWidget);
   });
 
   testWidgets('destination problems stop the run and show under Destination', (
@@ -194,7 +194,7 @@ void main() {
     expect(copies, 0);
     // Back to the plan, ready to retry once the drive is connected.
     expect(
-      find.widgetWithText(FilledButton, 'Import 2 photos'),
+      find.widgetWithText(FilledButton, '导入 2 张照片'),
       findsOneWidget,
     );
   });

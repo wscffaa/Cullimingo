@@ -101,9 +101,9 @@ void main() {
     await tester.pump();
 
     // Open the bookmark menu → "Save current selection…".
-    await tester.tap(find.byTooltip('Saved selections'));
+    await tester.tap(find.byTooltip('已保存选择'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Save current selection…'));
+    await tester.tap(find.text('保存当前选择…'));
     await tester.pumpAndSettle();
 
     await tester.enterText(
@@ -132,9 +132,9 @@ void main() {
     container.read(cullControllerProvider.notifier).setSelection({});
     await tester.pump();
 
-    await tester.tap(find.byTooltip('Saved selections'));
+    await tester.tap(find.byTooltip('已保存选择'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('My picks (2)'));
+    await tester.tap(find.text('My picks（2）'));
     await tester.pumpAndSettle();
 
     expect(

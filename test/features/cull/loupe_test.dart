@@ -144,7 +144,7 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.enter); // open loupe
     await tester.pump();
 
-    await tester.tap(find.byTooltip('Rate 3'));
+    await tester.tap(find.byTooltip('评 3 星'));
     await tester.pump();
 
     final rows = await tester.runAsync(
@@ -153,7 +153,7 @@ void main() {
     expect(rows!.first.rating, 3);
 
     // Clicking the active rating again clears it (toggle).
-    await tester.tap(find.byTooltip('Rate 3'));
+    await tester.tap(find.byTooltip('评 3 星'));
     await tester.pump();
     final after = await tester.runAsync(
       () => db.watchPhotosForImport(importId).first,
@@ -168,10 +168,10 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.enter); // open loupe
     await tester.pump();
 
-    expect(find.byTooltip('Rotate left'), findsOneWidget);
-    expect(find.byTooltip('Edit metadata (M)'), findsOneWidget);
+    expect(find.byTooltip('向左旋转'), findsOneWidget);
+    expect(find.byTooltip('编辑元数据（M）'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Rotate right'));
+    await tester.tap(find.byTooltip('向右旋转'));
     await tester.pump();
     final rows = await tester.runAsync(
       () => db.watchPhotosForImport(importId).first,
@@ -188,14 +188,14 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.enter); // open loupe
     await tester.pump();
 
-    expect(find.byTooltip('Analysis overlays'), findsOneWidget);
+    expect(find.byTooltip('分析叠加层'), findsOneWidget);
 
     // Open the menu and confirm all three overlays are listed, initially off.
-    await tester.tap(find.byTooltip('Analysis overlays'));
+    await tester.tap(find.byTooltip('分析叠加层'));
     await tester.pumpAndSettle();
-    expect(find.text('Histogram'), findsOneWidget);
-    expect(find.text('Clipping warnings'), findsOneWidget);
-    expect(find.text('Focus peaking'), findsOneWidget);
+    expect(find.text('直方图'), findsOneWidget);
+    expect(find.text('过曝警告'), findsOneWidget);
+    expect(find.text('峰值对焦'), findsOneWidget);
     expect(
       container.read(loupeHistogramVisibleProvider),
       isFalse,
@@ -203,14 +203,14 @@ void main() {
 
     // Toggling one flips its provider state (the menu closes on selection —
     // matching the existing sort menu's behaviour).
-    await tester.tap(find.text('Histogram'), warnIfMissed: false);
+    await tester.tap(find.text('直方图'), warnIfMissed: false);
     await tester.pumpAndSettle();
     expect(container.read(loupeHistogramVisibleProvider), isTrue);
 
     // Toggling clipping and peaking works the same way, independently.
-    await tester.tap(find.byTooltip('Analysis overlays'));
+    await tester.tap(find.byTooltip('分析叠加层'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Focus peaking'), warnIfMissed: false);
+    await tester.tap(find.text('峰值对焦'), warnIfMissed: false);
     await tester.pumpAndSettle();
     expect(container.read(loupeFocusPeakingVisibleProvider), isTrue);
     expect(container.read(loupeClippingVisibleProvider), isFalse);
@@ -232,7 +232,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text(revealInFileManagerLabel), findsOneWidget);
-    expect(find.text('Edit metadata…'), findsOneWidget);
+    expect(find.text('编辑元数据…'), findsOneWidget);
   });
 
   testWidgets('loupe shows a toggle for a cropped photo', (tester) async {
@@ -259,10 +259,10 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.enter); // open loupe
     await tester.pump();
 
-    expect(find.byTooltip('Hide crop outline'), findsOneWidget);
-    await tester.tap(find.byTooltip('Hide crop outline'));
+    expect(find.byTooltip('隐藏裁剪框'), findsOneWidget);
+    await tester.tap(find.byTooltip('隐藏裁剪框'));
     await tester.pump();
-    expect(find.byTooltip('Show crop outline'), findsOneWidget);
+    expect(find.byTooltip('显示裁剪框'), findsOneWidget);
   });
 
   testWidgets('loupe shows a play affordance for a video file', (
@@ -283,7 +283,7 @@ void main() {
     await tester.pump();
     await tester.sendKeyEvent(LogicalKeyboardKey.enter); // open loupe
     await tester.pump();
-    expect(find.byTooltip('Open in system player'), findsNothing);
+    expect(find.byTooltip('在系统播放器中打开'), findsNothing);
 
     // Blit to the video (4th photo).
     await tester.sendKeyEvent(LogicalKeyboardKey.bracketRight);
@@ -293,7 +293,7 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.bracketRight);
     await tester.pump();
     expect(find.text('4 / 4'), findsOneWidget);
-    expect(find.byTooltip('Open in system player'), findsOneWidget);
+    expect(find.byTooltip('在系统播放器中打开'), findsOneWidget);
   });
 
   testWidgets('double-tap a cell opens the loupe on it', (tester) async {

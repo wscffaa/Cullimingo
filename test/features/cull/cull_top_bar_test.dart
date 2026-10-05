@@ -55,9 +55,9 @@ void main() {
     );
     await openMoreMenu(tester);
 
-    expect(find.text('Edit keywords (K)'), findsOneWidget);
-    expect(find.text('Edit metadata (M)'), findsOneWidget);
-    expect(find.text('Apply metadata template (T)'), findsOneWidget);
+    expect(find.text('编辑关键字（K）'), findsOneWidget);
+    expect(find.text('编辑元数据（M）'), findsOneWidget);
+    expect(find.text('应用元数据模板（T）'), findsOneWidget);
   });
 
   testWidgets('selecting Edit metadata / Apply template fires the callbacks', (
@@ -72,12 +72,12 @@ void main() {
     );
 
     await openMoreMenu(tester);
-    await tester.tap(find.text('Edit metadata (M)'));
+    await tester.tap(find.text('编辑元数据（M）'));
     await tester.pumpAndSettle();
     expect(metadata, 1);
 
     await openMoreMenu(tester);
-    await tester.tap(find.text('Apply metadata template (T)'));
+    await tester.tap(find.text('应用元数据模板（T）'));
     await tester.pumpAndSettle();
     expect(template, 1);
   });
@@ -88,10 +88,10 @@ void main() {
     await pumpBar(tester, onEditKeywords: () {});
     await openMoreMenu(tester);
 
-    expect(find.text('Edit keywords (K)'), findsOneWidget);
-    expect(find.text('Edit metadata (M)'), findsNothing);
-    expect(find.text('Apply metadata template (T)'), findsNothing);
-    expect(find.text('Fill location from GPS'), findsNothing);
+    expect(find.text('编辑关键字（K）'), findsOneWidget);
+    expect(find.text('编辑元数据（M）'), findsNothing);
+    expect(find.text('应用元数据模板（T）'), findsNothing);
+    expect(find.text('从 GPS 填充位置'), findsNothing);
   });
 
   testWidgets('selecting Fill location from GPS fires the callback', (
@@ -101,7 +101,7 @@ void main() {
     await pumpBar(tester, onGeocode: () => geocoded++);
 
     await openMoreMenu(tester);
-    await tester.tap(find.text('Fill location from GPS'));
+    await tester.tap(find.text('从 GPS 填充位置'));
     await tester.pumpAndSettle();
     expect(geocoded, 1);
   });
@@ -112,11 +112,11 @@ void main() {
     await pumpBar(tester, onEditMetadata: () {});
 
     await openMoreMenu(tester);
-    expect(find.text('Edit metadata (M)'), findsOneWidget);
+    expect(find.text('编辑元数据（M）'), findsOneWidget);
 
     // The ⋮ button stays visible/clickable while the menu is open, so a second
     // tap on it toggles the menu closed (MenuAnchor, not PopupMenuButton).
     await openMoreMenu(tester);
-    expect(find.text('Edit metadata (M)'), findsNothing);
+    expect(find.text('编辑元数据（M）'), findsNothing);
   });
 }

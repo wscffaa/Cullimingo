@@ -10,9 +10,9 @@ void main() {
     await tester.pump();
 
     expect(find.byType(MaterialApp), findsOneWidget);
-    expect(find.text('Library'), findsOneWidget);
+    expect(find.text('图库'), findsOneWidget);
     expect(
-      find.text('Open a folder of RAWs or JPEGs to start culling'),
+      find.text('打开 RAW 或 JPEG 文件夹开始筛选'),
       findsOneWidget,
     );
   });

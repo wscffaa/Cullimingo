@@ -20,27 +20,27 @@ void main() {
     );
     await tester.pump(); // volume scan (sync) settles
 
-    expect(find.text('Import photos'), findsOneWidget);
+    expect(find.text('导入照片'), findsOneWidget);
     // The three cards of the what → where → named-how flow.
-    expect(find.text('SOURCE'), findsOneWidget);
-    expect(find.text('DESTINATION'), findsOneWidget);
-    expect(find.text('NAMING'), findsOneWidget);
+    expect(find.text('来源'), findsOneWidget);
+    expect(find.text('目标位置'), findsOneWidget);
+    expect(find.text('命名'), findsOneWidget);
     // The default naming preset is selected in the builder's dropdown.
-    expect(find.text('Year / date_shoot / name'), findsWidgets);
+    expect(find.text('年份 / 日期_拍摄 / 名称'), findsWidgets);
     // With no source, the source card says what to do next…
-    expect(find.text('Select a card or folder to scan.'), findsOneWidget);
+    expect(find.text('选择要扫描的存储卡或文件夹。'), findsOneWidget);
     // …and the footer explains why Import is greyed out.
-    expect(find.text('Select a source above'), findsOneWidget);
+    expect(find.text('请在上方选择来源'), findsOneWidget);
 
     // The default preset uses the Job-name element, so its row is visible.
-    expect(find.text('Job name'), findsOneWidget);
+    expect(find.text('任务名称'), findsOneWidget);
     // The pattern editor is collapsed behind the disclosure by default.
-    expect(find.text('Customise filename & folders'), findsOneWidget);
-    expect(find.text('Filename'), findsNothing);
+    expect(find.text('自定义文件名与文件夹'), findsOneWidget);
+    expect(find.text('文件名'), findsNothing);
 
     // With no source/destination chosen, the Import action is disabled.
     final importButton = tester.widget<FilledButton>(
-      find.widgetWithText(FilledButton, 'Import'),
+      find.widgetWithText(FilledButton, '导入'),
     );
     expect(importButton.onPressed, isNull);
   });

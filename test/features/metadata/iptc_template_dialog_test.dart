@@ -79,7 +79,7 @@ void main() {
     tester,
   ) async {
     final result = await run(tester, const IptcTemplate(), (t) async {
-      await goTab(t, 'Location');
+      await goTab(t, '地点');
       await t.enterText(fieldInput(IptcField.city), 'Munich');
     });
 
@@ -93,7 +93,7 @@ void main() {
     final result = await run(tester, const IptcTemplate(), (t) async {
       // Content is the default tab; caption is there.
       await t.enterText(fieldInput(IptcField.caption), 'On the wire');
-      await goTab(t, 'Keywords');
+      await goTab(t, '关键字');
       await t.enterText(find.byType(TextField), 'a, b, a');
     });
 
@@ -125,7 +125,7 @@ void main() {
     const initial = IptcTemplate(fields: {IptcField.credit: 'AP'});
 
     final result = await run(tester, initial, (t) async {
-      await goTab(t, 'Rights');
+      await goTab(t, '权利');
       await t.tap(fieldCheckbox(IptcField.credit)); // untick credit
       await t.pump();
     });
@@ -135,9 +135,9 @@ void main() {
 
   testWidgets('adding a table row saves a structured record', (tester) async {
     final result = await run(tester, const IptcTemplate(), (t) async {
-      await goTab(t, 'Tables');
+      await goTab(t, '表格');
       // First "Add row" button is the Locations-shown table.
-      final add = find.widgetWithText(TextButton, 'Add row').first;
+      final add = find.widgetWithText(TextButton, '添加行').first;
       await t.ensureVisible(add);
       await t.tap(add);
       await t.pumpAndSettle();
@@ -212,9 +212,9 @@ void main() {
     final recent = const RecentFieldValues().record(IptcField.credit, 'AP');
 
     final result = await run(tester, const IptcTemplate(), (t) async {
-      await goTab(t, 'Rights');
-      await t.ensureVisible(find.byTooltip('Recent values'));
-      await t.tap(find.byTooltip('Recent values'));
+      await goTab(t, '权利');
+      await t.ensureVisible(find.byTooltip('最近使用的值'));
+      await t.tap(find.byTooltip('最近使用的值'));
       await t.pumpAndSettle();
       await t.tap(find.text('AP').last);
       await t.pumpAndSettle();
@@ -260,7 +260,7 @@ void main() {
       tester,
       const IptcTemplate(fields: {IptcField.source: 'Stale'}),
       (t) async {
-        await t.tap(find.text('Load XMP…'));
+        await t.tap(find.text('加载 XMP…'));
         // The parse runs in a real isolate — let it finish outside fake async.
         await t.runAsync(
           () => Future<void>.delayed(const Duration(milliseconds: 200)),
@@ -288,7 +288,7 @@ void main() {
       tester,
       const IptcTemplate(fields: {IptcField.credit: 'AP'}, keywords: ['a']),
       (t) async {
-        await t.tap(find.text('Save XMP…'));
+        await t.tap(find.text('保存 XMP…'));
         // The write runs in a real isolate — let it finish outside fake async.
         await t.runAsync(
           () => Future<void>.delayed(const Duration(milliseconds: 200)),

@@ -36,23 +36,23 @@ void main() {
     return container;
   }
 
-  testWidgets('shows "Syncing N…" only while sidecar writes are pending', (
+  testWidgets('shows "正在同步 N…" only while sidecar writes are pending', (
     tester,
   ) async {
     final container = await pumpBar(tester);
 
     // Idle: nothing shown.
-    expect(find.textContaining('Syncing'), findsNothing);
+    expect(find.textContaining('正在同步'), findsNothing);
 
     // Writes in flight → the count appears.
     container.read(sidecarSyncProvider.notifier).add(7);
     await tester.pump();
-    expect(find.text('Syncing 7…'), findsOneWidget);
+    expect(find.text('正在同步 7…'), findsOneWidget);
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
     // Drained → it hides again.
     container.read(sidecarSyncProvider.notifier).add(-7);
     await tester.pump();
-    expect(find.textContaining('Syncing'), findsNothing);
+    expect(find.textContaining('正在同步'), findsNothing);
   });
 }

@@ -132,7 +132,7 @@ void main() {
     await pressT(tester);
 
     expect(
-      find.text('No metadata template set up — add one in Settings'),
+      find.text('尚未设置元数据模板——请在设置中添加'),
       findsOneWidget,
     );
   });
@@ -149,7 +149,7 @@ void main() {
     await pressT(tester);
 
     expect(
-      find.text('Applied the metadata template to 1 photo(s)'),
+      find.text('已将元数据模板应用到 1 张照片'),
       findsOneWidget,
     );
     final rows = await tester.runAsync(
@@ -187,7 +187,7 @@ void main() {
     await pressT(tester);
 
     expect(
-      find.text('Applied the metadata template to 1 photo(s)'),
+      find.text('已将元数据模板应用到 1 张照片'),
       findsOneWidget,
     );
     final rows = await tester.runAsync(

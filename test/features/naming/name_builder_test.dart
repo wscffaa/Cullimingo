@@ -34,7 +34,7 @@ void main() {
       host(initial: empty, onChanged: (p) => emitted = p),
     );
 
-    await tester.tap(find.text('Original filename'));
+    await tester.tap(find.text('原始文件名'));
     await tester
         .pump(); // insert focuses the field; don't settle (cursor blink)
 
@@ -49,9 +49,9 @@ void main() {
       host(initial: empty, onChanged: (p) => emitted = p),
     );
 
-    await tester.tap(find.text('Original filename'));
+    await tester.tap(find.text('原始文件名'));
     await tester.pump();
-    await tester.tap(find.text('Camera'));
+    await tester.tap(find.text('相机'));
     await tester.pump();
 
     expect(emitted?.filePattern, '{origname}{camera}');
@@ -65,9 +65,9 @@ void main() {
       host(initial: empty, onChanged: (p) => emitted = p),
     );
 
-    await tester.tap(find.text('Counter ▾'));
+    await tester.tap(find.text('计数器 ▾'));
     await tester.pumpAndSettle(); // menu opens (no field focus yet)
-    await tester.tap(find.text('4 digits').last);
+    await tester.tap(find.text('4 位').last);
     await tester.pump();
 
     expect(emitted?.filePattern, '{seq:4}');
@@ -81,9 +81,9 @@ void main() {
       host(initial: empty, onChanged: (p) => emitted = p),
     );
 
-    await tester.tap(find.text('Date / time ▾'));
+    await tester.tap(find.text('日期 / 时间 ▾'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Year (2026)').last);
+    await tester.tap(find.text('年份（2026）').last);
     await tester.pump();
 
     expect(emitted?.filePattern, '{date:year}');
@@ -104,7 +104,7 @@ void main() {
 
     // `{origname}` matches the Keep-filenames preset, so the editor starts
     // collapsed — open it first.
-    await tester.tap(find.textContaining('Customise'));
+    await tester.tap(find.textContaining('自定义'));
     await tester.pump();
 
     // The first TextField is the filename field; typing replaces its content.
@@ -122,14 +122,14 @@ void main() {
     );
 
     // A known preset needs no pattern editing — the editor is folded away.
-    expect(find.text('Filename'), findsNothing);
-    expect(find.text('ELEMENTS'), findsNothing);
+    expect(find.text('文件名'), findsNothing);
+    expect(find.text('元素'), findsNothing);
 
-    await tester.tap(find.text('Customise filename & folders'));
+    await tester.tap(find.text('自定义文件名与文件夹'));
     await tester.pump();
 
-    expect(find.text('Filename'), findsOneWidget);
-    expect(find.text('ELEMENTS'), findsOneWidget);
+    expect(find.text('文件名'), findsOneWidget);
+    expect(find.text('元素'), findsOneWidget);
   });
 
   testWidgets('a custom scheme starts with the pattern editor open', (
@@ -137,8 +137,8 @@ void main() {
   ) async {
     await tester.pumpWidget(host(initial: empty, onChanged: (_) {}));
 
-    expect(find.text('Filename'), findsOneWidget);
-    expect(find.text('ELEMENTS'), findsOneWidget);
+    expect(find.text('文件名'), findsOneWidget);
+    expect(find.text('元素'), findsOneWidget);
   });
 
   testWidgets('selecting a preset loads its scheme and shows the example', (
@@ -151,10 +151,10 @@ void main() {
 
     await tester.tap(find.byType(DropdownButton<String>));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Timestamped').last);
+    await tester.tap(find.text('时间戳').last);
     await tester.pumpAndSettle();
 
-    expect(emitted?.name, 'Timestamped');
+    expect(emitted?.name, '时间戳');
     expect(emitted!.filePattern, contains('{seq:4}'));
     // The example is rendered from the engine with the sample data.
     expect(find.textContaining('2026-07-02_143005'), findsOneWidget);

@@ -158,6 +158,40 @@ void main() {
       expect(filter.withQuery('  ').isActive, isFalse); // whitespace = inactive
       expect(filter.withQuery('').isActive, isFalse);
     });
+
+    test('day constraint keeps only photos of that capture day', () {
+      final filter = PhotoFilter(day: dayKeyOf(DateTime(2026, 10, 3, 18, 24)));
+      expect(filter.isActive, isTrue);
+      expect(
+        filter.matches(_photo(capturedAt: DateTime(2026, 10, 3, 18, 24))),
+        isTrue,
+      );
+      expect(
+        filter.matches(_photo(capturedAt: DateTime(2026, 10, 3, 23, 59))),
+        isTrue,
+      );
+      expect(
+        filter.matches(_photo(capturedAt: DateTime(2026, 10, 4, 0, 30))),
+        isFalse,
+      );
+      // 没有 EXIF 拍摄时间的照片在按日筛选时隐藏
+      expect(filter.matches(_photo()), isFalse);
+    });
+
+    test('day constraint sets and clears like the other nullable fields', () {
+      const filter = PhotoFilter(day: 20261003);
+      expect(filter.withDay(null).day, isNull);
+      expect(filter.withDay(null).isActive, isFalse);
+      expect(filter.withDay(20261004).day, 20261004);
+      // day 是瞬时约束：不进预设 json
+      expect(filter.toJson().containsKey('day'), isFalse);
+    });
+
+    test('dayKeyOf uses the local calendar date', () {
+      expect(dayKeyOf(DateTime(2026, 10, 3, 23, 59)), 20261003);
+      expect(dayKeyOf(DateTime(2026, 1, 5)), 20260105);
+      expect(dayKeyOf(null), isNull);
+    });
   });
 
   group('filteredPhotosProvider', () {

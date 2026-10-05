@@ -83,7 +83,7 @@ void main() {
       final summary = DeliverySummary([for (final t in ticks) t.last]);
       expect(summary.delivered, 1);
       expect(summary.failures.single.item.remoteName, 'a.jpg');
-      expect(summary.failures.single.error, contains('refused'));
+      expect(summary.failures.single.error, contains('拒绝'));
       expect(server.uploads.keys, ['/b.jpg']);
     },
   );

@@ -21,7 +21,7 @@ void main() {
         isA<DeliveryException>().having(
           (e) => e.message,
           'message',
-          contains('Could not read the key'),
+          contains('无法读取密钥'),
         ),
       ),
     );
